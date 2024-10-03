@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class JobController {
+    //JobController
     @GetMapping("/job/create")
     public String home(HttpSession session, Model model) {
 
