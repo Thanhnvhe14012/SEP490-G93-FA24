@@ -15,7 +15,7 @@ public class Account {
     private Long id;
 
     // Mapping thông tin biến với tên cột trong Database
-    @Column(name = "username")
+    @Column(name = "username    ")
     private String username;
 
     @Column(name = "password")
