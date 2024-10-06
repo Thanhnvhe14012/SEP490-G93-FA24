@@ -11,9 +11,17 @@ public class UserDTO {
     private String password;
     private String email;
     private String dateOfBirth;
-    private Integer accountType;
-    private String name;
+    private Integer role;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String addressId1;
+    private String addressId2;
+    private String addressId3;
+    private String address;
     private String biography;
+    private String companyName;
     private String companyDescription;
     private Integer companyScale;
+    private String displayName;
 }
