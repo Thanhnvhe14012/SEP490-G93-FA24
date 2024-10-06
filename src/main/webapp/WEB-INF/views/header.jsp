@@ -37,7 +37,7 @@
         <div>
             <c:if test="${empty sessionScope.user}">
                 <a href="/login" style="text-decoration: none; color: white; margin-right: 20px;">Đăng nhập</a>
-                <a href="/signup"
+                <a href="/register"
                    style="text-decoration: none; background-color: #f5a623; padding: 10px 20px; border-radius: 4px; color: white;">
                     Đăng ký
                 </a>
