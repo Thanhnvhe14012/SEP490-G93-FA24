@@ -3,6 +3,7 @@ package vn.edu.fpt.quickhire.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/handbook")
 public class HandbookController {
 
@@ -25,10 +26,8 @@ public class HandbookController {
     private HandbookServiceImpl handbookService;
 
     @GetMapping("/add")
-    public ModelAndView showAddHandbookForm() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("handbook/addHandbook");
-        return modelAndView;
+    public String showAddHandbookForm() {
+        return "handbook/addHandbook";
     }
 
     @PostMapping("/add")
@@ -75,13 +74,14 @@ public class HandbookController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Handbook>> getAllHandbooks() {
-        List<Handbook> handbookList = handbookService.findAllHandbooks();
-        if (handbookList != null) {
-            return new ResponseEntity<>(handbookList, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @GetMapping()
+//    public String getAllHandbooks() {
+//        List<Handbook> handbookList = handbookService.findAllHandbooks();
+//        if (handbookList != null) {
+//            model.addAttribute("handbookList", handbookList);
+//            return "handbookPage";
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
