@@ -63,7 +63,7 @@
         }
     </style>
 </head>
-<%@ include file="/WEB-INF/views/header.jspf" %>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 
 <body class="main">
 

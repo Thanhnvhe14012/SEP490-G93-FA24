@@ -11,6 +11,6 @@ public class JobController {
     @GetMapping("/job/create")
     public String home(HttpSession session, Model model) {
 
-        return "createJob";
+        return "job/createJob";
     }
 }
