@@ -23,6 +23,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Company findByName(String name) {
+        return companyRepository.findByName(name);
+    }
+
+    @Override
     public List<Company> ListCompany() {
         return companyRepository.ListCompany();
     }

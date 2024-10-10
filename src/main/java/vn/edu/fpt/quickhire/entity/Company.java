@@ -14,6 +14,9 @@ public class Company {
     @Column(name="id")
     private Long id;
 
+    @Column(name = "company_code")
+    private String companyCode;
+
     @Column(name = "company_name")
     private String companyName;
 
@@ -35,12 +38,14 @@ public class Company {
     public Company() {
     }
 
-    public Company(Long id, String companyName, String location, Long typeId, String logo, int numOfEmps) {
+    public Company(Long id, Long typeId, String logo, int status, int numOfEmps, String location, String companyName, String companyCode) {
         this.id = id;
-        this.companyName = companyName;
-        this.location = location;
         this.typeId = typeId;
         this.logo = logo;
+        this.status = status;
         this.numOfEmps = numOfEmps;
+        this.location = location;
+        this.companyName = companyName;
+        this.companyCode = companyCode;
     }
 }
