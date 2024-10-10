@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<%@ include file="/WEB-INF/views/header.jspf" %>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 <h2>Welcome to the Homepage</h2>
 <p>This is the content of the homepage.</p>
 <%--<%@ include file="footer.jsp" %>--%>
