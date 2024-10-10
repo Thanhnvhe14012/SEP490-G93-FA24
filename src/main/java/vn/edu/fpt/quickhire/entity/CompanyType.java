@@ -7,15 +7,21 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "candidate")
+@Table(name = "companyType")
 @Data
-public class Candidate {
+public class CompanyType {
     @Id
     @Column(name="id")
     private Long id;
 
-    // Mapping thông tin biến với tên cột trong Database
-    @Column(name = "biography")
-    private String biography;
+    @Column(name = "type_name")
+    private String typeName;
 
+    public CompanyType() {
+    }
+
+    public CompanyType(Long id, String typeName) {
+        this.id = id;
+        this.typeName = typeName;
+    }
 }
