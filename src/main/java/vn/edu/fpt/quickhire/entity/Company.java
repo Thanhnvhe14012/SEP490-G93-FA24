@@ -26,6 +26,9 @@ public class Company {
     @Column(name = "logo")
     private String logo;
 
+    @Column(name = "status")
+    private int status;
+
     @Column(name="typeId")
     private Long typeId;
 

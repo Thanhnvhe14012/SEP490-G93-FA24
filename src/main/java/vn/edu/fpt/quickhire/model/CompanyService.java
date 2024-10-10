@@ -1,19 +1,16 @@
-package vn.edu.fpt.quickhire.model.repository;
+package vn.edu.fpt.quickhire.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.Company;
+import vn.edu.fpt.quickhire.entity.Recruiter;
 
 import java.util.List;
 
-
-public interface CompanyRepository extends JpaRepository<
-        Company, Long> {
-
+public interface CompanyService {
     Company findById(long id);
     List<Company> ListCompany();
     void deleteById(long id);
     void createCompany(Company company);
     void updateCompany(Company company);
     Company save(Company company);
+
 }
