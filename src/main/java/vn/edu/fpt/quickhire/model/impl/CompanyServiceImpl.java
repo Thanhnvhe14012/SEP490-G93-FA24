@@ -23,13 +23,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findByName(String name) {
-        return companyRepository.findByName(name);
+    public Company findByName(String companyName) {
+        return companyRepository.findByCompanyName(companyName);
     }
 
     @Override
-    public List<Company> ListCompany() {
-        return companyRepository.ListCompany();
+    public List<Company> findAll() {
+        return companyRepository.findAll();
     }
 
     @Override
@@ -37,15 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.deleteById(id);
     }
 
-    @Override
-    public void createCompany(Company company) {
-        companyRepository.createCompany(company);
-    }
 
-    @Override
-    public void updateCompany(Company company) {
-        companyRepository.updateCompany(company);
-    }
 
     @Override
     public Company save(Company company) {

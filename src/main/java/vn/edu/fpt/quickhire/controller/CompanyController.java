@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.quickhire.entity.Company;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.CompanyServiceImpl;
+import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
 
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class CompanyController {
 
     @Autowired
     private CompanyServiceImpl companyService;
+    @Autowired
+    private CompanyRepository companyRepository;
 
 
     @GetMapping("/adminListCompany")
     public String list(Model model) {
-        List<Company> listC = companyService.ListCompany();
+        List<Company> listC = companyService.findAll();
         model.addAttribute("listC", listC);
         return "company/adminListCompany";
     }
@@ -50,20 +53,25 @@ public class CompanyController {
             model.addAttribute("msg", "Company code not unique");
             return "company/adminListCompany";
         }
-        companyService.createCompany(company);
+        companyService.save(company);
         model.addAttribute("msg", "Company created");
         return "company/adminListCompany";
     }
 
-    @PutMapping("/update")
-    public String update(@RequestBody Company company, Model model) {
-        Company c = companyService.findByName(company.getCompanyName());
-        if (c != null) {
-            model.addAttribute("msg", "Company code not unique");
-            return "company/adminListCompany";
-        }
-        companyService.updateCompany(company);
-        model.addAttribute("msg", "Company updated");
+    @PutMapping("/update/{id}")
+    public String update(@RequestBody Company newCompany, @PathVariable Long id) {
+        Company updatedCompany = companyRepository.findById(id).map(oldC -> {
+            oldC.setCompanyName(newCompany.getCompanyName());
+            oldC.setLocation(newCompany.getLocation());
+            oldC.setNumOfEmps(newCompany.getNumOfEmps());
+            oldC.setLogo(newCompany.getLogo());
+            oldC.setStatus(newCompany.getStatus());
+            oldC.setTypeId(newCompany.getTypeId());
+            return companyService.save(oldC);
+        }).orElseGet(() -> {
+            newCompany.setId(id);
+            return companyService.save(newCompany);
+        });
         return "company/adminListCompany";
     }
 

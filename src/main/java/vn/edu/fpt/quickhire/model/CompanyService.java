@@ -7,11 +7,9 @@ import java.util.List;
 
 public interface CompanyService {
     Company findById(long id);
-    Company findByName(String name);
-    List<Company> ListCompany();
+    Company findByName(String companyName);
+    List<Company> findAll();
     void deleteById(long id);
-    void createCompany(Company company);
-    void updateCompany(Company company);
     Company save(Company company);
 
 }
