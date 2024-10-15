@@ -26,6 +26,7 @@ public class CompanyController {
     public String list(Model model) {
         List<Company> listC = companyService.findAll();
         model.addAttribute("listC", listC);
+        model.addAttribute("listNull", "listNullText");
         return "company/adminListCompany";
     }
 
