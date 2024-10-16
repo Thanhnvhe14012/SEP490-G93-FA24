@@ -3,9 +3,10 @@ package vn.edu.fpt.quickhire.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import vn.edu.fpt.quickhire.entity.Handbook;
 import vn.edu.fpt.quickhire.model.impl.HandbookServiceImpl;
 
@@ -17,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/handbook")
 public class HandbookController {
 
@@ -25,10 +26,8 @@ public class HandbookController {
     private HandbookServiceImpl handbookService;
 
     @GetMapping("/add")
-    public ModelAndView showAddHandbookForm() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("handbook/addHandbook");
-        return modelAndView;
+    public String showAddHandbookForm() {
+        return "handbook/addHandbook";
     }
 
     @PostMapping("/add")
@@ -66,22 +65,22 @@ public class HandbookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Handbook> getHandbook(@PathVariable long id) {
+    public String getHandbook(@PathVariable long id, Model model) {
         Handbook handbook = handbookService.findHandbookById(id);
         if (handbook != null) {
-            return new ResponseEntity<>(handbook, HttpStatus.OK);
+            model.addAttribute("handbook", handbook);
+            return "handbook/handbookDetail";
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //Return error
+            return "homepage";
         }
     }
 
     @GetMapping()
-    public ResponseEntity<List<Handbook>> getAllHandbooks() {
+    public String getAllHandbooks(Model model) {
         List<Handbook> handbookList = handbookService.findAllHandbooks();
-        if (handbookList != null) {
-            return new ResponseEntity<>(handbookList, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        System.out.println("Here is handbooklist: " + handbookList);
+        model.addAttribute("handbookList", handbookList); // Add the list to the model
+        return "handbook/handbookPage"; // Ensure this matches your JSP path
     }
 }

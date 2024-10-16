@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="user" value="${sessionScope.user}"/>
@@ -32,9 +32,18 @@
                 </button>
             </form>
         </div>
-
-        <!-- Login/Sign Up -->
+        
         <div>
+            <a href="#" id="cv_create" style="text-decoration: none; color: white; margin-right: 20px;">Hồ sơ & CV</a>
+            <div id="cv_create_dropdow"
+                 style="display: none; position: absolute; right: 85px; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; border-radius: 4px;">
+                <a href="/profile"
+                   style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Tạo CV</a>
+                <a href="/applications"
+                   style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Up CV</a>
+            </div>
+
+
             <c:if test="${empty sessionScope.user}">
                 <a href="/login" style="text-decoration: none; color: white; margin-right: 20px;">Đăng nhập</a>
                 <a href="/register"
@@ -75,6 +84,10 @@
     var dropdown = document.getElementById("userDropdown");
     dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
   }
+  function toggleDropdown_cv() {
+      var dropdown = document.getElementById("cv_create_dropdow");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
 
   // Đóng dropdown nếu click bên ngoài
   window.onclick = function(event) {
@@ -88,4 +101,12 @@
       }
     }
   }
+  const hoverButton = document.getElementById('cv_create');
+  hoverButton.addEventListener('mouseover', () => {
+      toggleDropdown_cv();
+  });
+
+
+
+
 </script>
