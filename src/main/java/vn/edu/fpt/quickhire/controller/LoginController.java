@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
-import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.CandidateServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
@@ -29,12 +28,10 @@ public class LoginController {
 
     @Autowired
     private RoleRepository roleRepository;
-    private RecruiterServiceImpl recruiterService;
 
     @Autowired
     private ProvinceRepository provinceRepository;
 
-    private CandidateServiceImpl candidateService;
 
     // Hiển thị form đăng nhập
     @GetMapping("/login")
@@ -137,7 +134,6 @@ public class LoginController {
 
             Role existingRole = roleRepository.findById(Long.valueOf(3))
                     .orElseThrow(() -> new RuntimeException("Role not found"));
-            Candidate candidateSaved = candidateService.save(candidate);
 
             UserRole userRole = new UserRole();
             userRole.setRole(existingRole);
