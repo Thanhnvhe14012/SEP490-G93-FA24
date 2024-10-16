@@ -29,6 +29,9 @@ public class Company {
     @Column(name = "logo")
     private String logo;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "status")
     private int status;
 

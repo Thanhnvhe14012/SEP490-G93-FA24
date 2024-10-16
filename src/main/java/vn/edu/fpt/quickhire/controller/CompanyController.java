@@ -1,12 +1,10 @@
 package vn.edu.fpt.quickhire.controller;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.quickhire.entity.Company;
-import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.CompanyServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
 
@@ -22,12 +20,12 @@ public class CompanyController {
     private CompanyRepository companyRepository;
 
 
-    @GetMapping("/adminListCompany")
+    @GetMapping("/listCompany")
     public String list(Model model) {
         List<Company> listC = companyService.findAll();
         model.addAttribute("listC", listC);
         model.addAttribute("listNull", "listNullText");
-        return "company/adminListCompany";
+        return "company/listCompany";
     }
 
     @GetMapping("/{id}")
@@ -35,10 +33,10 @@ public class CompanyController {
         Company company = companyService.findById(id);
         if (company == null) {
             model.addAttribute("msg", "Company not found");
-            return "company/adminListCompany";
+            return "company/listCompany";
         }
         model.addAttribute("company", company);
-        return "company/findById";
+        return "company/detailCompany";
     }
 
     @DeleteMapping("/delete/{id}")
@@ -52,11 +50,11 @@ public class CompanyController {
         Company c = companyService.findByName(company.getCompanyName());
         if (c != null) {
             model.addAttribute("msg", "Company code not unique");
-            return "company/adminListCompany";
+            return "company/listCompany";
         }
         companyService.save(company);
         model.addAttribute("msg", "Company created");
-        return "company/adminListCompany";
+        return "company/listCompany";
     }
 
     @PutMapping("/update/{id}")
@@ -73,7 +71,7 @@ public class CompanyController {
             newCompany.setId(id);
             return companyService.save(newCompany);
         });
-        return "company/adminListCompany";
+        return "company/listCompany";
     }
 
 }
