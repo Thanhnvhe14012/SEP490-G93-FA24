@@ -1,9 +1,6 @@
 package vn.edu.fpt.quickhire.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,10 +9,16 @@ import lombok.Data;
 public class Candidate {
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "accountid")
+    private Long accountId;
     // Mapping thông tin biến với tên cột trong Database
     @Column(name = "biography")
     private String biography;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 }
