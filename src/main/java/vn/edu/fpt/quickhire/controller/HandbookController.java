@@ -65,12 +65,14 @@ public class HandbookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Handbook> getHandbook(@PathVariable long id) {
+    public String getHandbook(@PathVariable long id, Model model) {
         Handbook handbook = handbookService.findHandbookById(id);
         if (handbook != null) {
-            return new ResponseEntity<>(handbook, HttpStatus.OK);
+            model.addAttribute("handbook", handbook);
+            return "handbook/handbookDetail";
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //Return error
+            return "homepage";
         }
     }
 
