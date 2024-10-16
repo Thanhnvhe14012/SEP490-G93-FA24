@@ -20,4 +20,11 @@ public class HomeController {
         // Trả về trang home.jsp
         return "homepage";
     }
+
+    @GetMapping("/mau-cv")
+    public String createCV() {
+
+        // Trả về trang home.jsp
+        return "list_cv";
+    }
 }

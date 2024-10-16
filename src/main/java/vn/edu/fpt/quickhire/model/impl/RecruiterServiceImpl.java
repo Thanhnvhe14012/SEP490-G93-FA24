@@ -15,5 +15,5 @@ public class RecruiterServiceImpl implements RecruiterService {
     @Override
     public Recruiter saveRecruiter(Recruiter recruiter) {
         return recruiterRepository.save(recruiter);
-    }
+     }
 }
