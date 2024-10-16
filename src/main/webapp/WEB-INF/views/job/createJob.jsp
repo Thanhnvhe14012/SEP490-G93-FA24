@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -63,12 +63,12 @@
         }
     </style>
 </head>
-<%@ include file="/WEB-INF/views/header.jspf" %>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 
 <body class="main">
-
+<body>
 <div class="container">
-    <h1 class="jtitle">Create Job</h1>
+    <h1 class="title">Create Job</h1>
     <form class="form-main" action="submitJob.jsp" method="post">
         <label for="name">Job Name</label>
         <input type="text" id="name" name="name" required>
