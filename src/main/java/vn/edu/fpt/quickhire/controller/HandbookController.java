@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import vn.edu.fpt.quickhire.entity.Handbook;
 import vn.edu.fpt.quickhire.model.impl.HandbookServiceImpl;
 
@@ -74,14 +74,11 @@ public class HandbookController {
         }
     }
 
-//    @GetMapping()
-//    public String getAllHandbooks() {
-//        List<Handbook> handbookList = handbookService.findAllHandbooks();
-//        if (handbookList != null) {
-//            model.addAttribute("handbookList", handbookList);
-//            return "handbookPage";
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @GetMapping()
+    public String getAllHandbooks(Model model) {
+        List<Handbook> handbookList = handbookService.findAllHandbooks();
+        System.out.println("Here is handbooklist: " + handbookList);
+        model.addAttribute("handbookList", handbookList); // Add the list to the model
+        return "handbook/handbookPage"; // Ensure this matches your JSP path
+    }
 }
