@@ -24,6 +24,10 @@ public class Recruiter {
     @Column(name = "manager_id")
     private Integer managerId;
 
+    @Column(name = "industry_id")
+    private Integer industryId;
+
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
