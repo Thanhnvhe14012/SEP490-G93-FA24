@@ -39,6 +39,7 @@ public class AccountServiceImpl implements AccountService {
                 userDTO.setBiography(account.getCandidate().getBiography());
                 userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
             }
+            userDTO.setRole(Math.toIntExact(account.getUserRole().getRole().getId()));
 
             return userDTO;
         } else return null;
