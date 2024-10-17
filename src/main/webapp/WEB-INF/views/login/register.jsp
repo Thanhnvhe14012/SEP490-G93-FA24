@@ -144,8 +144,18 @@
     </select>
 
     <br>
-
-
+    <div class="form-group">
+      <label for="address">Địa chỉ chi tiết:</label>
+      <form:input path="address" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="accountType">Loại tài khoản:</label>
+      <form:select path="role" id="accountType" class="form-control" onchange="toggleAccountTypeFields()">
+        <form:option value="" label="-- Chọn loại tài khoản --" />
+        <form:option value="2" label="Người tuyển dụng" />
+        <form:option value="3" label="Người tìm việc" />
+      </form:select>
+    </div>
     <div class="form-group" id="nameFields" style="display:none;">
       <div class="form-group">
         <label for="firstName">Họ:</label>
@@ -154,6 +164,10 @@
       <div class="form-group">
         <label for="middleName">Tên đệm:</label>
         <form:input path="middleName" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Tên:</label>
+        <form:input path="lastName" class="form-control" />
       </div>
       <div class="form-group">
         <label for="dateOfBirth">Date of Birth:</label>

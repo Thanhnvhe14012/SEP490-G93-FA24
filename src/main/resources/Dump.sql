@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: quickhire
+-- Host: 127.0.0.1    Database: quick_hire
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.0.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,7 +18,6 @@
 --
 -- Table structure for table `account`
 --
-
 
 DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -37,7 +36,7 @@ CREATE TABLE `account` (
   `address_id_3` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(2,'thanhnv','admin','thanhnv@gmail.com',NULL,NULL,NULL,NULL,'01','002','00043',NULL),(3,'thanhnv133','admin','thanhkkhongcodon@gmail.com','2024-10-17 00:00:00.000000','Nguyen','Van','Thanh','01','002','00046',NULL),(4,'usernametest1','password1','testemail@gmail.com',NULL,NULL,NULL,NULL,'01','001','00001',NULL),(5,'usernametest2','password1','testemail@gmail.com',NULL,NULL,NULL,NULL,'02','027','00778','Hoang Mai HN'),(7,'teststaff','admin','askhbfk@gmail.com','2024-10-26 00:00:00.000000','Ngyteen','Van','Thanh','08','073','02320','SA5 smart city');
+INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,'Hanoi'),(4,'thanhrecruiter','thanh','thanhnv@gmail.com','2024-10-11 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(8,'thanhcandidate','thanh','thanhnv111@gmail.com','2024-10-03 00:00:00.000000','Nguyen Van Thanh 2',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,14 +57,13 @@ DROP TABLE IF EXISTS `candidate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `candidate` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `account_id` bigint DEFAULT NULL,
+  `id` bigint NOT NULL,
   `biography` varchar(255) DEFAULT NULL,
   `accountid` bigint DEFAULT NULL,
+  `account_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `account_fk_idx` (`account_id`),
-  CONSTRAINT `FKj4889h0mbv3h6rbbxuuyoyame` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `UKr09ojuqppptb5tf8f640kim17` (`account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,61 +72,44 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-INSERT INTO `candidate` VALUES (1,3,'Anh J97 không bỏ con',NULL);
+INSERT INTO `candidate` VALUES (1,'jkhkhj34243xcvx',1,1),(8,'Là nv số 2 VN',NULL,0);
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `company`
+-- Table structure for table `cv_section`
 --
 
-DROP TABLE IF EXISTS `company`;
+DROP TABLE IF EXISTS `cv_section`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `company` (
-  `id` bigint NOT NULL,
-  `company_code` varchar(255) DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
+CREATE TABLE `cv_section` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `candidate_cv_no` int DEFAULT NULL,
+  `client` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `logo` varchar(255) DEFAULT NULL,
-  `num_of_emps` int DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `type_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `organization` varchar(255) DEFAULT NULL,
+  `percentage` int DEFAULT NULL,
+  `section` varchar(255) DEFAULT NULL,
+  `team` int DEFAULT NULL,
+  `techstack` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `candidate_id` bigint NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKsi1odk6u32p0w8dv9543h6s40` (`candidate_id`),
+  CONSTRAINT `FKsi1odk6u32p0w8dv9543h6s40` FOREIGN KEY (`candidate_id`) REFERENCES `candidate` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `company`
+-- Dumping data for table `cv_section`
 --
 
-LOCK TABLES `company` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `company_type`
---
-
-DROP TABLE IF EXISTS `company_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `company_type` (
-  `id` bigint NOT NULL,
-  `type_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `company_type`
---
-
-LOCK TABLES `company_type` WRITE;
-/*!40000 ALTER TABLE `company_type` DISABLE KEYS */;
-/*!40000 ALTER TABLE `company_type` ENABLE KEYS */;
+LOCK TABLES `cv_section` WRITE;
+/*!40000 ALTER TABLE `cv_section` DISABLE KEYS */;
+INSERT INTO `cv_section` VALUES (1,1,'https://fb.com/asda','JSP SPRING BOOT asdsad','031674845',0,'introduction',NULL,NULL,'Backend Developer 132',1,'/upload/284d6758-895d-4ac9-8e79-369a430376e7_l-intro-1664286477-11342449.jpg'),(2,1,NULL,'Chuoi xanh','231231qweqwf',0,'experience',NULL,NULL,'asdasdas',1,NULL),(3,1,NULL,'asdasdasdasda123cxvx','asddasdad35235546',0,'education',NULL,NULL,'qwewq/wqeq 2130-1231456456',1,NULL),(4,1,'asdasda456456','asdasdasd78687','asd45646',0,'project',123,'asdad456465','dasd45646',1,NULL),(5,1,NULL,'xcvxvxvcx -2000',NULL,0,'cert',NULL,NULL,NULL,1,NULL),(6,1,NULL,'asdasdasd',NULL,0,'hobby',NULL,NULL,NULL,1,NULL),(7,1,NULL,'asdasdasdas',NULL,0,'introducer',NULL,NULL,NULL,1,NULL),(8,1,NULL,'asdasda 213123123',NULL,0,'trophy',NULL,NULL,NULL,1,NULL),(9,2,'https://fb.com/asda','wqeqeqeqweqe','0316748678',NULL,'',NULL,NULL,'wqeqwe',1,NULL),(10,2,NULL,'czxczxczczcz','zxczxczx',NULL,'',NULL,NULL,'adadasda',1,NULL),(11,2,NULL,'asdasdasd','asdasdsda',NULL,'',NULL,NULL,'asdad',1,NULL),(12,2,'sdadasdas','xzcxzzxxcz','zxcz',NULL,'',123,'czxcxzc','xzczxczx',1,NULL),(13,2,NULL,'xcvxvcxcv',NULL,NULL,'',NULL,NULL,NULL,1,NULL),(14,2,NULL,'xcvxcvxcv',NULL,NULL,'',NULL,NULL,NULL,1,NULL),(15,2,NULL,'xcvxcvxcv',NULL,NULL,'',NULL,NULL,NULL,1,NULL),(16,2,NULL,'xcvxcvxxcvc',NULL,NULL,'',NULL,NULL,NULL,1,NULL);
+/*!40000 ALTER TABLE `cv_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -139,16 +120,16 @@ DROP TABLE IF EXISTS `districts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `districts` (
-  `code` varchar(255) NOT NULL,
+  `code` varchar(20) NOT NULL,
   `name` varchar(255) NOT NULL,
   `name_en` varchar(255) DEFAULT NULL,
   `full_name` varchar(255) DEFAULT NULL,
   `full_name_en` varchar(255) DEFAULT NULL,
   `code_name` varchar(255) DEFAULT NULL,
-  `province_code` varchar(255) DEFAULT NULL,
+  `province_code` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`code`),
   KEY `idx_districts_province` (`province_code`),
-  CONSTRAINT `prv_fk` FOREIGN KEY (`province_code`) REFERENCES `provinces` (`code`)
+  CONSTRAINT `districts_province_code_fkey` FOREIGN KEY (`province_code`) REFERENCES `provinces` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -229,7 +210,7 @@ CREATE TABLE `industry` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +219,6 @@ CREATE TABLE `industry` (
 
 LOCK TABLES `industry` WRITE;
 /*!40000 ALTER TABLE `industry` DISABLE KEYS */;
-INSERT INTO `industry` VALUES (1,'Kế toán'),(2,'IT'),(3,'Công nhân'),(4,'Giáo viên'),(5,'Thợ');
 /*!40000 ALTER TABLE `industry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,19 +230,18 @@ DROP TABLE IF EXISTS `job`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `benefits` varchar(255) DEFAULT NULL,
-  `start` datetime(6) DEFAULT NULL,
-  `end` datetime(6) DEFAULT NULL,
+  `id` int NOT NULL,
+  `name` varchar(2000) DEFAULT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  `benefits` varchar(2000) DEFAULT NULL,
+  `start` date DEFAULT NULL,
+  `end` date DEFAULT NULL,
   `status` int DEFAULT NULL,
-  `company_id` bigint DEFAULT NULL,
+  `company_id` int DEFAULT NULL,
   `recruiter_id` int DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   `salary_min` int DEFAULT NULL,
   `salary_max` int DEFAULT NULL,
-  `company_description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -277,6 +256,42 @@ LOCK TABLES `job` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `profile_section`
+--
+
+DROP TABLE IF EXISTS `profile_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profile_section` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `from_month` int DEFAULT NULL,
+  `from_year` int DEFAULT NULL,
+  `organization` varchar(255) DEFAULT NULL,
+  `section` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `to_month` int DEFAULT NULL,
+  `to_year` int DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `candidate_id` bigint NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKijot6lknqjuka8v860jq606vx` (`candidate_id`),
+  CONSTRAINT `FKijot6lknqjuka8v860jq606vx` FOREIGN KEY (`candidate_id`) REFERENCES `candidate` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profile_section`
+--
+
+LOCK TABLES `profile_section` WRITE;
+/*!40000 ALTER TABLE `profile_section` DISABLE KEYS */;
+INSERT INTO `profile_section` VALUES (1,'GOOD',4,2018,'Chuoi','education','MThjkhk',5,2000,NULL,1,'/upload/7fc79f8d-62ea-441f-b513-a23a57d15f9d_l-intro-1664286477-11342449.jpg'),(2,'sdfs',7,2013,'qwjhgjgjh','experience','qeyuiyi',5,2016,NULL,1,NULL),(3,'asdad',0,0,NULL,'skill','asd',0,0,NULL,1,NULL),(4,'Chuoi xanh',3,2022,NULL,'project','qweqw',2,2015,'http://dasdq.com',1,NULL),(5,'wqeqw',6,2020,'adad','cert','asdasd',0,0,'http://dasdq.com',1,NULL),(6,'qweqweq',10,2015,'asdasdfsdfsdfs','trophy','asdad',0,0,NULL,1,NULL);
+/*!40000 ALTER TABLE `profile_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `provinces`
 --
 
@@ -284,7 +299,7 @@ DROP TABLE IF EXISTS `provinces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `provinces` (
-  `code` varchar(255) NOT NULL,
+  `code` varchar(20) NOT NULL,
   `name` varchar(255) NOT NULL,
   `name_en` varchar(255) DEFAULT NULL,
   `full_name` varchar(255) NOT NULL,
@@ -312,17 +327,16 @@ DROP TABLE IF EXISTS `recruiter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recruiter` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `account_id` bigint DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
+  `id` bigint NOT NULL,
   `company_description` varchar(255) DEFAULT NULL,
   `company_scale` int DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
-  `industry_id` int DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `account_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `account_fk_idx` (`account_id`),
+  UNIQUE KEY `UKhekwvdsbctq9xp975oupoy8h5` (`account_id`),
   CONSTRAINT `FKe0mecocgy2k9cewub2mo5xcf0` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +345,7 @@ CREATE TABLE `recruiter` (
 
 LOCK TABLES `recruiter` WRITE;
 /*!40000 ALTER TABLE `recruiter` DISABLE KEYS */;
-INSERT INTO `recruiter` VALUES (1,2,'Viettel','VDS',2,NULL,NULL),(2,4,'Samsung','Samsung VN',3,NULL,NULL),(3,5,'LG','LG Viet Nam',6,NULL,NULL),(5,7,'Viettel','VDS',2,2,0);
+INSERT INTO `recruiter` VALUES (4,'Là công ty số 1 VN',200,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `recruiter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,10 +357,10 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,7 +369,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'admin'),(2,'Công ty'),(3,'Người ứng tuyển'),(4,'Nhân viên công ty');
+INSERT INTO `role` VALUES (1,'admin'),(2,'Công ty'),(3,'Nhân Viên'),(4,'Người Ứng Tuyển');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,7 +389,7 @@ CREATE TABLE `userrole` (
   KEY `FKp9uqhbg64l2v6p5i1ixunb645` (`roleid`),
   CONSTRAINT `FK2gm26sco7hby4inni3ohxvf6k` FOREIGN KEY (`userid`) REFERENCES `account` (`id`),
   CONSTRAINT `FKp9uqhbg64l2v6p5i1ixunb645` FOREIGN KEY (`roleid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +398,7 @@ CREATE TABLE `userrole` (
 
 LOCK TABLES `userrole` WRITE;
 /*!40000 ALTER TABLE `userrole` DISABLE KEYS */;
-INSERT INTO `userrole` VALUES (2,2,2),(3,3,3),(4,1,1),(5,4,2),(6,5,2),(8,7,4);
+INSERT INTO `userrole` VALUES (1,1,1);
 /*!40000 ALTER TABLE `userrole` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,10 +416,10 @@ CREATE TABLE `wards` (
   `full_name` varchar(255) DEFAULT NULL,
   `full_name_en` varchar(255) DEFAULT NULL,
   `code_name` varchar(255) DEFAULT NULL,
-  `district_code` varchar(255) DEFAULT NULL,
+  `district_code` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`code`),
-  KEY `dt_fk_idx` (`district_code`),
-  CONSTRAINT `dt_fk` FOREIGN KEY (`district_code`) REFERENCES `districts` (`code`)
+  KEY `idx_wards_district` (`district_code`),
+  CONSTRAINT `wards_district_code_fkey` FOREIGN KEY (`district_code`) REFERENCES `districts` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -428,4 +442,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-16 21:56:08
+-- Dump completed on 2024-10-15 17:00:08
