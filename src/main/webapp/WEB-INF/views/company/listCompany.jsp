@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="user" value="${sessionScope.user}"/>
+<c:set var="isGuest" value="${empty user}"/>
 <html lang="en">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -19,7 +21,7 @@
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
-            google: { families: ["Public Sans:300,400,500,600,700"] },
+            google: {families: ["Public Sans:300,400,500,600,700"]},
             custom: {
                 families: [
                     "Font Awesome 5 Solid",
@@ -36,12 +38,12 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/css/plugins.min.css"/>
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css"/>
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css"/>
 </head>
 <body>
 <div class="wrapper">
@@ -195,12 +197,12 @@
                                 <i class="icon-home"></i>
                             </a>
                         </li>
-<%--                        <li class="separator">--%>
-<%--                            <i class="icon-arrow-right"></i>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a href="#">Tables</a>--%>
-<%--                        </li>--%>
+                        <%--                        <li class="separator">--%>
+                        <%--                            <i class="icon-arrow-right"></i>--%>
+                        <%--                        </li>--%>
+                        <%--                        <li class="nav-item">--%>
+                        <%--                            <a href="#">Tables</a>--%>
+                        <%--                        </li>--%>
                         <li class="separator">
                             <i class="icon-arrow-right"></i>
                         </li>
@@ -214,17 +216,17 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                     <button
+                                    <button
                                             class="btn btn-primary btn-round ms-auto"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#addRowModal"
+                                            onclick="window.location.href='${pageContext.request.contextPath}/Company/createCompany'"
                                     >
                                         <i class="fa fa-plus"></i>
-                                        Add Row
+                                        Add Company
                                     </button>
+
                                 </div>
                             </div>
-                             <div class="card-body">
+                            <div class="card-body">
                                 <div class="table-responsive">
                                     <table
                                             id="basic-datatables"
@@ -250,29 +252,47 @@
                                                 <td>${company.id}</td>
                                                 <td><img src="${company.logo}" alt="Logo" width="50"/></td>
                                                 <td>${company.companyName}</td>
-                                                <td>${company.status}</td>
+                                                <c:if test="${company.status==0}">
+                                                    <td>De-active</td>
+                                                </c:if>
+                                                <c:if test="${company.status==1}">
+                                                    <td>Active</td>
+                                                </c:if>
                                                 <td>
-                                                <div class="form-button-action">
-                                                    <button
-                                                            type="button"
-                                                            data-bs-toggle="tooltip"
-                                                            title=""
-                                                            class="btn btn-link btn-primary btn-lg"
-                                                            data-original-title="Edit Task"
-                                                    >
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button
-                                                            type="button"
-                                                            data-bs-toggle="tooltip"
-                                                            title=""
-                                                            class="btn btn-link btn-danger"
-                                                            data-original-title="Remove"
-                                                    >
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
+                                                    <c:if test="${!isGuest}">
+                                                        <div class="form-button-action">
+                                                            <button
+                                                                    type="button"
+                                                                    class="btn btn-link btn-primary btn-lg"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-original-title="View Company"
+                                                                    onclick="window.location.href='${pageContext.request.contextPath}/Company/${company.id}'">
+                                                                <i class="fa fa-edit"></i>
+                                                            </button>
+
+                                                            <button
+                                                                    type="button"
+                                                                    data-bs-toggle="tooltip"
+                                                                    class="btn btn-link btn-danger"
+                                                                    data-original-title="Remove"
+                                                                    onclick="deleteCompany(${company.id})">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${isGuest}">
+                                                        <div class="form-button-action">
+                                                            <button
+                                                                    type="button"
+                                                                    class="btn btn-link btn-primary btn-lg"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-original-title="View Company"
+                                                                    onclick="window.location.href='${pageContext.request.contextPath}/Company/${company.id}'">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </div>
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -362,6 +382,27 @@
             $("#addRowModal").modal("hide");
         });
     });
+</script>
+<script>
+    function deleteCompany(companyId) {
+        if (confirm('Are you sure you want to delete this company?')) {
+            fetch('${pageContext.request.contextPath}/Company/delete/' + companyId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Company deleted successfully!');
+                        window.location.href = '${pageContext.request.contextPath}/Company/listCompany';
+                    } else {
+                        alert('Failed to delete the company.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
 </script>
 </body>
 </html>

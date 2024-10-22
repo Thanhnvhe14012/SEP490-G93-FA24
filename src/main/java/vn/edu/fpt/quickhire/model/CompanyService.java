@@ -4,9 +4,11 @@ import vn.edu.fpt.quickhire.entity.Company;
 import vn.edu.fpt.quickhire.entity.Recruiter;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CompanyService {
-    Company findById(long id);
+    Optional<Company> findById(long id);
+    Company findByCompanyCode(String code);
     Company findByName(String companyName);
     List<Company> findAll();
     void deleteById(long id);

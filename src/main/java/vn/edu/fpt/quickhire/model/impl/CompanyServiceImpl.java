@@ -10,6 +10,7 @@ import vn.edu.fpt.quickhire.model.repository.CandidateRepository;
 import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -18,8 +19,13 @@ public class CompanyServiceImpl implements CompanyService {
     CompanyRepository companyRepository;
 
     @Override
-    public Company findById(long id) {
+    public Optional<Company> findById(long id) {
         return companyRepository.findById(id);
+    }
+
+    @Override
+    public Company findByCompanyCode(String code) {
+        return companyRepository.findByCompanyCode(code);
     }
 
     @Override
