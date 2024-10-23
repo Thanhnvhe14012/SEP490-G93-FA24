@@ -14,4 +14,6 @@ public interface CandidateService {
     Candidate findByID(Long id);
 
     List<ProfileSection> getAllProfileSectionOfCandidate (Long id);
+
+    void deleteProfileSection(Long id);
 }

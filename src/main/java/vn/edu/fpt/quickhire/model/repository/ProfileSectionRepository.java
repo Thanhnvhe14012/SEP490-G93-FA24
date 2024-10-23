@@ -7,7 +7,7 @@ import vn.edu.fpt.quickhire.entity.ProfileSection;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProfileRepository extends JpaRepository<ProfileSection, Long> {
+public interface ProfileSectionRepository extends JpaRepository<ProfileSection, Long> {
     Optional<ProfileSection> findBySectionAndCandidate(String section, Candidate candidate);
     Optional<List<ProfileSection>> findAllByCandidate(Candidate candidate);
 }
