@@ -40,4 +40,13 @@ public class ProfileController {
         return "profile";
     }
 
+    @GetMapping("/candidate-profile/{id}")
+    public String candidateProfile(@PathVariable("id") Long id, Model model) {
+        Candidate c = candidateService.findByID(id);
+        model.addAttribute("candidate", c);
+        this.profileService.getAllProfileSection();
+        return "candidate/profile";
+    }
+
+
 }
