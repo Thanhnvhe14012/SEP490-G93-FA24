@@ -33,4 +33,20 @@ public class ProfileController {
         candidateService.save(candidate, true,false, image);
         return "redirect:/profile/"+id;
     }
+
+    @GetMapping("/delete-ex")
+    public String deleteEx(@PathVariable("id") Long id, Model model) {
+        candidateService.deleteProfileSection(id);
+        return "profile";
+    }
+
+    @GetMapping("/candidate-profile/{id}")
+    public String candidateProfile(@PathVariable("id") Long id, Model model) {
+        Candidate c = candidateService.findByID(id);
+        model.addAttribute("candidate", c);
+        this.profileService.getAllProfileSection();
+        return "candidate/profile";
+    }
+
+
 }
