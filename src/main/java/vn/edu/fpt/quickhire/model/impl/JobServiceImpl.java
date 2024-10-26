@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
 import vn.edu.fpt.quickhire.model.JobService;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
-
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
 @Service
 
 public class JobServiceImpl implements JobService {
