@@ -105,37 +105,37 @@
 <body class="main">
 <body>
   <div class="container">
+    <a href="${pageContext.request.contextPath}/job/list">< Back to list job</a>
     <h2>Edit Job</h2>
-    <form action="/edit-job" method="POST">
-      <label for="job-name">Job Name</label>
-      <input type="text" id="job-name" name="job_name" value="Current Job Name" required>
+    <h4 style="color:yellowgreen">${messsage} </h4>
+
+    <form:form modelAttribute="job" class="form-main"  method="post">
+    <label for="name">Job Name</label>
+      <form:input path="name" type="text" id="name" name="name" required="true"/>
 
       <label for="description">Description</label>
-      <textarea id="description" name="description" rows="4">Current job description</textarea>
+      <form:textarea path="description" id="description" rows="4" required="true" />
 
       <label for="benefits">Benefits</label>
-      <textarea id="benefits" name="benefits" rows="3">Current job benefits</textarea>
+      <form:textarea path="benefits" id="benefits" rows="4" required="true" />
 
-      <label for="start-date">Start Date</label>
-      <input type="date" id="start-date" name="start_date" value="2024-01-01">
+      <label for="start">Start Date</label>
+      <form:input path="start" id="start" type="date" required="true" />
 
-      <label for="end-date">End Date</label>
-      <input type="date" id="end-date" name="end_date" value="2024-12-31">
+      <label for="end">End Date</label>
+      <form:input path="end" id="end" type="date" required="true" />
 
       <label for="status">Status</label>
-      <select id="status" name="status">
-        <option value="open" selected>Open</option>
-        <option value="closed">Closed</option>
-      </select>
+      <form:select path="status" id="status" required="true">
+        <form:option value="1">Open</form:option>
+        <form:option value="2">Closed</form:option>
+      </form:select>
 
-      <label for="company-id">Company ID</label>
-      <input type="text" id="company-id" name="company_id" value="12345" readonly>
+      <label for="company_id">Company ID</label>
+      <form:input path="company_id" id="company_id" required="true" />
 
-      <div class="button-group">
-        <button type="submit" class="update-btn">Update Job</button>
-        <button type="button" class="cancel-btn" onclick="window.location.href='/jobs'">Cancel</button>
-      </div>
-    </form>
+      <input type="submit" value="Update job" />
+    </form:form>
   </div>
 </body>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
