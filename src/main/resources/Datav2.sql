@@ -207,6 +207,7 @@ CREATE TABLE `education` (
   `id` int NOT NULL AUTO_INCREMENT,
   `account_id` int DEFAULT NULL,
   `school_name` varchar(255) DEFAULT NULL,
+  `major` varchar(255) DEFAULT NULL,
   `start` datetime(6) DEFAULT NULL,
   `end` datetime(6) DEFAULT NULL,
   `gpa` float DEFAULT NULL,
@@ -220,7 +221,7 @@ CREATE TABLE `education` (
 
 LOCK TABLES `education` WRITE;
 /*!40000 ALTER TABLE `education` DISABLE KEYS */;
-INSERT INTO `education` VALUES (1,1,'FPT','2024-10-01 00:00:00.000000','2024-10-09 00:00:00.000000',0.07);
+INSERT INTO `education` VALUES (1,1,'FPT',NULL,'2024-10-01 00:00:00.000000','2024-10-09 00:00:00.000000',0.07);
 /*!40000 ALTER TABLE `education` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,4 +529,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-30 13:02:36
+-- Dump completed on 2024-10-30 17:01:24

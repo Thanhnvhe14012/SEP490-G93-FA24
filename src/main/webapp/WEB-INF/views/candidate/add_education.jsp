@@ -41,6 +41,10 @@
       </div>
 
       <div class="form-group">
+        <label for="major">Chuyên ngành:</label>
+        <form:input path="major" class="form-control" placeholder="Enter your major" id="major"/>
+      </div>
+      <div class="form-group">
         <label for="start">Start Date:</label>
         <form:input path="start" type="date" class="form-control" id="start"/>
       </div>

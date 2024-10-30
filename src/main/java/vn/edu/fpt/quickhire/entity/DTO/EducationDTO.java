@@ -6,6 +6,7 @@ import lombok.Data;
 public class EducationDTO {
     private Integer accountId;
     private String schoolName;
+    private String major;
     private String start;
     private String end;
     private String gpa;

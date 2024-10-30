@@ -19,6 +19,9 @@ public class Education {
     @Column(name = "school_name")
     private String schoolName;
 
+    @Column(name = "major")
+    private String major;
+
     @Column(name = "start")
     private Date start;
 
