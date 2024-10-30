@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import vn.edu.fpt.quickhire.entity.DTO.EducationDTO;
 import vn.edu.fpt.quickhire.entity.DTO.ExperienceDTO;
+import vn.edu.fpt.quickhire.entity.Education;
 import vn.edu.fpt.quickhire.entity.Experience;
+import vn.edu.fpt.quickhire.model.repository.EducationRepository;
 import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
 import java.text.ParseException;
@@ -18,6 +21,9 @@ import java.util.Date;
 public class CandidateController {
     @Autowired
     private ExperienceRepository experienceRepository;
+
+    @Autowired
+    private EducationRepository educationRepository;
 
     @GetMapping("/experience/new")
     public String showForm(Model model) {
@@ -39,5 +45,26 @@ public class CandidateController {
         ex.setEnd(end);
         experienceRepository.save(ex);
         return "redirect:/experience/new?success";
+    }
+
+    @GetMapping("/education/new")
+    public String showFormEducation(Model model) {
+        model.addAttribute("education", new EducationDTO());
+        return "candidate/add_education";
+    }
+
+    @PostMapping("/education/save")
+    public String saveEducation(@ModelAttribute EducationDTO education) throws ParseException {
+        System.out.println(education.toString());
+        Education ex = new Education();
+        ex.setAccountId(education.getAccountId());
+        Date start=new SimpleDateFormat("yyyy-MM-dd").parse(education.getStart());
+        Date end=new SimpleDateFormat("yyyy-MM-dd").parse(education.getEnd());
+        ex.setStart(start);
+        ex.setEnd(end);
+        ex.setGpa(Double.parseDouble(education.getGpa()));
+        ex.setSchoolName(education.getSchoolName());
+        educationRepository.save(ex);
+        return "redirect:/education/new?success";
     }
 }
