@@ -210,16 +210,17 @@
                                 <div class="card-title">Form Elements</div>
                             </div>
                             <div class="card-body">
-                                <form action="/Company/update/${company.id}" method="POST"
+                                <c:if test="${not empty message}">
+                                    <div class="alert ${messageType eq 'success' ? 'alert-success' : 'alert-danger'}"
+                                         role="alert">
+                                            ${message}
+                                    </div>
+                                </c:if>
+                                <form action="${pageContext.request.contextPath}/Company/create" method="POST"
                                       enctype="multipart/form-data">
                                     <div class="row">
                                         <!-- Left (col-md-6) -->
                                         <div class="col-md-6">
-                                            <div class="form-group form-group-default">
-                                                <label>ID</label>
-                                                <input id="id" type="text" class="form-control" value="${company.id}"
-                                                       disabled/>
-                                            </div>
                                             <div class="form-group form-group-default">
                                                 <label>Code</label>
                                                 <input id="code" type="text" class="form-control" name="companyCode"
@@ -237,7 +238,7 @@
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Number of Employees</label>
-                                                <input id="numOfEmps" type="text" class="form-control" name="numOfEmps"
+                                                <input id="numOfEmps" type="number" class="form-control" name="numOfEmps"
                                                        value="${company.numOfEmps}"/>
                                             </div>
                                         </div>
@@ -246,9 +247,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group form-group-default">
                                                 <label>Description</label>
-                                                <input id="description" type="text"
-                                                       class="form-control form-control-lg h-1000" name="description"
-                                                       value="${company.description}"/>
+                                                <input id="description" type="text" class="form-control"
+                                                       name="description" value="${company.description}"/>
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Logo</label>
@@ -261,31 +261,23 @@
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Status</label>
-                                                <c:if test="${company.status == 0}">
-                                                    <input id="status-display" type="text" class="form-control"
-                                                           value="De-active" readonly/>
-                                                    <input id="status" type="hidden" name="status" value="0"/>
-                                                </c:if>
-                                                <c:if test="${company.status == 1}">
-                                                    <input id="status-display" type="text" class="form-control"
-                                                           value="Active" readonly/>
-                                                    <input id="status" type="hidden" name="status" value="1"/>
-                                                </c:if>
+                                                <select class="form-select form-control" id="status" name="status">
+                                                    <option value="1">Active</option>
+                                                    <option value="0">De-Active</option>
+                                                </select>
                                             </div>
                                         </div>
 
                                         <!-- Buttons for Submit and Cancel -->
-                                        <c:if test="${!isGuest}">
-                                            <div class="card-action">
-                                                <button type="submit" class="btn btn-success">Submit</button>
-                                                <button type="button" class="btn btn-danger"
-                                                        onclick="window.location.href='/Company/listCompany'">Cancel
-                                                </button>
-                                            </div>
-                                        </c:if>
+                                        <div class="card-action">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="window.location.href='${pageContext.request.contextPath}/Company/listCompany'">
+                                                Cancel
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
-
                             </div>
 
                         </div>
@@ -338,10 +330,11 @@
 
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
+<!-- JavaScript to Preview Image -->
 <script>
     function previewImage(event) {
         var reader = new FileReader();
-        reader.onload = function(){
+        reader.onload = function () {
             var output = document.getElementById('logo-preview');
             output.src = reader.result;
         };
