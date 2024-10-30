@@ -211,11 +211,11 @@ public class LoginController {
             Account user = userOpt.get();
             user.setPassword(newPassword); // Cập nhật mật khẩu mới
             userService.save(user);
-
+            model.addAttribute("error", "Thay đổi mật khẩu thành công");
             return "login/login";
         } else {
             model.addAttribute("error", "Không tìm thấy tài khoản để đặt lại mật khẩu.");
-            return "login/reset-password";
+            return "login/login";
         }
     }
 
