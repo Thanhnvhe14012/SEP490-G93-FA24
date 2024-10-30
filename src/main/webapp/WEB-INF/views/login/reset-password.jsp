@@ -54,15 +54,39 @@
     button:hover {
       background-color: #45a049;
     }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
   </style>
+  <script>
+    function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirm_password").value;
+      var errorElement = document.getElementById("error_message");
+
+      if (password !== confirmPassword) {
+        errorElement.textContent = "Mật khẩu không khớp. Vui lòng thử lại.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
+    }
+  </script>
 </head>
 <body>
 <div class="container">
   <h1>Đặt lại mật khẩu</h1>
-  <form action="/reset-password" method="post">
+  <form action="/reset-password" method="post" onsubmit="return validateForm();">
     <label for="password">Mật khẩu mới:</label>
     <input type="password" id="password" name="password" placeholder="Nhập mật khẩu mới" required>
+
+    <label for="confirm_password">Nhập lại mật khẩu:</label>
+    <input type="password" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
+
     <input type="hidden" value="${email}" name="email">
+    <div id="error_message" class="error"></div>
     <button type="submit">Đặt lại mật khẩu</button>
   </form>
 </div>
