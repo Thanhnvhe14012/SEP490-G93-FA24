@@ -1,4 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,27 +9,32 @@
 </head>
 <body>
 <h2>Insert Experience</h2>
-<form action="/experience/save" method="post" >
+
+<form:form modelAttribute="experience" method="POST" action="/experience/save">
   <input type="hidden" name="accountId" value="${sessionScope.user.id}">
+
   <label>Company:</label>
-  <input type="text" name="company" /><br/>
+  <form:input path="company" class="form-control" />
 
   <label>Start Date:</label>
-  <input type="date" name="start" /><br/>
+  <form:input path="start" type="date" class="form-control"/>
 
   <label>End Date:</label>
-  <input type="date" name="end" /><br/>
+  <form:input path="end" type="date" class="form-control"/>
 
   <label>Job Title:</label>
-  <input type="text" name="jobTitle" /><br/>
+  <form:input path="jobTitle" class="form-control" />
 
   <label>Description:</label>
-  <textarea name="description"></textarea><br/>
+  <form:input path="description" type="textarea" class="form-control" />
 
   <label>Project:</label>
-  <input type="text" name="project" /><br/>
+  <form:input path="project" type="textarea" class="form-control" />
 
-  <button type="submit">Save Experience</button>
-</form>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+
+</form:form>
 </body>
 </html>

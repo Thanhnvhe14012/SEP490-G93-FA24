@@ -1,11 +1,13 @@
 package vn.edu.fpt.quickhire.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "experience")
+@Data
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +33,19 @@ public class Experience {
 
     @Column(name = "project")
     private String project;
+
+
+    @Override
+    public String toString() {
+        return "Experience{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", company='" + company + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", project='" + project + '\'' +
+                '}';
+    }
 }
