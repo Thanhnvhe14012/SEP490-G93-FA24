@@ -72,7 +72,7 @@
     <br>
     <button type="submit">Login</button>
   </form>
-  <a href="forgot-password" class="forgot-password">Quên mật khẩu?</a>
+  <a href="/forgot-password" class="forgot-password">Quên mật khẩu?</a>
 
   <!-- Hiển thị thông báo lỗi (nếu có) -->
   <c:if test="${not empty error}">

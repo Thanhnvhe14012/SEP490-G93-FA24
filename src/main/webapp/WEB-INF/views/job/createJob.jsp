@@ -63,39 +63,44 @@
         }
     </style>
 </head>
-<%@ include file="/WEB-INF/views/header.jsp" %>
 
+<%@ include file="/WEB-INF/views/header.jsp" %>
+<h4 style="color:yellowgreen">${messsage} </h4>
 <body class="main">
 <body>
 <div class="container">
+    <a href="${pageContext.request.contextPath}/job/list">< Back to list job</a>
+
     <h1 class="title">Create Job</h1>
-    <form class="form-main" action="submitJob.jsp" method="post">
+
+    <form:form modelAttribute="job" class="form-main"  method="post">
         <label for="name">Job Name</label>
-        <input type="text" id="name" name="name" required>
+        <form:input path="name" type="text" id="name" name="name" required="true"/>
 
-        <label for="description">Description</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
+            <label for="description">Description</label>
+            <form:textarea path="description" id="description" rows="4" required="true" />
 
-        <label for="benefits">Benefits</label>
-        <textarea id="benefits" name="benefits" rows="4" required></textarea>
+            <label for="benefits">Benefits</label>
+            <form:textarea path="benefits" id="benefits" rows="4" required="true" />
 
-        <label for="start">Start Date</label>
-        <input type="date" id="start" name="start" required>
+            <label for="start">Start Date</label>
+            <form:input path="start" id="start" type="date" required="true" />
 
-        <label for="end">End Date</label>
-        <input type="date" id="end" name="end" required>
+            <label for="end">End Date</label>
+            <form:input path="end" id="end" type="date" required="true" />
 
-        <label for="status">Status</label>
-        <select id="status" name="status" required>
-            <option value="1">Open</option>
-            <option value="2">Closed</option>
-        </select>
+            <label for="status">Status</label>
+            <form:select path="status" id="status" required="true">
+                <form:option value="1">Open</form:option>
+                <form:option value="2">Closed</form:option>
+            </form:select>
 
-        <label for="company_id">Company ID</label>
-        <input type="text" id="company_id" name="company_id" required>
+            <label for="company_id">Company ID</label>
+            <form:input path="company_id" id="company_id" required="true" />
 
-        <input type="submit" value="Create Job">
-    </form>
+            <input type="submit" value="Create Job" />
+    </form:form>
+
 </div>
 </body>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
