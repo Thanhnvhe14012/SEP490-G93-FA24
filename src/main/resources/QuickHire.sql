@@ -250,19 +250,18 @@ DROP TABLE IF EXISTS `job`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `benefits` varchar(255) DEFAULT NULL,
-  `start` datetime(6) DEFAULT NULL,
-  `end` datetime(6) DEFAULT NULL,
+  `id` int NOT NULL,
+  `name` varchar(2000) DEFAULT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  `benefits` varchar(2000) DEFAULT NULL,
+  `start` date DEFAULT NULL,
+  `end` date DEFAULT NULL,
   `status` int DEFAULT NULL,
-  `company_id` bigint DEFAULT NULL,
+  `company_id` int DEFAULT NULL,
   `recruiter_id` int DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   `salary_min` int DEFAULT NULL,
   `salary_max` int DEFAULT NULL,
-  `company_description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
