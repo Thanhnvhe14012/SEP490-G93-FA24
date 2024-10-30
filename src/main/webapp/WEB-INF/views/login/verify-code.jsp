@@ -63,6 +63,9 @@
     <label for="code">Mã xác nhận:</label>
     <input type="text" id="code" name="code" placeholder="Nhập mã xác nhận" required>
     <input type="hidden" value="${email}" name="email">
+    <c:if test="${not empty error}">
+      <p class="error">${error}</p>
+    </c:if>
     <button type="submit">Xác nhận</button>
   </form>
 </div>

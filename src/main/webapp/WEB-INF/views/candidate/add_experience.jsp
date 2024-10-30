@@ -37,32 +37,32 @@
 
       <div class="form-group">
         <label for="company">Công ty:</label>
-        <form:input path="company" class="form-control" placeholder="Enter your company name" id="company"/>
+        <form:input path="company" class="form-control" placeholder="Enter your company name" id="company" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="start">Start Date:</label>
-        <form:input path="start" type="date" class="form-control" id="start"/>
+        <form:input path="start" type="date" class="form-control" id="start" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="end">End Date:</label>
-        <form:input path="end" type="date" class="form-control" id="end"/>
+        <form:input path="end" type="date" class="form-control" id="end" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="jobTitle">Job Title:</label>
-        <form:input path="jobTitle" class="form-control" id="jobTitle"/>
+        <form:input path="jobTitle" class="form-control" id="jobTitle" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="description">Mô tả:</label>
-        <form:textarea path="description" class="form-control" id="description" placeholder="Describe your responsibilities"/>
+        <form:textarea path="description" class="form-control" id="description" placeholder="Describe your responsibilities" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="project">Project:</label>
-        <form:textarea path="project" class="form-control" id="project" placeholder="Describe any projects"/>
+        <form:textarea path="project" class="form-control" id="project" placeholder="Describe any projects" required="true"/>
       </div>
 
       <div class="form-group text-center">

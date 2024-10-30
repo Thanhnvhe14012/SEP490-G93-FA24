@@ -1,10 +1,8 @@
 package vn.edu.fpt.quickhire.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -15,6 +13,7 @@ import java.util.Date;
 public class Job {
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -26,9 +25,11 @@ public class Job {
     @Column(name = "benefits")
     private String benefits;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Adjust format if necessary
     @Column(name = "start")
     private Date start;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Adjust format if necessary
     @Column(name = "end")
     private Date end;
 
@@ -40,6 +41,10 @@ public class Job {
 
     @Column(name = "company_description")
     private String company_description;
+
+    @ManyToOne(fetch = FetchType.LAZY,targetEntity = Company.class)
+    @JoinColumn(name = "company_id", referencedColumnName = "id",insertable=false, updatable=false)
+    private Company company;
 
     public Job() {
     }
