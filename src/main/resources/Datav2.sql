@@ -45,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,'Hanoi'),(4,'thanhrecruiter','thanh','thanhnv@gmail.com','2024-10-11 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(8,'thanhcandidate','thanh','thanhnv111@gmail.com','2024-10-03 00:00:00.000000','Nguyen Van Thanh 2',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,'Hanoi'),(4,'thanhrecruiter','thanh2','gocasespam01@gmail.com','2024-10-11 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(8,'thanhcandidate','thanh','thanhnv111@gmail.com','2024-10-03 00:00:00.000000','Nguyen Van Thanh 2',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,6 +342,31 @@ LOCK TABLES `job` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `password_reset`
+--
+
+DROP TABLE IF EXISTS `password_reset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `password_reset` (
+  `email` varchar(255) NOT NULL,
+  `verification_code` varchar(255) DEFAULT NULL,
+  `expiry_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_reset`
+--
+
+LOCK TABLES `password_reset` WRITE;
+/*!40000 ALTER TABLE `password_reset` DISABLE KEYS */;
+INSERT INTO `password_reset` VALUES ('gocasespam01@gmail.com','199622','2024-10-30 20:02:57');
+/*!40000 ALTER TABLE `password_reset` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `profile_section`
 --
 
@@ -529,4 +554,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-30 17:01:24
+-- Dump completed on 2024-10-30 20:03:47
