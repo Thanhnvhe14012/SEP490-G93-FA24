@@ -6,35 +6,74 @@
 <html>
 <head>
   <title>Insert Experience</title>
+  <!-- Link to Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #f9f9f9;
+    }
+    .form-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
 <body>
-<h2>Insert Experience</h2>
+<div class="container">
+  <div class="form-container">
+    <h2>Insert Experience</h2>
 
-<form:form modelAttribute="experience" method="POST" action="/experience/save">
-  <input type="hidden" name="accountId" value="${sessionScope.user.id}">
+    <form:form modelAttribute="experience" method="POST" action="/experience/save">
+      <input type="hidden" name="accountId" value="${sessionScope.user.id}">
 
-  <label>Company:</label>
-  <form:input path="company" class="form-control" />
+      <div class="form-group">
+        <label for="company">Công ty:</label>
+        <form:input path="company" class="form-control" placeholder="Enter your company name" id="company"/>
+      </div>
 
-  <label>Start Date:</label>
-  <form:input path="start" type="date" class="form-control"/>
+      <div class="form-group">
+        <label for="start">Start Date:</label>
+        <form:input path="start" type="date" class="form-control" id="start"/>
+      </div>
 
-  <label>End Date:</label>
-  <form:input path="end" type="date" class="form-control"/>
+      <div class="form-group">
+        <label for="end">End Date:</label>
+        <form:input path="end" type="date" class="form-control" id="end"/>
+      </div>
 
-  <label>Job Title:</label>
-  <form:input path="jobTitle" class="form-control" />
+      <div class="form-group">
+        <label for="jobTitle">Job Title:</label>
+        <form:input path="jobTitle" class="form-control" id="jobTitle"/>
+      </div>
 
-  <label>Description:</label>
-  <form:input path="description" type="textarea" class="form-control" />
+      <div class="form-group">
+        <label for="description">Mô tả:</label>
+        <form:textarea path="description" class="form-control" id="description" placeholder="Describe your responsibilities"/>
+      </div>
 
-  <label>Project:</label>
-  <form:input path="project" type="textarea" class="form-control" />
+      <div class="form-group">
+        <label for="project">Project:</label>
+        <form:textarea path="project" class="form-control" id="project" placeholder="Describe any projects"/>
+      </div>
 
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Save</button>
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+
+    </form:form>
   </div>
+</div>
 
-</form:form>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
