@@ -5,12 +5,14 @@ import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.Company;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CompanyRepository extends JpaRepository<
         Company, Long> {
 
-    Company findById(long id);
+    Optional<Company> findById(long id);
+    Company findByCompanyCode(String code);
     Company findByCompanyName(String companyName);
     List<Company> findAll();
     void deleteById(long id);
