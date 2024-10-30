@@ -64,6 +64,7 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setGpa(Double.parseDouble(education.getGpa()));
         ex.setSchoolName(education.getSchoolName());
+        ex.setMajor(education.getMajor());
         educationRepository.save(ex);
         return "redirect:/education/new?success";
     }
