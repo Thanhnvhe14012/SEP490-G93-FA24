@@ -2,6 +2,7 @@ package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
-import vn.edu.fpt.quickhire.model.impl.CandidateServiceImpl;
-import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
+import org.springframework.mail.javamail.JavaMailSender;
+import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 public class LoginController {
@@ -31,6 +35,13 @@ public class LoginController {
 
     @Autowired
     private ProvinceRepository provinceRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private PasswordResetRepository passwordResetRepository;
+
 
 
     // Hiển thị form đăng nhập
@@ -148,10 +159,64 @@ public class LoginController {
     }
 
 
-    @GetMapping("/forget-password")
-    public String forgetPasswordShow(HttpSession session) {
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordPage() {
+        return "login/forgot-password";
+    }
 
-        return "redirect:/home";
+    @PostMapping("/forgot-password")
+    public String sendVerificationCode(@RequestParam("email") String email, Model model) {
+        String verificationCode = String.format("%06d", new Random().nextInt(999999));
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5);
+        // Lưu mã xác nhận vào bảng password_reset
+        PasswordReset reset = new PasswordReset(email, verificationCode, expiryTime);
+        passwordResetRepository.save(reset);
+
+        // Gửi email
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Xác nhận quên mật khẩu");
+        message.setText("Mã xác nhận của bạn là: " + verificationCode + ". Mã này có hiệu lực trong 5 phút.");
+        mailSender.send(message);
+        model.addAttribute("email", email);
+
+        return "login/verify-code";
+    }
+
+    @PostMapping("/verify-code")
+    public String verifyCode(@RequestParam("email") String email, @RequestParam("code") String code, Model model) {
+        Optional<PasswordReset> resetOpt = passwordResetRepository.findByEmail(email);
+        if (resetOpt.isPresent()) {
+            PasswordReset reset = resetOpt.get();
+
+            // Kiểm tra mã xác nhận và thời gian hết hạn
+            if (reset.getVerificationCode().equals(code) && reset.getExpiryTime().isAfter(LocalDateTime.now())) {
+                model.addAttribute("email", email);
+                return "login/reset-password";
+            } else {
+                model.addAttribute("error", "Mã xác nhận không hợp lệ hoặc đã hết hạn.");
+                return "login/verify-code";
+            }
+        } else {
+            model.addAttribute("error", "Không tìm thấy yêu cầu đặt lại mật khẩu cho email này.");
+            return "login/verify-code";
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam("email") String email, @RequestParam("password") String newPassword, Model model) {
+        Optional<Account> userOpt = userService.findByEmail(email);
+
+        if (userOpt.isPresent()) {
+            Account user = userOpt.get();
+            user.setPassword(newPassword); // Cập nhật mật khẩu mới
+            userService.save(user);
+
+            return "login/login";
+        } else {
+            model.addAttribute("error", "Không tìm thấy tài khoản để đặt lại mật khẩu.");
+            return "login/reset-password";
+        }
     }
 
 
