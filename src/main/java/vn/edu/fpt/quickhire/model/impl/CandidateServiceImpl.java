@@ -8,6 +8,7 @@ import vn.edu.fpt.quickhire.entity.CvSection;
 import vn.edu.fpt.quickhire.entity.ProfileSection;
 import vn.edu.fpt.quickhire.model.CandidateService;
 import vn.edu.fpt.quickhire.model.repository.CandidateRepository;
+import vn.edu.fpt.quickhire.model.repository.ProfileSectionRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +24,9 @@ public class CandidateServiceImpl implements CandidateService {
     CandidateRepository candidateRepository;
     @Autowired
     ProfileServiceImpl profileService;
+
+    @Autowired
+    ProfileSectionRepository profileSectionRepository;
 
     @Override
     public Candidate save(Candidate candidate, boolean isUpdateProfile, boolean isUpdateCV, MultipartFile file) {
@@ -112,6 +116,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public List<ProfileSection> getAllProfileSectionOfCandidate(Long id) {
         return Objects.requireNonNull(this.candidateRepository.findById(id).orElse(null)).getProfileSections();
+    }
+
+    @Override
+    public void deleteProfileSection(Long id) {
+        profileSectionRepository.deleteById(id);
     }
 
     private String saveImage(MultipartFile imageFile) {

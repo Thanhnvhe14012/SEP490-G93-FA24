@@ -7,6 +7,8 @@ import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.AccountService;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 
+import java.util.Optional;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -56,6 +58,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account save(Account account) {
         return accountRepository.save(account);
+    }
+
+    @Override
+    public Optional<Account> findByEmail(String email) {
+        return accountRepository.findAllByEmail(email);
     }
 }
 
