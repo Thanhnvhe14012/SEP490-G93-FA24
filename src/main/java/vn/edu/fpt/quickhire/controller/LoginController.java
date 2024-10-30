@@ -148,4 +148,11 @@ public class LoginController {
     }
 
 
+    @GetMapping("/forget-password")
+    public String forgetPasswordShow(HttpSession session) {
+
+        return "redirect:/home";
+    }
+
+
 }
