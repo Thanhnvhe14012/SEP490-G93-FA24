@@ -6,6 +6,9 @@ import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.model.RecruiterService;
 import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class RecruiterServiceImpl implements RecruiterService {
 
@@ -13,7 +16,32 @@ public class RecruiterServiceImpl implements RecruiterService {
     RecruiterRepository recruiterRepository;
 
     @Override
-    public Recruiter saveRecruiter(Recruiter recruiter) {
+    public Optional<Recruiter> findById(long id) {
+        return recruiterRepository.findById(id);
+    }
+
+    @Override
+    public Recruiter findByCode(String code) {
+        return recruiterRepository.findByCompanyCode(code);
+    }
+
+    @Override
+    public Recruiter findByName(String name) {
+        return recruiterRepository.findByCompanyName(name);
+    }
+
+    @Override
+    public List<Recruiter> findAll() {
+        return recruiterRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(long id) {
+   recruiterRepository.deleteById(id);
+    }
+
+    @Override
+    public Recruiter save(Recruiter recruiter) {
         return recruiterRepository.save(recruiter);
-     }
+    }
 }

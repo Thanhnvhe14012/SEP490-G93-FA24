@@ -43,8 +43,6 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.deleteById(id);
     }
 
-
-
     @Override
     public Company save(Company company) {
         return companyRepository.save(company);
