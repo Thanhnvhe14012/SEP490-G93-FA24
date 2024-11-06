@@ -50,6 +50,7 @@ public class CandidateController {
         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(experience.getEnd());
         ex.setStart(start);
         ex.setEnd(end);
+        ex.setProject(experience.getProject());
         experienceRepository.save(ex);
         return "redirect:/experience/new?success";
     }
@@ -105,7 +106,7 @@ public class CandidateController {
             Format formatter = new SimpleDateFormat("yyyy-MM-dd");
             experienceDTO.setStart(formatter.format(experience.getStart()));
             experienceDTO.setEnd(formatter.format(experience.getEnd()));
-            experienceDTO.setExId(experience.getId());
+            experienceDTO.setExId((long) experience.getId());
             model.addAttribute("experience",experienceDTO);
             return "candidate/update-experience";
         }
@@ -118,7 +119,7 @@ public class CandidateController {
     @PostMapping("/experience/save-update")
     public String updateExperience(@ModelAttribute ExperienceDTO experience) throws ParseException {
         System.out.println(experience.toString());
-        Experience ex = new Experience();
+        Experience ex = experienceService.getExperienceById(experience.getExId());
         ex.setAccountId(experience.getAccountId());
         ex.setDescription(experience.getDescription());
         ex.setCompany(experience.getCompany());
@@ -127,6 +128,7 @@ public class CandidateController {
         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(experience.getEnd());
         ex.setStart(start);
         ex.setEnd(end);
+        ex.setProject(experience.getProject());
         experienceRepository.save(ex);
         return "redirect:/experience/new?success";
     }

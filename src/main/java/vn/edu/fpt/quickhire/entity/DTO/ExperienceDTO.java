@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class ExperienceDTO {
-    private Integer exId;
+    private Long exId;
     private Integer accountId;
     private String company;
     private String start;
