@@ -3,10 +3,7 @@ package vn.edu.fpt.quickhire.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.quickhire.entity.DTO.EducationDTO;
 import vn.edu.fpt.quickhire.entity.DTO.ExperienceDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
@@ -16,6 +13,7 @@ import vn.edu.fpt.quickhire.model.ExperienceService;
 import vn.edu.fpt.quickhire.model.repository.EducationRepository;
 import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -92,5 +90,44 @@ public class CandidateController {
             model.addAttribute("listEducation", educationList);
             return "candidate/profile";
         } else return "homepage";
+    }
+
+    @GetMapping("/experience/update")
+    public String showFormUpdateExperience(Model model, @RequestParam(value = "experienceId", required = false) Long experienceId) {
+        Experience experience =experienceService.getExperienceById(experienceId);
+        if(experience != null) {
+            ExperienceDTO experienceDTO = new ExperienceDTO();
+            experienceDTO.setAccountId(experience.getAccountId());
+            experienceDTO.setDescription(experience.getDescription());
+            experienceDTO.setCompany(experience.getCompany());
+            experienceDTO.setJobTitle(experience.getJobTitle());
+            experienceDTO.setProject(experience.getProject());
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+            experienceDTO.setStart(formatter.format(experience.getStart()));
+            experienceDTO.setEnd(formatter.format(experience.getEnd()));
+            experienceDTO.setExId(experience.getId());
+            model.addAttribute("experience",experienceDTO);
+            return "candidate/update-experience";
+        }
+        return "homepage";
+
+
+
+    }
+
+    @PostMapping("/experience/save-update")
+    public String updateExperience(@ModelAttribute ExperienceDTO experience) throws ParseException {
+        System.out.println(experience.toString());
+        Experience ex = new Experience();
+        ex.setAccountId(experience.getAccountId());
+        ex.setDescription(experience.getDescription());
+        ex.setCompany(experience.getCompany());
+        ex.setJobTitle(experience.getJobTitle());
+        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(experience.getStart());
+        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(experience.getEnd());
+        ex.setStart(start);
+        ex.setEnd(end);
+        experienceRepository.save(ex);
+        return "redirect:/experience/new?success";
     }
 }
