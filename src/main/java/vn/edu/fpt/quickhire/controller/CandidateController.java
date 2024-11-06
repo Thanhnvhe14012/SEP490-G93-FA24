@@ -159,7 +159,6 @@ public class CandidateController {
     public String saveEducationUpdate(@ModelAttribute EducationDTO education) throws ParseException {
         System.out.println(education.toString());
         Education ex = educationRepository.findEducationById(education.getEduId());
-        ex.setAccountId(education.getAccountId());
         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(education.getStart());
         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(education.getEnd());
         ex.setStart(start);
