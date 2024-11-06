@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EducationRepository extends JpaRepository<Education, Long> {
     List<Education> findAllByAccountId(Long accountId);
+    Education findEducationById(Long id);
 }

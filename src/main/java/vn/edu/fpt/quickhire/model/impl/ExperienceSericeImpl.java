@@ -18,4 +18,11 @@ public class ExperienceSericeImpl implements ExperienceService {
     public List<Experience> getAllExperiencesById(Long id) {
         return experienceRepository.findAllByAccountId(id);
     }
+
+    @Override
+    public Experience getExperienceById(Long id) {
+        return experienceRepository.findById(id).get();
+    }
+
+
 }

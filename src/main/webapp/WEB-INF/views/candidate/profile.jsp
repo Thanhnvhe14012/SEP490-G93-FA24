@@ -195,8 +195,8 @@
                     <p class="dates">Từ: <fmt:formatDate value="${education.start}" pattern="dd-MM-yyyy"/> Đến: <fmt:formatDate value="${education.end}" pattern="dd-MM-yyyy"/></p>
                 </div>
                 <div class="actions">
-                    <button class="edit-btn">✏️</button>
-                    <button class="delete-btn">🗑️</button>
+                    <a class="edit-btn"  href="/education/update?educationId=${education.id}">✏️</a>
+                    <a class="delete-btn">🗑️</a>
                 </div>
             </div>
         </c:forEach>
@@ -216,8 +216,8 @@
                     <p class="project"><c:out value="${experience.project}"/></p>
                 </div>
                 <div class="actions">
-                    <button class="edit-btn">✏️</button>
-                    <button class="delete-btn">🗑️</button>
+                    <a class="edit-btn" href="/experience/update?experienceId=${experience.id}">✏️</a>
+                    <a class="delete-btn" href="/experience/new">🗑️</a>
                 </div>
             </div>
         </c:forEach>
