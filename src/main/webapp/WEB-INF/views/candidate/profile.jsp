@@ -195,7 +195,7 @@
                     <p class="dates">Từ: <fmt:formatDate value="${education.start}" pattern="dd-MM-yyyy"/> Đến: <fmt:formatDate value="${education.end}" pattern="dd-MM-yyyy"/></p>
                 </div>
                 <div class="actions">
-                    <a class="edit-btn"  href="/education/update?id=${education.id}>✏️</a>
+                    <a class="edit-btn"  href="/education/update?educationId=${education.id}">✏️</a>
                     <a class="delete-btn">🗑️</a>
                 </div>
             </div>

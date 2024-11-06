@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class EducationDTO {
+    private Long eduId;
     private Integer accountId;
     private String schoolName;
     private String major;

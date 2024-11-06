@@ -132,4 +132,42 @@ public class CandidateController {
         experienceRepository.save(ex);
         return "redirect:/experience/new?success";
     }
+
+    @GetMapping("/education/update")
+    public String showFormEducationUpdate(Model model, @RequestParam(value = "educationId", required = false) Long educationId) {
+        System.out.println(educationId);
+        Education edu = educationRepository.findEducationById(educationId);
+        if(edu != null) {
+            EducationDTO educationDTO = new EducationDTO();
+            educationDTO.setAccountId(edu.getAccountId());
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+            educationDTO.setStart(formatter.format(edu.getStart()));
+            educationDTO.setEnd(formatter.format(edu.getEnd()));
+            educationDTO.setMajor(edu.getMajor());
+            educationDTO.setSchoolName(edu.getSchoolName());
+            educationDTO.setGpa(String.valueOf(edu.getGpa()));
+            educationDTO.setEduId(edu.getId());
+            model.addAttribute("education", educationDTO);
+            return "candidate/update-education";
+        }
+        return "homepage";
+
+
+    }
+
+    @PostMapping("/education/save-update")
+    public String saveEducationUpdate(@ModelAttribute EducationDTO education) throws ParseException {
+        System.out.println(education.toString());
+        Education ex = educationRepository.findEducationById(education.getEduId());
+        ex.setAccountId(education.getAccountId());
+        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(education.getStart());
+        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(education.getEnd());
+        ex.setStart(start);
+        ex.setEnd(end);
+        ex.setGpa(Double.parseDouble(education.getGpa()));
+        ex.setSchoolName(education.getSchoolName());
+        ex.setMajor(education.getMajor());
+        educationRepository.save(ex);
+        return "redirect:/education/new?success";
+    }
 }
