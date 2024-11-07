@@ -20,6 +20,7 @@ public class UserDTO {
     private String addressId3;
     private String address;
     private String biography;
+    private String companyCode;
     private String companyName;
     private String companyDescription;
     private Integer companyScale;

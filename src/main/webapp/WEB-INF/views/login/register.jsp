@@ -177,6 +177,11 @@
 
     <!-- Thông tin người tuyển dụng -->
     <div id="employerFields" style="display:none;">
+
+      <div class="form-group">
+        <label for="companyName">Mã code công ty:</label>
+        <form:input path="companyCode" class="form-control" /> <!-- Added Company Code field -->
+      </div>
       <div class="form-group">
         <label for="companyName">Tên công ty:</label>
         <form:input path="companyName" class="form-control" /> <!-- Added Company Name field -->
