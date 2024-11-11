@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
+import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import org.springframework.mail.javamail.JavaMailSender;
 import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -42,6 +45,8 @@ public class LoginController {
     @Autowired
     private PasswordResetRepository passwordResetRepository;
 
+    @Autowired
+    private FileUploadService fileUploadService;
 
 
     // Hiển thị form đăng nhập
@@ -85,7 +90,8 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDTO user, Model model) throws ParseException {
+    public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
+                               ) throws ParseException {
         if (!userService.checkRegister(user.getUsername())) {
             model.addAttribute("error", "Tài khoản đã tồn tại");
             return "login/register";
@@ -108,7 +114,16 @@ public class LoginController {
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
-
+            if (image!= null && !image .isEmpty()) {
+                try {
+                    String imageUrl = fileUploadService.UploadFile(image);
+                    recruiter.setCompany_logo(imageUrl);
+                } catch (IOException e) {
+                    // Handle the exception properly, log it, etc.
+                    e.printStackTrace();
+                }
+            }
+            recruiter.setCompany_status(1);
 
             Role existingRole = roleRepository.findById(Long.valueOf(2))
                     .orElseThrow(() -> new RuntimeException("Role not found"));
