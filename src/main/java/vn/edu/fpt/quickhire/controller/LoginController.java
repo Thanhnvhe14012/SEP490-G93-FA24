@@ -104,6 +104,7 @@ public class LoginController {
 //            Account accountSaved = userService.save(account);
 
             Recruiter recruiter = new Recruiter();
+            recruiter.setCompanyCode(user.getCompanyCode());
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
