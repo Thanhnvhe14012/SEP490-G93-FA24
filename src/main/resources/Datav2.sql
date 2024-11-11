@@ -438,17 +438,20 @@ DROP TABLE IF EXISTS `recruiter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recruiter` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL  AUTO_INCREMENT,
+  `company_code` varchar(255) DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
   `company_description` varchar(255) DEFAULT NULL,
   `company_scale` int DEFAULT NULL,
+  `company_status` varchar(255) DEFAULT NULl,
+  `company_logo` varchar(255) DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKhekwvdsbctq9xp975oupoy8h5` (`account_id`),
   CONSTRAINT `FKe0mecocgy2k9cewub2mo5xcf0` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB  AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +460,7 @@ CREATE TABLE `recruiter` (
 
 LOCK TABLES `recruiter` WRITE;
 /*!40000 ALTER TABLE `recruiter` DISABLE KEYS */;
-INSERT INTO `recruiter` VALUES (4,'Là công ty số 1 VN',200,NULL,NULL,NULL,NULL);
+-- INSERT INTO `recruiter` VALUES (4,'Là công ty số 1 VN',200,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `recruiter` ENABLE KEYS */;
 UNLOCK TABLES;
 
