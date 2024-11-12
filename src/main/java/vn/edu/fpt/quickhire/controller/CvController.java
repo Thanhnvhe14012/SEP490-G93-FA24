@@ -120,40 +120,57 @@ public class CvController {
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.setFont(font, 12);
+
+                // Draw a line
+                contentStream.setLineWidth(1);
+                contentStream.moveTo(50, 750);
+                contentStream.lineTo(550, 750);
+                contentStream.stroke();
+
                 contentStream.beginText();
-                contentStream.newLineAtOffset(100, 700);
+                contentStream.newLineAtOffset(100, 720);
                 contentStream.showText(account.getEmail());
                 contentStream.newLineAtOffset(0, -20);
                 contentStream.showText(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
                 contentStream.newLineAtOffset(0, -20);
                 contentStream.showText(account.getAddress());
                 contentStream.newLineAtOffset(0, -20);
-                contentStream.showText(account.getCandidate().getBiography());
+                contentStream.showText("Biography:");
                 contentStream.newLineAtOffset(0, -20);
-                if(experiencesList != null) {
-                    for (Experience experience : experiencesList) {
-                        contentStream.showText(experience.getCompany());
-                        contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(experience.getJobTitle());
-                        contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(experience.getStart().toString() + " - " + experience.getEnd().toString());
-                        contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(experience.getDescription());
-                        contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(experience.getProject());
-                        contentStream.newLineAtOffset(0, -20);
+                contentStream.showText(account.getCandidate().getBiography());
 
+                // Experiences Section
+                contentStream.newLineAtOffset(0, -40);
+                contentStream.showText("Experiences:");
+                contentStream.newLineAtOffset(0, -20);
+                if (experiencesList != null) {
+                    for (Experience experience : experiencesList) {
+                        contentStream.showText("Company: " + experience.getCompany());
+                        contentStream.newLineAtOffset(0, -20);
+                        contentStream.showText("Job Title: " + experience.getJobTitle());
+                        contentStream.newLineAtOffset(0, -20);
+                        contentStream.showText("Period: " + experience.getStart().toString() + " - " + experience.getEnd().toString());
+                        contentStream.newLineAtOffset(0, -20);
+                        contentStream.showText("Description: " + experience.getDescription());
+                        contentStream.newLineAtOffset(0, -20);
+                        contentStream.showText("Project: " + experience.getProject());
+                        contentStream.newLineAtOffset(0, -20);
                     }
                 }
-                if(educationList != null) {
+
+                // Education Section
+                contentStream.newLineAtOffset(0, -40);
+                contentStream.showText("Education:");
+                contentStream.newLineAtOffset(0, -20);
+                if (educationList != null) {
                     for (Education education : educationList) {
-                        contentStream.showText(education.getMajor());
+                        contentStream.showText("Major: " + education.getMajor());
                         contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(education.getSchoolName());
+                        contentStream.showText("School: " + education.getSchoolName());
                         contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(String.valueOf(education.getGpa()));
+                        contentStream.showText("GPA: " + String.valueOf(education.getGpa()));
                         contentStream.newLineAtOffset(0, -20);
-                        contentStream.showText(education.getStart().toString() + " - " + education.getEnd().toString());
+                        contentStream.showText("Period: " + education.getStart().toString() + " - " + education.getEnd().toString());
                         contentStream.newLineAtOffset(0, -20);
                     }
                 }
@@ -167,4 +184,5 @@ public class CvController {
             document.save(response.getOutputStream());
         }
     }
+
 }
