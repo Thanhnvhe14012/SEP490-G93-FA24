@@ -27,4 +27,28 @@ public class UserDTO {
     private Integer company_status;
     private String company_logo;
     private String displayName;
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", addressId1='" + addressId1 + '\'' +
+                ", addressId2='" + addressId2 + '\'' +
+                ", addressId3='" + addressId3 + '\'' +
+                ", address='" + address + '\'' +
+                ", biography='" + biography + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyDescription='" + companyDescription + '\'' +
+                ", companyScale=" + companyScale +
+                ", displayName='" + displayName + '\'' +
+                '}';
+    }
 }
