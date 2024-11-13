@@ -66,17 +66,34 @@
                 </ul>
             </div>
             <c:if test="${!isGuest}">
-                <div class="d-flex align-items-center">
-                    <button
-                            class="btn btn-warning btn-round ms-auto"
-                            data-bs-toggle="modal"
-                            data-bs-target="#addRowModal"
-                            style="margin-bottom: 10px"
-                    >
-                        <i class="fa fa-trash"></i> <!-- Trash icon for delete -->
-                        Delete
-                    </button>
-                </div>
+                <c:if test="${company.company_status == 1}">
+                    <div class="d-flex align-items-center">
+                        <button
+                                class="btn btn-danger btn-round ms-auto"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addRowModal"
+                                style="margin-bottom: 10px"
+                                onclick="deleteCompany(${company.id})"
+                        >
+                            <i class="fa fa-trash"></i> <!-- Trash icon for delete -->
+                            Delete
+                        </button>
+                    </div>
+                </c:if>
+                 <c:if test="${company.company_status == 0}">
+                    <div class="d-flex align-items-center">
+                        <button
+                                class="btn btn-warning btn-round ms-auto"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addRowModal"
+                                style="margin-bottom: 10px"
+                                onclick="restoreCompany(${company.id})"
+                        >
+                            <i class="fa fa-undo"></i> <!-- Trash icon for delete -->
+                            Un-Delete
+                        </button>
+                    </div>
+                </c:if>
             </c:if>
             <div class="row">
                 <div class="col-md-12">
@@ -227,6 +244,37 @@
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+<script>
+    function deleteCompany(id) {
+        if (confirm('Are you sure you want to delete this company?')) {
+            fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Company deleted successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to delete the company');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function restoreCompany(id) {
+        if (confirm('Are you sure you want to restore this company?')) {
+            fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Company restored successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to restore the company');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
     }
 </script>
 </body>

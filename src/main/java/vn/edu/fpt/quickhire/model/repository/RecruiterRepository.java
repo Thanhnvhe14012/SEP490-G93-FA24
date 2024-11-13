@@ -11,4 +11,7 @@ public interface RecruiterRepository extends JpaRepository<Recruiter, Long> {
     Recruiter findByCompanyName(String name);
     List<Recruiter> findAll();
     void deleteById(long id);
+    List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode);
+
+
 }

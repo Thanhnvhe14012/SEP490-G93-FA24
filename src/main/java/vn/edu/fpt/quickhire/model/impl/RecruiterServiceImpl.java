@@ -44,4 +44,10 @@ public class RecruiterServiceImpl implements RecruiterService {
     public Recruiter save(Recruiter recruiter) {
         return recruiterRepository.save(recruiter);
     }
+
+    @Override
+    public List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode) {
+        return recruiterRepository.findByManagerIdAndCompanyCode(managerId, companyCode);
+    }
+
 }

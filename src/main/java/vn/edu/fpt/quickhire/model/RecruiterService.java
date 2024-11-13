@@ -7,8 +7,16 @@ import java.util.Optional;
 
 public interface RecruiterService {
     Optional<Recruiter> findById(long id);
+
     Recruiter findByCode(String code);
+
     Recruiter findByName(String name);
+
     List<Recruiter> findAll();
+
     void deleteById(long id);
-    Recruiter save(Recruiter recruiter);}
+
+    Recruiter save(Recruiter recruiter);
+
+    List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode);
+}
