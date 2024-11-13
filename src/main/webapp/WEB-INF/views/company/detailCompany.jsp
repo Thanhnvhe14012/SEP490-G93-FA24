@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="user" value="${sessionScope.user}"/>
 <c:set var="isGuest" value="${empty user}"/>
@@ -45,258 +45,139 @@
     <link rel="stylesheet" href="../assets/css/demo.css"/>
 </head>
 <body>
-<div class="wrapper">
-    <%@ include file="../sidebar.jsp" %>
-
-
-    <div class="main-panel">
-        <div class="main-header">
-            <div class="main-header-logo">
-                <!-- Logo Header -->
-                <div class="logo-header" data-background-color="dark">
-                    <a href="../index.html" class="logo">
-                        <img
-                                src="../assets/img/kaiadmin/logo_light.svg"
-                                alt="navbar brand"
-                                class="navbar-brand"
-                                height="20"
-                        />
-                    </a>
-                    <div class="nav-toggle">
-                        <button class="btn btn-toggle toggle-sidebar">
-                            <i class="gg-menu-right"></i>
-                        </button>
-                        <button class="btn btn-toggle sidenav-toggler">
-                            <i class="gg-menu-left"></i>
-                        </button>
-                    </div>
-                    <button class="topbar-toggler more">
-                        <i class="gg-more-vertical-alt"></i>
+<%@ include file="/WEB-INF/views/header.jsp" %>
+<div class="main-panel" style="float: left">
+    <div class="container">
+        <div class="page-inner">
+            <div class="page-header">
+                <h3 class="fw-bold mb-3">Thông tin chi tiết công ty </h3>
+                <ul class="breadcrumbs mb-3">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Detail</a>
+                    </li>
+                </ul>
+            </div>
+            <c:if test="${!isGuest}">
+                <div class="d-flex align-items-center">
+                    <button
+                            class="btn btn-warning btn-round ms-auto"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addRowModal"
+                            style="margin-bottom: 10px"
+                    >
+                        <i class="fa fa-trash"></i> <!-- Trash icon for delete -->
+                        Delete
                     </button>
                 </div>
-                <!-- End Logo Header -->
-            </div>
-            <!-- Navbar Header -->
-            <nav
-                    class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-            >
-                <div class="container-fluid">
-                    <nav
-                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-                    >
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button type="submit" class="btn btn-search pe-1">
-                                    <i class="fa fa-search search-icon"></i>
-                                </button>
-                            </div>
-                            <input
-                                    type="text"
-                                    placeholder="Search ..."
-                                    class="form-control"
-                            />
-                        </div>
-                    </nav>
-
-                    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                        <li
-                                class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
-                        >
-                            <a
-                                    class="nav-link dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    href="#"
-                                    role="button"
-                                    aria-expanded="false"
-                                    aria-haspopup="true"
-                            >
-                                <i class="fa fa-search"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-search animated fadeIn">
-                                <form class="navbar-left navbar-form nav-search">
-                                    <div class="input-group">
-                                        <input
-                                                type="text"
-                                                placeholder="Search ..."
-                                                class="form-control"
-                                        />
+            </c:if>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+<%--                        <div class="card-header">--%>
+<%--                            <div class="card-title">Form Elements</div>--%>
+<%--                        </div>--%>
+                        <div class="card-body">
+                            <form action="/updateCompany/${company.id}" method="POST"
+                                  enctype="multipart/form-data">
+                                <div class="row">
+                                    <!-- Left (col-md-6) -->
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-default">
+                                            <label>ID</label>
+                                            <input id="id" type="text" class="form-control" value="${company.id}"
+                                                   disabled/>
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Mã Code</label>
+                                            <input id="code" type="text" class="form-control" name="companyCode"
+                                                   value="${company.companyCode}"/>
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Tên công ty</label>
+                                            <input id="name" type="text" class="form-control" name="companyName"
+                                                   value="${company.companyName}"/>
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Địa chỉ công ty</label>
+                                            <input id="location" type="text" class="form-control" name="company_location"
+                                                   value="${company.company_location}"/>
+                                        </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Quy mô nhân viên </label>
+                                            <input id="companyScale" type="number" class="form-control" name="companyScale"
+                                                   value="${company.companyScale}"/>
+                                        </div>
                                     </div>
-                                </form>
-                            </ul>
-                        </li>
 
-                        <li class="nav-item topbar-user dropdown hidden-caret">
-                            <a
-                                    class="dropdown-toggle profile-pic"
-                                    data-bs-toggle="dropdown"
-                                    href="#"
-                                    aria-expanded="false"
-                            >
-                                <div class="avatar-sm">
-                                    <img
-                                            src="../assets/img/profile.jpg"
-                                            alt="..."
-                                            class="avatar-img rounded-circle"
-                                    />
-                                </div>
-                                <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Hizrian</span>
-                    </span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                <div class="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div class="user-box">
-                                            <div class="avatar-lg">
-                                                <img
-                                                        src="../assets/img/profile.jpg"
-                                                        alt="image profile"
-                                                        class="avatar-img rounded"
-                                                />
-                                            </div>
-                                            <div class="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p class="text-muted">hello@example.com</p>
-                                                <a
-                                                        href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm"
-                                                >View Profile</a
-                                                >
-                                            </div>
+                                    <!-- Right (col-md-6) -->
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-default">
+                                            <label>Mô tả công ty</label>
+                                            <input id="companyDescription" type="text"
+                                                   class="form-control form-control-lg h-1000" name="companyDescription"
+                                                   value="${company.companyDescription}"/>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">My Profile</a>
-                                        <a class="dropdown-item" href="#">My Balance</a>
-                                        <a class="dropdown-item" href="#">Inbox</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Logout</a>
-                                    </li>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <!-- End Navbar -->
-        </div>
-
-        <div class="container">
-            <div class="page-inner">
-                <div class="page-header">
-                    <h3 class="fw-bold mb-3">Detail Information</h3>
-                    <ul class="breadcrumbs mb-3">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="icon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Detail</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Form Elements</div>
-                            </div>
-                            <div class="card-body">
-                                <form action="/Company/update/${company.id}" method="POST"
-                                      enctype="multipart/form-data">
-                                    <div class="row">
-                                        <!-- Left (col-md-6) -->
-                                        <div class="col-md-6">
-                                            <div class="form-group form-group-default">
-                                                <label>ID</label>
-                                                <input id="id" type="text" class="form-control" value="${company.id}"
-                                                       disabled/>
+                                        <div class="form-group form-group-default">
+                                            <label>Logo</label>
+                                            <div>
+                                                <img id="logo-preview" src="${company.company_logo}" alt="Company Logo"
+                                                     style="max-height: 100px; margin-bottom: 10px;"/>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Code</label>
-                                                <input id="code" type="text" class="form-control" name="companyCode"
-                                                       value="${company.companyCode}"/>
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Name</label>
-                                                <input id="name" type="text" class="form-control" name="companyName"
-                                                       value="${company.companyName}"/>
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Location</label>
-                                                <input id="location" type="text" class="form-control" name="location"
-                                                       value="${company.location}"/>
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Number of Employees</label>
-                                                <input id="numOfEmps" type="text" class="form-control" name="numOfEmps"
-                                                       value="${company.numOfEmps}"/>
-                                            </div>
+                                            <input id="image" type="file" class="form-control" name="image"
+                                                   accept="image/*" onchange="previewImage(event)"/>
                                         </div>
-
-                                        <!-- Right (col-md-6) -->
-                                        <div class="col-md-6">
-                                            <div class="form-group form-group-default">
-                                                <label>Description</label>
-                                                <input id="description" type="text"
-                                                       class="form-control form-control-lg h-1000" name="description"
-                                                       value="${company.description}"/>
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Logo</label>
-                                                <div>
-                                                    <img id="logo-preview" src="${company.logo}" alt="Company Logo"
-                                                         style="max-height: 100px; margin-bottom: 10px;"/>
-                                                </div>
-                                                <input id="image" type="file" class="form-control" name="image"
-                                                       accept="image/*" onchange="previewImage(event)"/>
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Status</label>
-                                                <c:if test="${company.status == 0}">
-                                                    <input id="status-display" type="text" class="form-control"
-                                                           value="De-active" readonly/>
-                                                    <input id="status" type="hidden" name="status" value="0"/>
-                                                </c:if>
-                                                <c:if test="${company.status == 1}">
-                                                    <input id="status-display" type="text" class="form-control"
-                                                           value="Active" readonly/>
-                                                    <input id="status" type="hidden" name="status" value="1"/>
-                                                </c:if>
-                                            </div>
+                                        <div class="form-group form-group-default">
+                                            <label>Địa chỉ website: </label>
+                                            <input id="company_website" type="text" class="form-control"
+                                                   name="company_website"
+                                                   value="${company.company_website}"/>
                                         </div>
-
-                                        <!-- Buttons for Submit and Cancel -->
-                                        <c:if test="${!isGuest}">
-                                            <div class="card-action">
-                                                <button type="submit" class="btn btn-success">Submit</button>
-                                                <button type="button" class="btn btn-danger"
-                                                        onclick="window.location.href='/Company/listCompany'">Cancel
-                                                </button>
-                                            </div>
-                                        </c:if>
+                                        <div class="form-group form-group-default">
+                                            <label>Trạng thái</label>
+                                            <c:if test="${company.company_status == 0}">
+                                                <input id="status-display" type="text" class="form-control"
+                                                       value="De-active" readonly/>
+                                                <input id="status" type="hidden" name="status" value="0"/>
+                                            </c:if>
+                                            <c:if test="${company.company_status == 1}">
+                                                <input id="status-display" type="text" class="form-control"
+                                                       value="Active" readonly/>
+                                                <input id="status" type="hidden" name="status" value="1"/>
+                                            </c:if>
+                                        </div>
                                     </div>
-                                </form>
 
-                            </div>
+                                    <!-- Buttons for Submit and Cancel -->
+                                    <c:if test="${!isGuest}">
+                                        <div class="card-action">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="window.location.href='/listCompany'">Cancel
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </form>
 
                         </div>
+
                     </div>
                 </div>
-
             </div>
+
         </div>
-
-
     </div>
+
+
+</div>
 
 
 </div>
@@ -341,7 +222,7 @@
 <script>
     function previewImage(event) {
         var reader = new FileReader();
-        reader.onload = function(){
+        reader.onload = function () {
             var output = document.getElementById('logo-preview');
             output.src = reader.result;
         };

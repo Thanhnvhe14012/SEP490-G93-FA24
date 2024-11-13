@@ -15,6 +15,7 @@ import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import org.springframework.mail.javamail.JavaMailSender;
+import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
@@ -48,6 +49,8 @@ public class LoginController {
     @Autowired
     private FileUploadService fileUploadService;
 
+    @Autowired
+    RecruiterServiceImpl recruiterService;
 
     // Hiển thị form đăng nhập
     @GetMapping("/login")
@@ -108,6 +111,13 @@ public class LoginController {
             account.setAddress(user.getAddress());
 
 //            Account accountSaved = userService.save(account);
+
+            Recruiter existRecruiter= recruiterService.findByCode(user.getCompanyCode());
+            if(existRecruiter != null) {
+                model.addAttribute("message", "Failed to add recruiter . Company Code duplicate.");
+                model.addAttribute("messageType", "error");
+                return "login/register";
+            }
 
             Recruiter recruiter = new Recruiter();
             recruiter.setCompanyCode(user.getCompanyCode());

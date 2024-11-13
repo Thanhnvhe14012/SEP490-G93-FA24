@@ -445,6 +445,8 @@ CREATE TABLE `recruiter` (
   `company_scale` int DEFAULT NULL,
   `company_status` varchar(255) DEFAULT NULl,
   `company_logo` varchar(255) DEFAULT NULL,
+  `company_location` varchar(255) DEFAULT NULL,
+  `company_website` varchar(255) DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
   `industry_id` int DEFAULT NULL,

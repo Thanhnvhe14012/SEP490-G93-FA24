@@ -30,6 +30,12 @@
         @Column(name = "company_logo")
         private String company_logo;
 
+        @Column(name = "company_location")
+        private String company_location;
+
+        @Column(name = "company_website")
+        private String company_website;
+
         @Column(name = "manager_id")
         private Integer managerId;
 
