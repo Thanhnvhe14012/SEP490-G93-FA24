@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.fpt.quickhire.entity.Cetificate;
+import vn.edu.fpt.quickhire.entity.DTO.CetificateDTO;
 import vn.edu.fpt.quickhire.entity.DTO.EducationDTO;
 import vn.edu.fpt.quickhire.entity.DTO.ExperienceDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.Education;
 import vn.edu.fpt.quickhire.entity.Experience;
 import vn.edu.fpt.quickhire.model.ExperienceService;
+import vn.edu.fpt.quickhire.model.repository.CetificateRepository;
 import vn.edu.fpt.quickhire.model.repository.EducationRepository;
 import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
@@ -28,6 +31,9 @@ public class CandidateController {
 
     @Autowired
     private EducationRepository educationRepository;
+
+    @Autowired
+    private CetificateRepository cetificateRepository;
 
     @Autowired
     private ExperienceService experienceService;
@@ -169,4 +175,26 @@ public class CandidateController {
         educationRepository.save(ex);
         return "redirect:/education/new?success";
     }
+
+    @GetMapping("/cetificate/new")
+    public String showFormCetificate(Model model) {
+        model.addAttribute("cetificate", new CetificateDTO());
+        return "candidate/add-cetificate";
+    }
+
+    @PostMapping("/cetificate/save")
+    public String saveCetificate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
+        System.out.println(cetificateDTO.toString());
+        Cetificate ex = new Cetificate();
+        ex.setAccountId(cetificateDTO.getAccountId());
+        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getStart());
+        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getEnd());
+        ex.setStart(start);
+        ex.setEnd(end);
+        ex.setCetificateName(cetificateDTO.getCetificateName());
+        ex.setOrganization(cetificateDTO.getOrganization());
+        cetificateRepository.save(ex);
+        return "redirect:/education/new?success";
+    }
+
 }
