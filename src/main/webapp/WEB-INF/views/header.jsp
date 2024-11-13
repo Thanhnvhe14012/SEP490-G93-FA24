@@ -43,7 +43,7 @@
                                 <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Cẩm nang nghề nghiệp</a>
+                        <li><a href="/handbook">Cẩm nang nghề nghiệp</a>
                             <ul class="dropdown-nav">
                                 <li><a href="handbook-overview.html">Tổng quan cẩm nang</a></li>
                                 <li><a href="handbook-tips.html">Mẹo nghề nghiệp</a></li>
@@ -57,7 +57,7 @@
 
             <div class="utf-right-side">
                 <div class="utf-header-widget-item">
-                    <a href="#utf-signin-dialog-block" class="popup-with-zoom-anim log-in-button"><i
+                    <a href="/login" class="log-in-button"><i
                             class="icon-feather-log-in"></i> <span>Đăng Nhập</span></a>
                 </div>
                 <div class="utf-header-widget-item">
