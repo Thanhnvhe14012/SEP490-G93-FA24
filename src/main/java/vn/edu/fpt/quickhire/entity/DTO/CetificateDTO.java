@@ -10,4 +10,5 @@ public class CetificateDTO {
     private String organization;
     private String start;
     private String end;
+    private String link;
 }
