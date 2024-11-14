@@ -1,5 +1,6 @@
 package vn.edu.fpt.quickhire.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
+import vn.edu.fpt.quickhire.model.impl.UserRoleServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
@@ -24,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Controller
 public class RecruiterController {
@@ -148,13 +152,28 @@ public class RecruiterController {
     @GetMapping("/listCompany")
     public String list(Model model) {
         List<Recruiter> listC = recruiterService.findAll();
-        model.addAttribute("listC", listC);
+        // dùng để lấy các bản ghi unique
+        List<Recruiter> listUniqueC= listC.stream()
+                .collect(Collectors.toMap(
+                        Recruiter::getCompanyCode,
+                        Function.identity(),
+                        (existing, replacement) -> existing // Keep the first encountered record
+                ))
+                .values()
+                .stream()
+                .collect(Collectors.toList());
+        model.addAttribute("listC", listUniqueC);
         model.addAttribute("listNull", "listNullText");
         return "company/listCompany";
     }
 
     @GetMapping("/detailCompany/{id}")
-    public String findById(@PathVariable long id, Model model) {
+    public String findById(@PathVariable long id, Model model, @SessionAttribute(name = "user", required = true) UserDTO userDTO) {
+//        if (!userDTO.getRole() == 2) {
+//
+//
+//            return "homepage";
+//        }
         Optional<Recruiter> c = recruiterService.findById(id);
         if (!c.isPresent()) {
             model.addAttribute("msg", "Company not found");

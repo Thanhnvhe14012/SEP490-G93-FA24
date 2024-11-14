@@ -48,7 +48,7 @@
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <div class="wrapper">
-  <div class="main-panel">
+  <div class="main-panel" style="float: left">
         <div class="container">
             <div class="page-inner">
                 <div class="page-header">
