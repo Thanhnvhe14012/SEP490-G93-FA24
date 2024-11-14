@@ -1,14 +1,16 @@
 package vn.edu.fpt.quickhire.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "education")
-@Data
-public class Education {
+@Table(name = "cetificate")
+@Getter
+@Setter
+public class Cetificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,18 +18,15 @@ public class Education {
     @Column(name = "account_id")
     private Integer accountId;
 
-    @Column(name = "school_name")
-    private String schoolName;
+    @Column(name = "cetificate_name")
+    private String cetificateName;
 
-    @Column(name = "major")
-    private String major;
+    @Column(name = "organization")
+    private String organization;
 
     @Column(name = "start")
     private Date start;
 
     @Column(name = "end")
     private Date end;
-
-    @Column(name = "gpa")
-    private double gpa;
 }

@@ -36,7 +36,7 @@ CREATE TABLE `account` (
   `address_id_3` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,'Hanoi'),(4,'thanhrecruiter','thanh2','gocasespam01@gmail.com','2024-10-11 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(8,'thanhcandidate','thanh','thanhnv111@gmail.com','2024-10-03 00:00:00.000000','Nguyen Van Thanh 2',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `account` VALUES (1,'admin','admin','thanhnvhe@fpt.edu.vn','2000-08-10 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,'Hanoi'),(4,'thanhrecruiter','thanh3','gocasespam01@gmail.com','2024-10-11 00:00:00.000000','Nguyen Van Thanh',NULL,NULL,NULL,NULL,NULL,NULL),(8,'thanhcandidate','thanh','thanhnv111@gmail.com','2024-10-03 00:00:00.000000','Nguyen','Van','Thanh',NULL,NULL,NULL,'Ha noi');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,8 @@ CREATE TABLE `candidate` (
   `accountid` bigint DEFAULT NULL,
   `account_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UKr09ojuqppptb5tf8f640kim17` (`account_id`)
+  UNIQUE KEY `UKr09ojuqppptb5tf8f640kim17` (`account_id`),
+  CONSTRAINT `FKj4889h0mbv3h6rbbxuuyoyame` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,8 +73,35 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-INSERT INTO `candidate` VALUES (1,'jkhkhj34243xcvx',1,1),(8,'Là nv số 2 VN',NULL,0);
+INSERT INTO `candidate` VALUES (1,'jkhkhj34243xcvx',1,1),(8,'Là nv số 2 VN',8,8);
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cetificate`
+--
+
+DROP TABLE IF EXISTS `cetificate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cetificate` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `account_id` int DEFAULT NULL,
+  `cetificate_name` varchar(255) DEFAULT NULL,
+  `organization` varchar(255) DEFAULT NULL,
+  `start` datetime(6) DEFAULT NULL,
+  `end` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cetificate`
+--
+
+LOCK TABLES `cetificate` WRITE;
+/*!40000 ALTER TABLE `cetificate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cetificate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -204,7 +232,7 @@ DROP TABLE IF EXISTS `education`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `education` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `account_id` int DEFAULT NULL,
   `school_name` varchar(255) DEFAULT NULL,
   `major` varchar(255) DEFAULT NULL,
@@ -212,7 +240,7 @@ CREATE TABLE `education` (
   `end` datetime(6) DEFAULT NULL,
   `gpa` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +249,7 @@ CREATE TABLE `education` (
 
 LOCK TABLES `education` WRITE;
 /*!40000 ALTER TABLE `education` DISABLE KEYS */;
-INSERT INTO `education` VALUES (1,1,'FPT',NULL,'2024-10-01 00:00:00.000000','2024-10-09 00:00:00.000000',0.07);
+INSERT INTO `education` VALUES (1,8,'FPT','KTPM 22222','2024-10-01 00:00:00.000000','2024-10-09 00:00:00.000000',2),(4,8,'FPT 4','KTPM1','2024-11-01 00:00:00.000000','2024-11-30 00:00:00.000000',3),(5,8,'FPT 5','KTPM 22222','2024-11-01 00:00:00.000000','2024-11-30 00:00:00.000000',3);
 /*!40000 ALTER TABLE `education` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +270,7 @@ CREATE TABLE `experience` (
   `description` varchar(255) DEFAULT NULL,
   `project` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +279,7 @@ CREATE TABLE `experience` (
 
 LOCK TABLES `experience` WRITE;
 /*!40000 ALTER TABLE `experience` DISABLE KEYS */;
-INSERT INTO `experience` VALUES (6,1,'VDS','2024-10-10 00:00:00.000000','2024-11-02 00:00:00.000000','Demo','Demo 1',NULL);
+INSERT INTO `experience` VALUES (6,8,'VDS1','2024-10-10 00:00:00.000000','2024-11-30 00:00:00.000000','Demo','Demo 1','project test 1'),(7,8,'MBB','2024-10-09 00:00:00.000000','2024-10-18 00:00:00.000000','Demo 111','Demo 222','project test 2'),(8,8,'VDS','2024-10-10 00:00:00.000000','2024-10-31 00:00:00.000000','Demo','Demo 1','project tesst 3'),(9,8,'DEMO4','2024-11-01 00:00:00.000000','2024-11-29 00:00:00.000000','DEMO','ÀASFAFA','ÁDASDASD');
 /*!40000 ALTER TABLE `experience` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +323,7 @@ CREATE TABLE `industry` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,6 +332,7 @@ CREATE TABLE `industry` (
 
 LOCK TABLES `industry` WRITE;
 /*!40000 ALTER TABLE `industry` DISABLE KEYS */;
+INSERT INTO `industry` VALUES (1,'IT'),(2,'GV');
 /*!40000 ALTER TABLE `industry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,7 +357,9 @@ CREATE TABLE `job` (
   `salary_min` int DEFAULT NULL,
   `salary_max` int DEFAULT NULL,
   `company_description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK5q04favsasq8y70bsei7wv8fc` (`company_id`),
+  CONSTRAINT `FK5q04favsasq8y70bsei7wv8fc` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -362,7 +393,7 @@ CREATE TABLE `password_reset` (
 
 LOCK TABLES `password_reset` WRITE;
 /*!40000 ALTER TABLE `password_reset` DISABLE KEYS */;
-INSERT INTO `password_reset` VALUES ('gocasespam01@gmail.com','199622','2024-10-30 20:02:57');
+INSERT INTO `password_reset` VALUES ('gocasespam01@gmail.com','396511','2024-10-30 21:13:06');
 /*!40000 ALTER TABLE `password_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,22 +469,17 @@ DROP TABLE IF EXISTS `recruiter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recruiter` (
-  `id` bigint NOT NULL  AUTO_INCREMENT,
-  `company_code` varchar(255) DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
+  `id` bigint NOT NULL,
   `company_description` varchar(255) DEFAULT NULL,
   `company_scale` int DEFAULT NULL,
-  `company_status` varchar(255) DEFAULT NULl,
-  `company_logo` varchar(255) DEFAULT NULL,
-  `company_location` varchar(255) DEFAULT NULL,
-  `company_website` varchar(255) DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKhekwvdsbctq9xp975oupoy8h5` (`account_id`),
   CONSTRAINT `FKe0mecocgy2k9cewub2mo5xcf0` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB  AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -462,7 +488,7 @@ CREATE TABLE `recruiter` (
 
 LOCK TABLES `recruiter` WRITE;
 /*!40000 ALTER TABLE `recruiter` DISABLE KEYS */;
--- INSERT INTO `recruiter` VALUES (4,'Là công ty số 1 VN',200,NULL,NULL,NULL,NULL);
+INSERT INTO `recruiter` VALUES (4,'Là công ty số 1 VN',200,NULL,'FPT',4,NULL);
 /*!40000 ALTER TABLE `recruiter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +532,7 @@ CREATE TABLE `userrole` (
   KEY `FKp9uqhbg64l2v6p5i1ixunb645` (`roleid`),
   CONSTRAINT `FK2gm26sco7hby4inni3ohxvf6k` FOREIGN KEY (`userid`) REFERENCES `account` (`id`),
   CONSTRAINT `FKp9uqhbg64l2v6p5i1ixunb645` FOREIGN KEY (`roleid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,7 +541,7 @@ CREATE TABLE `userrole` (
 
 LOCK TABLES `userrole` WRITE;
 /*!40000 ALTER TABLE `userrole` DISABLE KEYS */;
-INSERT INTO `userrole` VALUES (1,1,1);
+INSERT INTO `userrole` VALUES (1,1,1),(2,8,4),(3,4,2);
 /*!40000 ALTER TABLE `userrole` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -559,4 +585,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-30 20:03:47
+-- Dump completed on 2024-11-14 17:53:26

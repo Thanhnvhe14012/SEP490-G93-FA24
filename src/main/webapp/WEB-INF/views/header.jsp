@@ -3,109 +3,105 @@
 <c:set var="user" value="${sessionScope.user}"/>
 <c:set var="isGuest" value="${empty user}"/>
 
-<%--<header>--%>
-<%--<c:if test="${empty sessionScope.user}">--%>
-<%--    <a href="/login">Đăng nhập</a>--%>
-<%--</c:if>--%>
-<%--<c:if test="${not empty sessionScope.user}">--%>
-<%--    Welcome <c:out value="${sessionScope.user.username}"/>--%>
-<%--</c:if>--%>
-<%--</header>--%>
-<header style="background-color: #004080; padding: 20px; color: white;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <!-- Logo -->
-        <div>
-            <a href="/home" style="text-decoration: none; color: white;">
-                <img src="/WEB-INF/fragment/logo.png" alt="JobFinder Logo" style="height: 50px;">
-            </a>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handbook List</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/assets/css/icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
-        <!-- Search bar -->
-        <div style="flex-grow: 1; padding: 0 20px;">
-            <form action="/search" method="get" style="display: flex;">
-                <input type="text" name="q" placeholder="Tìm kiếm công việc"
-                       style="flex-grow: 1; padding: 10px; border: none; border-radius: 4px 0 0 4px;">
-                <button type="submit"
-                        style="padding: 10px 20px; background-color: #f5a623; border: none; border-radius: 0 4px 4px 0; color: white; cursor: pointer;">
-                    Tìm kiếm
-                </button>
-            </form>
-        </div>
-        
-        <div>
-            <a href="#" id="cv_create" style="text-decoration: none; color: white; margin-right: 20px;">Hồ sơ & CV</a>
-            <div id="cv_create_dropdow"
-                 style="display: none; position: absolute; right: 85px; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; border-radius: 4px;">
-                <a href="/profile"
-                   style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Tạo CV</a>
-                <a href="/applications"
-                   style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Up CV</a>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+<header id="utf-header-container-block">
+    <div id="header">
+        <div class="container">
+            <div class="utf-left-side">
+                <div id="logo">
+                    <a href="/home"><img src="/assets/img/arashmil.jpg" alt=""></a>
+                </div>
+                <nav id="navigation">
+                    <ul id="responsive">
+                        <li><a href="/home">Trang chủ</a></li>
+                        <li><a href="#">Việc Làm</a>
+                            <ul class="dropdown-nav">
+                                <li><a href="jobs-list-layout-leftside.html"><i class="icon-feather-chevron-right"></i>Tìm việc làm</a></li>
+                                <li><a href="jobs-list-layout-rightside.html"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a></li>
+                                <li><a href="jobs-listing-with-map.html"><i class="icon-feather-chevron-right"></i>Danh sách công ty</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Hồ sơ & CV</a>
+                            <ul class="dropdown-nav">
+                                <li><a href="dashboard-my-profile.html">Quản lý hồ sơ</a></li>
+                                <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Cẩm nang nghề nghiệp</a>
+                            <ul class="dropdown-nav">
+                                <li><a href="handbook-overview.html">Tổng quan cẩm nang</a></li>
+                                <li><a href="handbook-tips.html">Mẹo nghề nghiệp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Quickhire</a></li>
+                    </ul>
+                </nav>
+                <div class="clearfix"></div>
             </div>
 
-
-            <c:if test="${empty sessionScope.user}">
-                <a href="/login" style="text-decoration: none; color: white; margin-right: 20px;">Đăng nhập</a>
-                <a href="/register"
-                   style="text-decoration: none; background-color: #f5a623; padding: 10px 20px; border-radius: 4px; color: white;">
-                    Đăng ký
-                </a>
-            </c:if>
-            <c:if test="${not empty sessionScope.user}">
-                <!-- User Menu Dropdown (Hiển thị khi đã đăng nhập) -->
-                <div style="position: relative; display: inline-block;">
-                    <button onclick="toggleDropdown()"
-                            style="background-color: #f5a623; padding: 10px 20px; border: none; border-radius: 4px; color: white; cursor: pointer;">
-                        <c:out value="${sessionScope.user.username}"/> <span style="font-size: 12px;">&#9660;</span>
-                    </button>
-                    <div id="userDropdown"
-                         style="display: none; position: absolute; right: 0; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; border-radius: 4px;">
-                        <a href="/profile"
-                           style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Thông tin cá
-                            nhân</a>
-                        <a href="/applications"
-                           style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Việc đã ứng
-                            tuyển</a>
-                        <a href="/settings"
-                           style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Cài đặt</a>
-                        <a href="/sign-out"
-                           style="color: black; padding: 12px 16px; text-decoration: none; display: block;">Đăng
-                            xuất</a>
+            <div class="utf-right-side">
+                <div class="utf-header-widget-item">
+                    <a href="/login" class="log-in-button"><i
+                            class="icon-feather-log-in"></i> <span>Đăng Nhập</span></a>
+                </div>
+                <div class="utf-header-widget-item">
+                    <div class="utf-header-notifications user-menu">
+                        <div class="utf-header-notifications-trigger user-profile-title">
+                            <a href="#">
+                                <div class="user-avatar status-online"><img src="/assets/img/arashmil.jpg" alt=""></div>
+                                <div class="user-name">Xin chào, John!</div>
+                            </a>
+                        </div>
+                        <div class="utf-header-notifications-dropdown-block">
+                            <ul class="utf-user-menu-dropdown-nav">
+                                <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
+                                    khiển</a></li>
+                                <li><a href="dashboard-my-profile.html"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                </li>
+                                <li><a href="index-1.html"><i class="icon-material-outline-power-settings-new"></i> Đăng
+                                    xuất</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </c:if>
-
+                <span class="mmenu-trigger">
+                        <button class="hamburger utf-hamburger-collapse-item" type="button">
+                            <span class="utf-hamburger-box-item">
+                                <span class="utf-hamburger-inner-item"></span>
+                            </span>
+                        </button>
+                    </span>
+            </div>
         </div>
     </div>
 </header>
-
-<script>
-  function toggleDropdown() {
-    var dropdown = document.getElementById("userDropdown");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  }
-  function toggleDropdown_cv() {
-      var dropdown = document.getElementById("cv_create_dropdow");
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  }
-
-  // Đóng dropdown nếu click bên ngoài
-  window.onclick = function(event) {
-    if (!event.target.matches('button')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      for (var i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.style.display === "block") {
-          openDropdown.style.display = "none";
-        }
-      }
-    }
-  }
-  const hoverButton = document.getElementById('cv_create');
-  hoverButton.addEventListener('mouseover', () => {
-      toggleDropdown_cv();
-  });
-
-
-
-
-</script>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+  <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
+  <script src="/assets/js/mmenu.min.js"></script>
+  <script src="/assets/js/tippy.all.min.js"></script>
+  <script src="/assets/js/simplebar.min.js"></script>
+  <script src="/assets/js/bootstrap-slider.min.js"></script>
+  <script src="/assets/js/bootstrap-select.min.js"></script>
+  <script src="/assets/js/snackbar.js"></script>
+  <script src="/assets/js/clipboard.min.js"></script>
+  <script src="/assets/js/counterup.min.js"></script>
+  <script src="/assets/js/magnific-popup.min.js"></script>
+  <script src="/assets/js/slick.min.js"></script>
+  <script src="/assets/js/custom_jquery.js"></script>
+</body>
+</html>

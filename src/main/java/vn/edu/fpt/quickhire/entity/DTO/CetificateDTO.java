@@ -3,12 +3,11 @@ package vn.edu.fpt.quickhire.entity.DTO;
 import lombok.Data;
 
 @Data
-public class EducationDTO {
-    private Long eduId;
+public class CetificateDTO {
+    private Long cetificateId;
     private Integer accountId;
-    private String schoolName;
-    private String major;
+    private String cetificateName;
+    private String organization;
     private String start;
     private String end;
-    private String gpa;
 }

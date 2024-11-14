@@ -125,7 +125,7 @@
                             src="https://marketplace.canva.com/EAEuQ3DaPWw/1/0/1131w/canva-m%C3%A0u-kem-v%C3%A0-xanh-l%C3%A1-s%C3%A1ng-t%E1%BA%A1o-s%C6%A1-y%E1%BA%BFu-l%C3%BD-l%E1%BB%8Bch-kIi9FwknLmM.jpg"
                             class="card-img-top" alt="CV Template">
                     <div class="card-overlay">
-                        <button class="use-template-btn"><a href="/cv/${i}">Dùng mẫu</a></button>
+                        <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a></button>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">CV số ${i}</h5>
