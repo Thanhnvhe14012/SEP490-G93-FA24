@@ -197,4 +197,39 @@ public class CandidateController {
         return "redirect:/education/new?success";
     }
 
+    @GetMapping("/education/update")
+    public String showFormCetificateUpdate(Model model, @RequestParam(value = "cetificateId", required = false) Long cetificateId) {
+        System.out.println(cetificateId);
+        Cetificate cetificate = cetificateRepository.findCetificateById(cetificateId);
+        if(cetificate != null) {
+            CetificateDTO cetificateDTO = new CetificateDTO();
+            cetificateDTO.setAccountId(cetificate.getAccountId());
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+            cetificateDTO.setStart(formatter.format(cetificate.getStart()));
+            cetificateDTO.setEnd(formatter.format(cetificate.getEnd()));
+            cetificateDTO.setCetificateName(cetificate.getCetificateName());
+            cetificateDTO.setOrganization(cetificate.getOrganization());
+            cetificateDTO.setCetificateId(cetificate.getId());
+            model.addAttribute("cetificate", cetificateDTO);
+            return "candidate/update-cetificate";
+        }
+        return "homepage";
+
+
+    }
+
+    @PostMapping("/education/save-update")
+    public String saveECetificateUpdate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
+        System.out.println(cetificateDTO.toString());
+        Cetificate cetificate = cetificateRepository.findCetificateById(cetificateDTO.getCetificateId());
+        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getStart());
+        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getEnd());
+        cetificate.setStart(start);
+        cetificate.setEnd(end);
+        cetificate.setOrganization(cetificateDTO.getOrganization());
+        cetificate.setCetificateName(cetificateDTO.getCetificateName());
+        cetificateRepository.save(cetificate);
+        return "redirect:/education/new?success";
+    }
+
 }
