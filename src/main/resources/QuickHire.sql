@@ -316,6 +316,8 @@ CREATE TABLE `recruiter` (
   `company_name` varchar(255) DEFAULT NULL,
   `company_description` varchar(255) DEFAULT NULL,
   `company_scale` int DEFAULT NULL,
+  `company_status` varchar(255) DEFAULT NULl,
+  `company_logo` varchar(255) DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),

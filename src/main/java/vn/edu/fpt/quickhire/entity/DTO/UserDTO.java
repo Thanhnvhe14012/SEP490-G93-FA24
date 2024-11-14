@@ -20,9 +20,12 @@ public class UserDTO {
     private String addressId3;
     private String address;
     private String biography;
+    private String companyCode;
     private String companyName;
     private String companyDescription;
     private Integer companyScale;
+    private Integer company_status;
+    private String company_logo;
     private String displayName;
 
     @Override

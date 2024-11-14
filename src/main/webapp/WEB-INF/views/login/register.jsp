@@ -102,7 +102,7 @@
   <c:if test="${not empty error}">
     <p style="color: red;">${error}</p>
   </c:if>
-  <form:form modelAttribute="user" method="POST">
+  <form:form modelAttribute="user" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="username">Username:</label>
       <form:input path="username" class="form-control" />
@@ -177,6 +177,11 @@
 
     <!-- Thông tin người tuyển dụng -->
     <div id="employerFields" style="display:none;">
+
+      <div class="form-group">
+        <label for="companyName">Mã code công ty:</label>
+        <form:input path="companyCode" class="form-control" /> <!-- Added Company Code field -->
+      </div>
       <div class="form-group">
         <label for="companyName">Tên công ty:</label>
         <form:input path="companyName" class="form-control" /> <!-- Added Company Name field -->
@@ -185,10 +190,18 @@
         <label for="companyDescription">Mô tả công ty:</label>
         <form:input path="companyDescription" class="form-control" />
       </div>
-
       <div class="form-group">
         <label for="companyScale">Số lượng nhân viên:</label>
         <form:input path="companyScale" type="number" class="form-control" />
+      </div>
+      <div class="form-group form-group-default">
+        <label>Logo công ty : </label>
+        <div>
+          <img id="logo-preview" src="${company.logo}" alt="Company Logo"
+               style="max-height: 100px; margin-bottom: 10px;"/>
+        </div>
+        <input id="image" type="file" class="form-control" name="image"
+               accept="image/*" required onchange="previewImage(event)"/>
       </div>
     </div>
 
@@ -248,6 +261,17 @@
       }
     });
   });
+</script>
+
+<script>
+  function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById('logo-preview');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
 </script>
 </body>
 </html>
