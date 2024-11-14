@@ -197,7 +197,7 @@ public class CandidateController {
         return "redirect:/education/new?success";
     }
 
-    @GetMapping("/education/update")
+    @GetMapping("/cetificate/update")
     public String showFormCetificateUpdate(Model model, @RequestParam(value = "cetificateId", required = false) Long cetificateId) {
         System.out.println(cetificateId);
         Cetificate cetificate = cetificateRepository.findCetificateById(cetificateId);
@@ -218,8 +218,8 @@ public class CandidateController {
 
     }
 
-    @PostMapping("/education/save-update")
-    public String saveECetificateUpdate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
+    @PostMapping("/cetificate/save-update")
+    public String saveCetificateUpdate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
         System.out.println(cetificateDTO.toString());
         Cetificate cetificate = cetificateRepository.findCetificateById(cetificateDTO.getCetificateId());
         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getStart());
