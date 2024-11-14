@@ -39,12 +39,11 @@ public class CvController {
     @Autowired
     private ExperienceService experienceService;
 
-//    //CVController
-//    @GetMapping("/cv/list")
-//    public String cv(Model model) {
-//        model.addAttribute("cvs", cvService.countCVofCandidate(1L));
-//        return "list-cv";
-//    }
+    //CVController
+    @GetMapping("/cv/list")
+    public String cv(Model model) {
+        return "cv/listCV";
+    }
 
 //    @GetMapping("/cv/{id}")
 //    public String cvDetail(Model model, @PathVariable int id) {
