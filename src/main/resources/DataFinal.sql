@@ -91,8 +91,9 @@ CREATE TABLE `cetificate` (
   `organization` varchar(255) DEFAULT NULL,
   `start` datetime(6) DEFAULT NULL,
   `end` datetime(6) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,6 +102,7 @@ CREATE TABLE `cetificate` (
 
 LOCK TABLES `cetificate` WRITE;
 /*!40000 ALTER TABLE `cetificate` DISABLE KEYS */;
+INSERT INTO `cetificate` VALUES (1,16,'Teen','To chuc','2024-11-20 00:00:00.000000','2024-11-23 00:00:00.000000',NULL),(2,16,'dfgh','fghgfh,fsdg','2024-11-14 00:00:00.000000','2024-11-16 00:00:00.000000',NULL),(3,16,'cc','To chuc','2024-11-09 00:00:00.000000','2024-11-17 00:00:00.000000','link');
 /*!40000 ALTER TABLE `cetificate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +206,7 @@ CREATE TABLE `education` (
   `end` datetime(6) DEFAULT NULL,
   `gpa` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +215,7 @@ CREATE TABLE `education` (
 
 LOCK TABLES `education` WRITE;
 /*!40000 ALTER TABLE `education` DISABLE KEYS */;
-INSERT INTO `education` VALUES (6,16,'FPT','KTPM','2024-11-13 00:00:00.000000','2024-11-22 00:00:00.000000',0.14);
+INSERT INTO `education` VALUES (6,16,'FPT','KTPM','2024-11-13 00:00:00.000000','2024-11-22 00:00:00.000000',0.14),(8,16,'sdfgdfg','fhgh','2024-11-03 00:00:00.000000','2024-11-08 00:00:00.000000',0.04);
 /*!40000 ALTER TABLE `education` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +236,7 @@ CREATE TABLE `experience` (
   `description` varchar(255) DEFAULT NULL,
   `project` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +245,6 @@ CREATE TABLE `experience` (
 
 LOCK TABLES `experience` WRITE;
 /*!40000 ALTER TABLE `experience` DISABLE KEYS */;
-INSERT INTO `experience` VALUES (10,16,'MBB','2024-10-30 00:00:00.000000','2024-11-10 00:00:00.000000','Title','Description','Làm linh tinh');
 /*!40000 ALTER TABLE `experience` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,4 +519,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 21:50:15
+-- Dump completed on 2024-11-15  0:04:09
