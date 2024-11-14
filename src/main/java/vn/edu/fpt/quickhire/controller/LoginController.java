@@ -94,7 +94,7 @@ public class LoginController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
-                               ) throws ParseException {
+    ) throws ParseException {
         if (!userService.checkRegister(user.getUsername())) {
             model.addAttribute("error", "Tài khoản đã tồn tại");
             return "login/register";
@@ -169,7 +169,7 @@ public class LoginController {
             candidate.setBiography(user.getBiography());
 
 
-            Role existingRole = roleRepository.findById(Long.valueOf(3))
+            Role existingRole = roleRepository.findById(Long.valueOf(4))
                     .orElseThrow(() -> new RuntimeException("Role not found"));
 
             UserRole userRole = new UserRole();
