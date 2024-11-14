@@ -31,7 +31,7 @@
 <body>
 <div class="container">
     <div class="form-container">
-        <h2>Update Experience</h2>
+        <h2>Cập nhật kinh nghiệm</h2>
 
         <form:form modelAttribute="experience" method="POST" action="/experience/save-update">
             <input type="hidden" name="accountId" value="${sessionScope.user.id}">
@@ -43,12 +43,12 @@
             </div>
 
             <div class="form-group">
-                <label for="start">Start Date:</label>
+                <label for="start">Ngày bắt đầu:</label>
                 <form:input path="start" type="date" class="form-control" id="start" value="${experience.start}" required="true"/>
             </div>
 
             <div class="form-group">
-                <label for="end">End Date:</label>
+                <label for="end">Ngày kết thúc:</label>
                 <form:input path="end" type="date" class="form-control" id="end" value="${experience.end}" required="true"/>
             </div>
 
