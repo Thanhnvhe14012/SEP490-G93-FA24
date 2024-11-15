@@ -237,7 +237,7 @@
                 </div>
                 <div class="actions">
                     <a class="edit-btn"  href="/cetificate/update?cetificateId=${cetificate.id}">✏️</a>
-                    <a class="delete-btn" href="/deleteCetificate/${cetificateId.id}">🗑️</a>
+                    <a class="delete-btn" href="/deleteCetificate/${cetificate.id}">🗑️</a>
                 </div>
             </div>
         </c:forEach>
