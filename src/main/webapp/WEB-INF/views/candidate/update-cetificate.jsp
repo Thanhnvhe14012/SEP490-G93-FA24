@@ -34,6 +34,7 @@
 
         <form:form modelAttribute="cetificate" method="POST" action="/cetificate/save-update">
             <input type="hidden" name="accountId" value="${sessionScope.user.id}">
+            <input type="hidden" name="cetificateId" value="${cetificate.cetificateId}">
 
             <div class="form-group">
                 <label for="cetificateName">Tên chứng chỉ:</label>
