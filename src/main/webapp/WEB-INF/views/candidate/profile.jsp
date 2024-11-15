@@ -196,7 +196,7 @@
                 </div>
                 <div class="actions">
                     <a class="edit-btn"  href="/education/update?educationId=${education.id}">✏️</a>
-                    <a class="delete-btn">🗑️</a>
+                    <a class="delete-btn" href="/deleteEducation/${education.id}">🗑️</a>
                 </div>
             </div>
         </c:forEach>
@@ -217,7 +217,27 @@
                 </div>
                 <div class="actions">
                     <a class="edit-btn" href="/experience/update?experienceId=${experience.id}">✏️</a>
-                    <a class="delete-btn" href="/experience/new">🗑️</a>
+                    <a class="delete-btn" href="/deleteExperience/${experience.id}">🗑️</a>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="card">
+        <div class="header">
+            Học vấn
+            <a class="add-btn" href="/cetificate/new">➕</a>
+        </div>
+        <c:forEach var="cetificate" items="${listCetificate}">
+            <div class="content">
+                <div>
+                    <h3><strong><c:out value="${cetificate.cetificateName}"/></strong></h3>
+                    <p><c:out value="${cetificate.organization}"/></p>
+                    <p><c:out value="${cetificate.link}"/></p>
+                    <p class="dates">Từ: <fmt:formatDate value="${cetificate.start}" pattern="dd-MM-yyyy"/> Đến: <fmt:formatDate value="${cetificate.end}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="actions">
+                    <a class="edit-btn"  href="/cetificate/update?cetificateId=${cetificate.id}">✏️</a>
+                    <a class="delete-btn" href="/deleteCetificate/${cetificate.id}">🗑️</a>
                 </div>
             </div>
         </c:forEach>

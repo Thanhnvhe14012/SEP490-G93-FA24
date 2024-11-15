@@ -34,28 +34,28 @@
 <body>
 <div class="container">
     <div class="form-container">
-        <h2>Insert Education</h2>
+        <h2>Cập nhật thông tin học vấn</h2>
 
         <form:form modelAttribute="education" method="POST" action="/education/save-update" id="educationForm">
             <input type="hidden" name="accountId" value="${sessionScope.user.id}">
             <input type="hidden" name="eduId" value="${education.eduId}">
             <div class="form-group">
                 <label for="schoolName">Tên trường:</label>
-                <form:input path="schoolName" class="form-control" placeholder="Enter your school name" id="schoolName" required="true"/>
+                <form:input path="schoolName" class="form-control" placeholder="Nhập tên trường" id="schoolName" required="true"/>
             </div>
 
             <div class="form-group">
                 <label for="major">Chuyên ngành:</label>
-                <form:input path="major" class="form-control" placeholder="Enter your major" id="major" required="true"/>
+                <form:input path="major" class="form-control" placeholder="Chuyên ngành" id="major" required="true"/>
             </div>
 
             <div class="form-group">
-                <label for="start">Start Date:</label>
+                <label for="start">Ngày bắt đầu:</label>
                 <form:input path="start" type="date" class="form-control" id="start" required="true"/>
             </div>
 
             <div class="form-group">
-                <label for="end">End Date:</label>
+                <label for="end">Ngày kết thúc:</label>
                 <form:input path="end" type="date" class="form-control" id="end" required="true"/>
             </div>
 

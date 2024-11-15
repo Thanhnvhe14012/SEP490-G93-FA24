@@ -1,9 +1,15 @@
 package vn.edu.fpt.quickhire.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.Cetificate;
 import vn.edu.fpt.quickhire.entity.DTO.CetificateDTO;
 import vn.edu.fpt.quickhire.entity.DTO.EducationDTO;
@@ -16,6 +22,8 @@ import vn.edu.fpt.quickhire.model.repository.CetificateRepository;
 import vn.edu.fpt.quickhire.model.repository.EducationRepository;
 import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +53,7 @@ public class CandidateController {
     }
 
     @PostMapping("/experience/save")
-    public String saveExperience(@ModelAttribute ExperienceDTO experience) throws ParseException {
+    public String saveExperience(@ModelAttribute ExperienceDTO experience, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(experience.toString());
         Experience ex = new Experience();
         ex.setAccountId(experience.getAccountId());
@@ -58,7 +66,7 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setProject(experience.getProject());
         experienceRepository.save(ex);
-        return "redirect:/experience/new?success";
+        return showFormProfileCandidate(userDTO, model);
     }
 
     @GetMapping("/education/new")
@@ -68,7 +76,7 @@ public class CandidateController {
     }
 
     @PostMapping("/education/save")
-    public String saveEducation(@ModelAttribute EducationDTO education) throws ParseException {
+    public String saveEducation(@ModelAttribute EducationDTO education , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(education.toString());
         Education ex = new Education();
         ex.setAccountId(education.getAccountId());
@@ -80,7 +88,7 @@ public class CandidateController {
         ex.setSchoolName(education.getSchoolName());
         ex.setMajor(education.getMajor());
         educationRepository.save(ex);
-        return "redirect:/education/new?success";
+        return showFormProfileCandidate(userDTO, model);
     }
 
     @GetMapping("/candidate/profile")
@@ -95,6 +103,8 @@ public class CandidateController {
             model.addAttribute("listExperience", experiencesList);
             List<Education> educationList = educationRepository.findAllByAccountId(userDTO.getId());
             model.addAttribute("listEducation", educationList);
+            List<Cetificate> cetificateList = cetificateRepository.findAllByAccountId(userDTO.getId());
+            model.addAttribute("listCetificate", cetificateList);
             return "candidate/profile";
         } else return "homepage";
     }
@@ -123,7 +133,7 @@ public class CandidateController {
     }
 
     @PostMapping("/experience/save-update")
-    public String updateExperience(@ModelAttribute ExperienceDTO experience) throws ParseException {
+    public String updateExperience(@ModelAttribute ExperienceDTO experience , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(experience.toString());
         Experience ex = experienceService.getExperienceById(experience.getExId());
         ex.setAccountId(experience.getAccountId());
@@ -136,7 +146,7 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setProject(experience.getProject());
         experienceRepository.save(ex);
-        return "redirect:/experience/new?success";
+        return showFormProfileCandidate(userDTO, model);
     }
 
     @GetMapping("/education/update")
@@ -162,7 +172,7 @@ public class CandidateController {
     }
 
     @PostMapping("/education/save-update")
-    public String saveEducationUpdate(@ModelAttribute EducationDTO education) throws ParseException {
+    public String saveEducationUpdate(@ModelAttribute EducationDTO education, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(education.toString());
         Education ex = educationRepository.findEducationById(education.getEduId());
         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(education.getStart());
@@ -173,7 +183,7 @@ public class CandidateController {
         ex.setSchoolName(education.getSchoolName());
         ex.setMajor(education.getMajor());
         educationRepository.save(ex);
-        return "redirect:/education/new?success";
+        return showFormProfileCandidate(userDTO, model);
     }
 
     @GetMapping("/cetificate/new")
@@ -183,7 +193,7 @@ public class CandidateController {
     }
 
     @PostMapping("/cetificate/save")
-    public String saveCetificate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
+    public String saveCetificate(@ModelAttribute CetificateDTO cetificateDTO , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(cetificateDTO.toString());
         Cetificate ex = new Cetificate();
         ex.setAccountId(cetificateDTO.getAccountId());
@@ -193,11 +203,12 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setCetificateName(cetificateDTO.getCetificateName());
         ex.setOrganization(cetificateDTO.getOrganization());
+        ex.setLink(cetificateDTO.getLink());
         cetificateRepository.save(ex);
-        return "redirect:/education/new?success";
+        return showFormProfileCandidate(userDTO, model);
     }
 
-    @GetMapping("/education/update")
+    @GetMapping("/cetificate/update")
     public String showFormCetificateUpdate(Model model, @RequestParam(value = "cetificateId", required = false) Long cetificateId) {
         System.out.println(cetificateId);
         Cetificate cetificate = cetificateRepository.findCetificateById(cetificateId);
@@ -210,6 +221,7 @@ public class CandidateController {
             cetificateDTO.setCetificateName(cetificate.getCetificateName());
             cetificateDTO.setOrganization(cetificate.getOrganization());
             cetificateDTO.setCetificateId(cetificate.getId());
+            cetificateDTO.setLink(cetificate.getLink());
             model.addAttribute("cetificate", cetificateDTO);
             return "candidate/update-cetificate";
         }
@@ -218,8 +230,8 @@ public class CandidateController {
 
     }
 
-    @PostMapping("/education/save-update")
-    public String saveECetificateUpdate(@ModelAttribute CetificateDTO cetificateDTO) throws ParseException {
+    @PostMapping("/cetificate/save-update")
+    public String saveCetificateUpdate(@ModelAttribute CetificateDTO cetificateDTO, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(cetificateDTO.toString());
         Cetificate cetificate = cetificateRepository.findCetificateById(cetificateDTO.getCetificateId());
         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(cetificateDTO.getStart());
@@ -228,8 +240,25 @@ public class CandidateController {
         cetificate.setEnd(end);
         cetificate.setOrganization(cetificateDTO.getOrganization());
         cetificate.setCetificateName(cetificateDTO.getCetificateName());
+        cetificate.setLink(cetificateDTO.getLink());
         cetificateRepository.save(cetificate);
-        return "redirect:/education/new?success";
+        return showFormProfileCandidate(userDTO, model);
+    }
+
+    @GetMapping("/deleteExperience/{id}")
+    public String deleteExperience( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+        experienceRepository.deleteById(id);
+        return showFormProfileCandidate(userDTO, model);
+    }
+    @GetMapping("/deleteEducation/{id}")
+    public String deleteEducation( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+        educationRepository.deleteById(id);
+        return showFormProfileCandidate(userDTO, model);
+    }
+    @GetMapping("/deleteCetificate/{id}")
+    public String deleteCetificate( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+        cetificateRepository.deleteById(id);
+        return showFormProfileCandidate(userDTO, model);
     }
 
 }

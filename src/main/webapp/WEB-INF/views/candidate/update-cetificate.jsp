@@ -30,28 +30,33 @@
 <body>
 <div class="container">
     <div class="form-container">
-        <h2>Insert Experience</h2>
+        <h2>Cập nhật chứng chỉ</h2>
 
         <form:form modelAttribute="cetificate" method="POST" action="/cetificate/save-update">
             <input type="hidden" name="accountId" value="${sessionScope.user.id}">
+            <input type="hidden" name="cetificateId" value="${cetificate.cetificateId}">
 
             <div class="form-group">
                 <label for="cetificateName">Tên chứng chỉ:</label>
                 <form:input path="cetificateName" class="form-control" placeholder="Nhập tên chứng chỉ" id="cetificateName" required="true"/>
             </div>
             <div class="form-group">
-                <label for="organization">Tên chứng chỉ:</label>
+                <label for="organization">Tên tổ chức:</label>
                 <form:input path="organization" class="form-control" placeholder="Nhập tên tổ chức" id="organization" required="true"/>
             </div>
 
             <div class="form-group">
-                <label for="start">Start Date:</label>
+                <label for="start">Ngày bắt đầu:</label>
                 <form:input path="start" type="date" class="form-control" id="start" required="true"/>
             </div>
 
             <div class="form-group">
-                <label for="end">End Date:</label>
+                <label for="end">Ngày kết thúc:</label>
                 <form:input path="end" type="date" class="form-control" id="end" required="true"/>
+            </div>
+            <div class="form-group">
+                <label for="link">Đường dẫn:</label>
+                <form:input path="link" class="form-control" placeholder="Thêm link" id="link" required="true"/>
             </div>
 
 

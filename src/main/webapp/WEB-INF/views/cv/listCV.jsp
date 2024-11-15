@@ -117,27 +117,48 @@
     </div>
 
     <div class="row">
-        <c:forEach var="i" items="${cvs}" step="1" end="${cvs.size()}">
-            <div class="mb-4 col-md-3">
-                <div class="card">
-                    <div class="badge-corner">Mới</div>
-                    <img
-                            src="https://marketplace.canva.com/EAEuQ3DaPWw/1/0/1131w/canva-m%C3%A0u-kem-v%C3%A0-xanh-l%C3%A1-s%C3%A1ng-t%E1%BA%A1o-s%C6%A1-y%E1%BA%BFu-l%C3%BD-l%E1%BB%8Bch-kIi9FwknLmM.jpg"
-                            class="card-img-top" alt="CV Template">
-                    <div class="card-overlay">
-                        <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a></button>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">CV số ${i}</h5>
-                        <p class="card-text">
-                            <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
-                            <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
-                            <span class="px-2 py-1 badge bg-secondary">+5</span>
-                        </p>
-                    </div>
+
+        <div class="mb-4 col-md-3">
+            <div class="card">
+                <div class="badge-corner">Mới</div>
+                <img
+                        src="https://marketplace.canva.com/EAEuQ3DaPWw/1/0/1131w/canva-m%C3%A0u-kem-v%C3%A0-xanh-l%C3%A1-s%C3%A1ng-t%E1%BA%A1o-s%C6%A1-y%E1%BA%BFu-l%C3%BD-l%E1%BB%8Bch-kIi9FwknLmM.jpg"
+                        class="card-img-top" alt="CV Template">
+                <div class="card-overlay">
+                    <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">CV số ${i}</h5>
+                    <p class="card-text">
+                        <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
+                        <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
+                        <span class="px-2 py-1 badge bg-secondary">+5</span>
+                    </p>
                 </div>
             </div>
-        </c:forEach>
+        </div>
+        <div class="mb-4 col-md-3">
+            <div class="card">
+                <div class="badge-corner">Mới</div>
+                <img
+                        src="https://marketplace.canva.com/EAFzfwx_Qik/3/0/1131w/canva-blue-simple-professional-cv-resume-HZVmncd0LSs.jpg"
+                        class="card-img-top" alt="CV Template">
+                <div class="card-overlay">
+                    <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">CV số ${i}</h5>
+                    <p class="card-text">
+                        <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
+                        <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
+                        <span class="px-2 py-1 badge bg-secondary">+5</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
