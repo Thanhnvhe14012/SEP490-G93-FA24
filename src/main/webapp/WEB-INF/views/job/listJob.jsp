@@ -62,20 +62,39 @@
         button.add-btn:hover {
             background-color: #218838;
         }
-        .btn.edit-btn {
-            background-color: #007bff;
+        .btn-icon {
+            display: inline-block;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 50%;
             color: white;
+            cursor: pointer;
+            border: none;
         }
-        .btn.edit-btn:hover {
+
+        .btn-icon.edit-btn {
+            background-color: #007bff; /* Màu xanh cho nút sửa */
+            margin-right: 5px;
+        }
+
+        .btn-icon.delete-btn {
+            background-color: #dc3545; /* Màu đỏ cho nút xóa */
+        }
+
+        .btn-icon i {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-icon.edit-btn:hover {
             background-color: #0056b3;
         }
-        .btn.delete-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-        .btn.delete-btn:hover {
+
+        .btn-icon.delete-btn:hover {
             background-color: #c82333;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -126,24 +145,24 @@
         .overlay.active {
             display: block;
         }
+
     </style>
 </head>
-<%@ include file="/WEB-INF/views/header.jsp" %>
 
 <body>
 
 <div class="container">
-    <h1>Job Management</h1>
+    <h1>Quản lý công việc</h1>
 
-    <a href="${pageContext.request.contextPath}/job/create"><button class="add-btn" >+ Add Job</button></a>
+    <a href="${pageContext.request.contextPath}/job/create"><button class="add-btn" >+ Thêm công việc </button></a>
 
     <table>
         <thead>
         <tr>
-            <th>Job ID</th>
-            <th>Job Name</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>ID</th>
+            <th>Tên </th>
+            <th>Mô tả</th>
+            <th>Hoạt động</th>
         </tr>
         </thead>
         <tbody>
@@ -153,9 +172,13 @@
                 <td>${job.name}</td>
                 <td>${job.description}</td>
                 <td>
-                    <a href="/job/edit/${job.id}"> <button class="btn edit-btn">Edit</button></a>
+                    <a href="/job/edit/${job.id}" class="btn-icon edit-btn">
+                        <i class="fas fa-pen"></i>
+                    </a>
                     <form action="/job/edit/${job.id}/delete" method="post" style="display:inline;">
-                       <button type="submit" class="btn delete-btn">Delete</button>
+                        <button type="submit" class="btn-icon delete-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -167,4 +190,6 @@
 </body>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </html>

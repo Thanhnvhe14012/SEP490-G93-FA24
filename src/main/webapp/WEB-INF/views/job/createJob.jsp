@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Job</title>
+    <title>Tạo công việc</title>
     <style>
         body.main {
             font-family: Arial, sans-serif;
@@ -64,38 +64,38 @@
     </style>
 </head>
 
-<%@ include file="/WEB-INF/views/header.jsp" %>
+
 <h4 style="color:yellowgreen">${messsage} </h4>
 <body class="main">
 <body>
 <div class="container">
-    <a href="${pageContext.request.contextPath}/job/list">< Back to list job</a>
+    <a href="${pageContext.request.contextPath}/job/list">< Quay lại danh sách</a>
 
-    <h1 class="title">Create Job</h1>
+    <h1 class="title">Tạo công việc</h1>
 
     <form:form modelAttribute="job" class="form-main"  method="post">
-        <label for="name">Job Name</label>
+        <label for="name">Tên</label>
         <form:input path="name" type="text" id="name" name="name" required="true"/>
 
-            <label for="description">Description</label>
+            <label for="description">Mô tả</label>
             <form:textarea path="description" id="description" rows="4" required="true" />
 
-            <label for="benefits">Benefits</label>
+            <label for="benefits">Lợi nhuận</label>
             <form:textarea path="benefits" id="benefits" rows="4" required="true" />
 
-            <label for="start">Start Date</label>
+            <label for="start">Ngày bắt đầu</label>
             <form:input path="start" id="start" type="date" required="true" />
 
-            <label for="end">End Date</label>
+            <label for="end">Ngày kết thúc</label>
             <form:input path="end" id="end" type="date" required="true" />
 
-            <label for="status">Status</label>
+            <label for="status">Trạng thái</label>
             <form:select path="status" id="status" required="true">
-                <form:option value="1">Open</form:option>
-                <form:option value="2">Closed</form:option>
+                <form:option value="1">Mở </form:option>
+                <form:option value="2">Đóng</form:option>
             </form:select>
 
-            <label for="company_id">Company ID</label>
+            <label for="company_id">ID công ty</label>
             <form:input path="company_id" id="company_id" required="true" />
 
             <input type="submit" value="Create Job" />
