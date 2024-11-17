@@ -237,7 +237,7 @@
 </script>
 <script>
     function deleteCompany(companyId) {
-        if (confirm('Are you sure you want to delete this company?')) {
+        if (confirm('Xác định xóa công ty này ??')) {
             fetch('${pageContext.request.contextPath}/Company/delete/' + companyId, {
                 method: 'DELETE',
                 headers: {
@@ -246,10 +246,10 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        alert('Company deleted successfully!');
+                        alert('Xóa thành công !');
                         window.location.href = '${pageContext.request.contextPath}/Company/listCompany';
                     } else {
-                        alert('Failed to delete the company.');
+                        alert('Xóa thất bại.');
                     }
                 })
                 .catch(error => console.error('Error:', error));

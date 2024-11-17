@@ -76,7 +76,7 @@
                                 onclick="deleteCompany(${company.id})"
                         >
                             <i class="fa fa-trash"></i> <!-- Trash icon for delete -->
-                            Delete
+                            Xóa
                         </button>
                     </div>
                 </c:if>
@@ -90,7 +90,7 @@
                                 onclick="restoreCompany(${company.id})"
                         >
                             <i class="fa fa-undo"></i> <!-- Trash icon for delete -->
-                            Un-Delete
+                           Khôi phục
                         </button>
                     </div>
                 </c:if>
@@ -175,9 +175,9 @@
                                     <!-- Buttons for Submit and Cancel -->
                                     <c:if test="${!isGuest}">
                                         <div class="card-action">
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-success">Xác nhận</button>
                                             <button type="button" class="btn btn-danger"
-                                                    onclick="window.location.href='/listCompany'">Cancel
+                                                    onclick="window.location.href='/listCompany'">Hủy
                                             </button>
                                         </div>
                                     </c:if>
@@ -248,32 +248,32 @@
 </script>
 <script>
     function deleteCompany(id) {
-        if (confirm('Are you sure you want to delete this company?')) {
+        if (confirm('Xác nhận xóa công ty ?')) {
             fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
                 .then(response => {
                     if (response.ok) {
-                        alert('Company deleted successfully');
+                        alert('Xóa thành công');
                         location.reload();
                     } else {
-                        alert('Failed to delete the company');
+                        alert('Xóa thất baị');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Lỗi:', error));
         }
     }
 
     function restoreCompany(id) {
-        if (confirm('Are you sure you want to restore this company?')) {
+        if (confirm('Xác nhận khôi phục công ty ?')) {
             fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
                 .then(response => {
                     if (response.ok) {
-                        alert('Company restored successfully');
+                        alert('Khôi phục thành công');
                         location.reload();
                     } else {
-                        alert('Failed to restore the company');
+                        alert('Khôi phục thất baị');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Lỗi:', error));
         }
     }
 </script>
