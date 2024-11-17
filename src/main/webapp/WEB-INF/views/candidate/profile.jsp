@@ -232,7 +232,7 @@
                 <div>
                     <h3><strong><c:out value="${cetificate.cetificateName}"/></strong></h3>
                     <p><c:out value="${cetificate.organization}"/></p>
-                    <p><c:out value="${cetificate.link}"/></p>
+                    <a href="${cetificate.link}">${cetificate.link}</a>
                     <p class="dates">Từ: <fmt:formatDate value="${cetificate.start}" pattern="dd-MM-yyyy"/> Đến: <fmt:formatDate value="${cetificate.end}" pattern="dd-MM-yyyy"/></p>
                 </div>
                 <div class="actions">
