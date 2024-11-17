@@ -29,4 +29,8 @@ public class Cetificate {
 
     @Column(name = "end")
     private Date end;
+
+    @Column(name = "link")
+    private String link;
+
 }

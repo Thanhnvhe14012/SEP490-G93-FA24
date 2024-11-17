@@ -30,7 +30,7 @@
 <body>
 <div class="container">
   <div class="form-container">
-    <h2>Insert Experience</h2>
+    <h2>Thêm kinh nghiệm</h2>
 
     <form:form modelAttribute="experience" method="POST" action="/experience/save">
       <input type="hidden" name="accountId" value="${sessionScope.user.id}">
@@ -41,28 +41,28 @@
       </div>
 
       <div class="form-group">
-        <label for="start">Start Date:</label>
+        <label for="start">Ngày bắt đầu:</label>
         <form:input path="start" type="date" class="form-control" id="start" required="true"/>
       </div>
 
       <div class="form-group">
-        <label for="end">End Date:</label>
+        <label for="end">Ngày kết thúc:</label>
         <form:input path="end" type="date" class="form-control" id="end" required="true"/>
       </div>
 
       <div class="form-group">
-        <label for="jobTitle">Job Title:</label>
+        <label for="jobTitle">Tiêu đề công việc:</label>
         <form:input path="jobTitle" class="form-control" id="jobTitle" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="description">Mô tả:</label>
-        <form:textarea path="description" class="form-control" id="description" placeholder="Describe your responsibilities" required="true"/>
+        <form:textarea path="description" class="form-control" id="description" placeholder="Mô tả công việc" required="true"/>
       </div>
 
       <div class="form-group">
         <label for="project">Project:</label>
-        <form:textarea path="project" class="form-control" id="project" placeholder="Describe any projects" required="true"/>
+        <form:textarea path="project" class="form-control" id="project" placeholder="Mô tả projects" required="true"/>
       </div>
 
       <div class="form-group text-center">

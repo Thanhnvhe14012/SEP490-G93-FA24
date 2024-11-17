@@ -201,7 +201,7 @@
                style="max-height: 100px; margin-bottom: 10px;"/>
         </div>
         <input id="image" type="file" class="form-control" name="image"
-               accept="image/*" onchange="previewImage(event)"/>
+               accept="image/*"  onchange="previewImage(event)"/>
       </div>
     </div>
 

@@ -32,7 +32,7 @@
                         <li><a href="#">Việc Làm</a>
                             <ul class="dropdown-nav">
                                 <li><a href="jobs-list-layout-leftside.html"><i class="icon-feather-chevron-right"></i>Tìm việc làm</a></li>
-                                <li><a href="jobs-list-layout-rightside.html"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a></li>
+                                <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a></li>
                                 <li><a href="jobs-listing-with-map.html"><i class="icon-feather-chevron-right"></i>Danh sách công ty</a></li>
                             </ul>
                         </li>
