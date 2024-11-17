@@ -224,7 +224,7 @@
     </div>
     <div class="card">
         <div class="header">
-            Học vấn
+            Chứng chỉ
             <a class="add-btn" href="/cetificate/new">➕</a>
         </div>
         <c:forEach var="cetificate" items="${listCetificate}">
