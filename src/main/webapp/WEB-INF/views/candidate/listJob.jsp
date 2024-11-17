@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Listings</title>
+    <title>Danh sách công việc</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
@@ -69,11 +69,11 @@
                         <div class="col-md-6">
                             <h4 class="job-title">${job.name}</h4>
                             <p class="text-muted">${job.company.description} - Hà Nội</p>
-                            <p>Salary: ${job.benefits}</p>
+                            <p>Lương: ${job.benefits}</p>
                         </div>
                         <div class="col-md-4 text-right">
                             <a href="${pageContext.request.contextPath}/candidate/job/details/${job.id}">
-                                <button class="btn apply-btn">Apply Now</button>
+                                <button class="btn apply-btn">Ứng tuyển</button>
                             </a>
                         </div>
                     </div>
@@ -83,29 +83,14 @@
         </div>
 
         <!-- Sidebar: Filter & Suggested Jobs -->
-        <div class="col-lg-4">
-            <div class="sidebar">
-                <h5>Job Filters</h5>
-                <form method="get">
+        <div class="sidebar">
+            <h5>Tìm kiếm</h5>
+            <form method="get" action="${pageContext.request.contextPath}/candidate/job/list">
+                <!-- Tìm kiếm theo tên công việc -->
+                <input name="search" type="text" class="form-control mb-3" placeholder="Tên công việc">
 
-               <input name="search" type="text" class="form-control mb-3" placeholder="Search jobs">
-                    <button type="submit" class="btn btn-outline-success btn-block mb-2">Search job</button>
-                </form>
-                    <button class="btn btn-outline-secondary btn-block mb-2">Recently Posted</button>
-                <button class="btn btn-outline-secondary btn-block mb-2">Urgent Hiring</button>
-            </div>
-
-            <!-- Suggested Jobs Section -->
-            <div class="sidebar mt-4">
-                <h5>Suggested Jobs</h5>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <h6>Project Manager</h6>
-                        <p class="text-muted mb-0">Company ABC - Hồ Chí Minh</p>
-                    </li>
-                    <!-- Add more suggestions -->
-                </ul>
-            </div>
+                <button type="submit" class="btn btn-outline-success btn-block mb-2">Tìm kiếm công việc</button>
+            </form>
         </div>
     </div>
 </div>
