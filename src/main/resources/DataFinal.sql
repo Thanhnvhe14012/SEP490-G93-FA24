@@ -406,7 +406,7 @@ CREATE TABLE `recruiter` (
   `account_id` bigint DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
   `company_code` varchar(255) DEFAULT NULL,
-  `company_status` int DEFAULT NULL,
+  `company_status` int DEFAULT 1,
   `company_logo` varchar(255) DEFAULT NULL,
   `company_location` varchar(255) DEFAULT NULL,
   `company_website` varchar(255) DEFAULT NULL,
