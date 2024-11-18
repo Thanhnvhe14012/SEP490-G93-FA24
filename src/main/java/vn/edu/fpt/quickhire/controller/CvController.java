@@ -178,4 +178,8 @@ public class CvController {
         }
     }
 
+    @GetMapping("/cv/template1")
+    public String cvTemplate1() {
+        return "cv/cvTemplate/cvTemplate1";
+    }
 }

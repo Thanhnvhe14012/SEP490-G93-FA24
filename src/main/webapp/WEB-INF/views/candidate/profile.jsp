@@ -159,6 +159,20 @@
             font-size: 0.9rem;
             font-weight: bold;
         }
+        .redirect-btn {
+            background-color: #ff5252; /* Red color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .redirect-btn:hover {
+            background-color: #ff1744; /* Darker shade of red on hover */
+        }
     </style>
 </head>
 <body>
@@ -242,6 +256,12 @@
             </div>
         </c:forEach>
     </div>
+    <button onclick="redirectToCVTemplate()" class="redirect-btn">Generate CV</button>
 </div>
+<script>
+    function redirectToCVTemplate() {
+        window.location.href = '/generate-pdf/${sessionScope.user.id}';
+    }
+</script>
 </body>
 </html>
