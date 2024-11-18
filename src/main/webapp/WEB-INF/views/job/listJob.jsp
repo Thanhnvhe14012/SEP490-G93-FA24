@@ -6,166 +6,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Tái sử dụng CSS hiện tại */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 0;     
-
+            padding: 0;
         }
-        .container {
-            max-height: 100%;
 
-            max-width: 1000px;
-            margin: 50px auto;
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
             background: #fff;
             padding: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
+            margin-bottom: 10px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
-        table thead {
-            background-color: #007bff;
-            color: #fff;
+
+        .actions select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-        table th, table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        table td {
-            text-align: center;
-        }
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        button, .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+
         button.add-btn {
             background-color: #28a745;
             color: white;
-            margin-bottom: 20px;
-            display: inline-block;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
+
         button.add-btn:hover {
             background-color: #218838;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table th, table td {
+            text-align: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
         .btn-icon {
-            display: inline-block;
-            font-size: 18px;
-            padding: 8px;
+            padding: 10px;
+            border: none;
             border-radius: 50%;
             color: white;
             cursor: pointer;
-            border: none;
-        }
-
-        .btn-icon.edit-btn {
-            background-color: #007bff; /* Màu xanh cho nút sửa */
             margin-right: 5px;
         }
 
+        .btn-icon.edit-btn {
+            background-color: #007bff;
+        }
+
         .btn-icon.delete-btn {
-            background-color: #dc3545; /* Màu đỏ cho nút xóa */
+            background-color: #dc3545;
         }
 
-        .btn-icon i {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-        }
-
-        .btn-icon.edit-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-icon.delete-btn:hover {
-            background-color: #c82333;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            width: 400px;
-            border-radius: 5px;
-        }
-        .modal.active {
-            display: block;
-        }
-        .modal-header {
-            font-size: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .modal-footer {
-            text-align: center;
+        .pagination {
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
         }
-        .modal input, .modal textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #007bff;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .modal-close {
-            float: right;
-            cursor: pointer;
-            font-size: 20px;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        .overlay.active {
-            display: block;
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
         }
 
     </style>
 </head>
-
 <body>
 
 <div class="container">
     <h1>Quản lý công việc</h1>
-
-    <a href="${pageContext.request.contextPath}/job/create"><button class="add-btn" >+ Thêm công việc </button></a>
+    <div class="actions">
+        <div>
+            <label for="filter">Lọc công việc:</label>
+            <select id="filter">
+                <option value="location">Địa điểm</option>
+                <option value="salary">Mức lương</option>
+                <option value="experience">Kinh nghiệm</option>
+                <option value="industry">Ngành nghề</option>
+            </select>
+        </div>
+        <a href="${pageContext.request.contextPath}/job/create">
+            <button class="add-btn">+ Thêm công việc</button>
+        </a>
+    </div>
 
     <table>
         <thead>
         <tr>
             <th>ID</th>
-            <th>Tên </th>
-            <th>Mô tả</th>
-            <th>Hoạt động</th>
+            <th>Tên công việc</th>
+            <th>Mô tả công việc</th>
+            <th>Địa chỉ<th>
+            <th>Hành động</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="job-list">
         <c:forEach var="job" items="${jobs}">
             <tr>
                 <td>${job.id}</td>
@@ -175,21 +156,40 @@
                     <a href="/job/edit/${job.id}" class="btn-icon edit-btn">
                         <i class="fas fa-pen"></i>
                     </a>
-                    <form action="/job/edit/${job.id}/delete" method="post" style="display:inline;">
-                        <button type="submit" class="btn-icon delete-btn">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
+                    <button class="btn-icon delete-btn" onclick="deleteJob(${job.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+
+    <div class="pagination">
+        <a href="?page=1">1</a>
+        <a href="?page=2">2</a>
+        <a href="?page=3">3</a>
+    </div>
 </div>
 
+<script>
+    function deleteJob(jobId) {
+        if (confirm('Bạn có chắc chắn muốn xóa công việc này?')) {
+            fetch(`/job/delete/${jobId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Xóa công việc thành công!');
+                        window.location.reload(); // Tải lại danh sách
+                    } else {
+                        alert('Có lỗi xảy ra khi xóa công việc!');
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    }
+</script>
+
 </body>
-<%@ include file="/WEB-INF/views/footer.jsp" %>
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </html>
