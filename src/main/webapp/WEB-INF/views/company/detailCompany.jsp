@@ -51,19 +51,6 @@
         <div class="page-inner">
             <div class="page-header">
                 <h3 class="fw-bold mb-3">Thông tin chi tiết công ty </h3>
-                <ul class="breadcrumbs mb-3">
-                    <li class="nav-home">
-                        <a href="#">
-                            <i class="icon-home"></i>
-                        </a>
-                    </li>
-                    <li class="separator">
-                        <i class="icon-arrow-right"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Detail</a>
-                    </li>
-                </ul>
             </div>
             <c:if test="${!isGuest}">
                 <c:if test="${company.company_status == 1}">
@@ -80,7 +67,7 @@
                         </button>
                     </div>
                 </c:if>
-                 <c:if test="${company.company_status == 0}">
+                <c:if test="${company.company_status == 0}">
                     <div class="d-flex align-items-center">
                         <button
                                 class="btn btn-warning btn-round ms-auto"
@@ -90,7 +77,7 @@
                                 onclick="restoreCompany(${company.id})"
                         >
                             <i class="fa fa-undo"></i> <!-- Trash icon for delete -->
-                           Khôi phục
+                            Khôi phục
                         </button>
                     </div>
                 </c:if>
@@ -98,9 +85,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-<%--                        <div class="card-header">--%>
-<%--                            <div class="card-title">Form Elements</div>--%>
-<%--                        </div>--%>
+                        <%--                        <div class="card-header">--%>
+                        <%--                            <div class="card-title">Form Elements</div>--%>
+                        <%--                        </div>--%>
                         <div class="card-body">
                             <form action="/updateCompany/${company.id}" method="POST"
                                   enctype="multipart/form-data">
@@ -124,12 +111,14 @@
                                         </div>
                                         <div class="form-group form-group-default">
                                             <label>Địa chỉ công ty</label>
-                                            <input id="location" type="text" class="form-control" name="company_location"
+                                            <input id="location" type="text" class="form-control"
+                                                   name="company_location"
                                                    value="${company.company_location}"/>
                                         </div>
                                         <div class="form-group form-group-default">
                                             <label>Quy mô nhân viên </label>
-                                            <input id="companyScale" type="number" class="form-control" name="companyScale"
+                                            <input id="companyScale" type="number" class="form-control"
+                                                   name="companyScale"
                                                    value="${company.companyScale}"/>
                                         </div>
                                     </div>
@@ -161,12 +150,12 @@
                                             <label>Trạng thái</label>
                                             <c:if test="${company.company_status == 0}">
                                                 <input id="status-display" type="text" class="form-control"
-                                                       value="De-active" readonly/>
+                                                       value="Bị Xóa" readonly/>
                                                 <input id="status" type="hidden" name="status" value="0"/>
                                             </c:if>
                                             <c:if test="${company.company_status == 1}">
                                                 <input id="status-display" type="text" class="form-control"
-                                                       value="Active" readonly/>
+                                                       value="Hoạt động" readonly/>
                                                 <input id="status" type="hidden" name="status" value="1"/>
                                             </c:if>
                                         </div>
@@ -249,7 +238,7 @@
 <script>
     function deleteCompany(id) {
         if (confirm('Xác nhận xóa công ty ?')) {
-            fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
+            fetch(`/deleteOrRestoreCompany/${id}`, {method: 'DELETE'})
                 .then(response => {
                     if (response.ok) {
                         alert('Xóa thành công');
@@ -264,7 +253,7 @@
 
     function restoreCompany(id) {
         if (confirm('Xác nhận khôi phục công ty ?')) {
-            fetch(`/deleteOrRestoreCompany/${id}`, { method: 'DELETE' })
+            fetch(`/deleteOrRestoreCompany/${id}`, {method: 'DELETE'})
                 .then(response => {
                     if (response.ok) {
                         alert('Khôi phục thành công');
