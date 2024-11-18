@@ -42,7 +42,7 @@
                                 <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Cẩm nang nghề nghiệp</a>
+                        <li><a href="/handbook">Cẩm nang nghề nghiệp</a>
                             <ul class="dropdown-nav">
                                 <li><a href="handbook-overview.html">Tổng quan cẩm nang</a></li>
                                 <li><a href="handbook-tips.html">Mẹo nghề nghiệp</a></li>
@@ -71,7 +71,7 @@
                             <ul class="utf-user-menu-dropdown-nav">
                                 <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
                                     khiển</a></li>
-                                <li><a href="dashboard-my-profile.html"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                 </li>
                                 <li><a href="index-1.html"><i class="icon-material-outline-power-settings-new"></i> Đăng
                                     xuất</a></li>
