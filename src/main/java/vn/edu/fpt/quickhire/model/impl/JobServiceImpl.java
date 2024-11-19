@@ -1,10 +1,13 @@
 package vn.edu.fpt.quickhire.model.impl;
 
+import jakarta.security.auth.message.config.AuthConfig;
 import jakarta.transaction.Transactional;
+import org.apache.http.auth.AUTH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
 import vn.edu.fpt.quickhire.model.JobService;
+import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
 import java.util.*;
 @Service
@@ -12,10 +15,15 @@ import java.util.*;
 public class JobServiceImpl implements JobService {
     @Autowired
     JobRepository jobRepository;
+    @Autowired
+    CompanyRepository companyRepository;
+
 
     @Transactional
     @Override
     public void CreateJob(Job job) {
+//        job.setRecruiter_id(4l);
+        job.setCompany(companyRepository.findById(job.getCompany_id()).get());
         jobRepository.save(job);
     }
 

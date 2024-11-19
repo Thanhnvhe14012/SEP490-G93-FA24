@@ -121,6 +121,7 @@
 
 <div class="container">
     <h1>Quản lý công việc</h1>
+    <h4 style="color:yellowgreen">${messsage} </h4>
     <div class="actions">
         <div>
             <label for="filter">Lọc công việc:</label>
@@ -152,6 +153,7 @@
                 <td>${job.id}</td>
                 <td>${job.name}</td>
                 <td>${job.description}</td>
+                <td>${job.addressId1 + job.addressId2 + job.addressId3}</td>
                 <td>
                     <a href="/job/edit/${job.id}" class="btn-icon edit-btn">
                         <i class="fas fa-pen"></i>
@@ -175,7 +177,7 @@
 <script>
     function deleteJob(jobId) {
         if (confirm('Bạn có chắc chắn muốn xóa công việc này?')) {
-            fetch(`/job/delete/${jobId}`, {
+            fetch(`/job/delete/`+ jobId, {
                 method: 'DELETE'
             })
                 .then(response => {
