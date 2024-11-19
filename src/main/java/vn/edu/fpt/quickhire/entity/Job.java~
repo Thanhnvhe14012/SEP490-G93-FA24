@@ -61,7 +61,7 @@ public class Job {
     @Column(name = "province_code")
     private String addressId1;
 
-    @Column(name = "district_code")
+    @Column(name = "district")
     private String addressId2;
 
     @Column(name = "ward_code")
