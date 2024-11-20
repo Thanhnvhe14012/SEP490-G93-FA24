@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.fpt.quickhire.entity.DTO.JobDTO;
 import vn.edu.fpt.quickhire.entity.District;
 import vn.edu.fpt.quickhire.entity.Job;
 import vn.edu.fpt.quickhire.entity.Ward;
@@ -33,9 +34,9 @@ public class JobController {
     //JobController
     @GetMapping("/job/list")
     public String listJobs(HttpSession session, Model model){
-        List<Job> jobs = jobService.GetAllJobs();
+        List<JobDTO> jobs = jobService.ShowAllJobs();
         model.addAttribute("jobs", jobs);
-        return "job/listJob"; // Trả về view editJob
+        return "job/listJob2"; // Trả về view editJob
     }
     @GetMapping("/candidate/job/list")
     public String listJobsCandidates(HttpSession session, Model model,@RequestParam(value = "search",defaultValue = "") String keyword){

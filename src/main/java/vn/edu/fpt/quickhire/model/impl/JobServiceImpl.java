@@ -5,11 +5,16 @@ import jakarta.transaction.Transactional;
 import org.apache.http.auth.AUTH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.edu.fpt.quickhire.entity.DTO.JobDTO;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.model.AddressService;
 import vn.edu.fpt.quickhire.model.JobService;
 import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
+import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
 import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 
 public class JobServiceImpl implements JobService {
@@ -17,6 +22,10 @@ public class JobServiceImpl implements JobService {
     JobRepository jobRepository;
     @Autowired
     CompanyRepository companyRepository;
+    @Autowired
+    AddressService addressService;
+    @Autowired
+    IndustryRepository industryRepository;
 
 
     @Transactional
@@ -49,6 +58,20 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<Job> GetAllJobs() {
         return jobRepository.findAll();
+    }
+
+    @Override
+    public List<JobDTO> ShowAllJobs() {
+        List<Job> jobs = this.jobRepository.findAll();
+        return jobs.stream().map(x -> new JobDTO(
+               x.getId(),
+                x.getName(),
+                x.getDescription(),
+                x.getSalary_min(),
+                x.getSalary_max(),
+                addressService.getAddressFromCode(x.getAddressId1(),x.getAddressId2(),x.getAddressId3()),
+                industryRepository.findById(x.getIndustry_id()).orElseThrow().getName()
+        )).collect(Collectors.toList());
     }
 
     @Override

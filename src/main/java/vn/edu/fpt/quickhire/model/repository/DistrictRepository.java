@@ -5,6 +5,6 @@ import vn.edu.fpt.quickhire.entity.District;
 
 import java.util.List;
 
-public interface DistrictRepository extends JpaRepository<District, Long> {
+public interface DistrictRepository extends JpaRepository<District, String> {
     List<District> findByProvinceCode(String provinceCode);
 }

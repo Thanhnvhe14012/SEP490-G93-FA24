@@ -26,6 +26,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public String getAddressFromCode(String provinceCode, String districtCode, String wardCode) {
+        return wardRepository.findById(wardCode).orElseThrow().getName() + "," + districtRepository.findById(districtCode).orElseThrow().getName() + "," + provinceRepository.findById(provinceCode).orElseThrow().getName();
+    }
+
+    @Override
     public List<District> getAllDistricts() {
         return this.districtRepository.findAll();
     }

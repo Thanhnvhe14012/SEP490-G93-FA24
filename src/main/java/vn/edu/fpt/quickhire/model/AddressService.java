@@ -9,6 +9,7 @@ import java.util.List;
 public interface AddressService {
     List<Province> getAllProvinces();
 
+    String getAddressFromCode(String provinceCode, String districtCode, String wardCode);
     List<District> getAllDistricts();
 
     List<Ward> getAllWards();
