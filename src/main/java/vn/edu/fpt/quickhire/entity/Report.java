@@ -25,11 +25,11 @@ public class Report {
     private int reportStatus;
 
     @ManyToOne(fetch = FetchType.LAZY,targetEntity = Candidate.class)
-    @JoinColumn(name = "candidate_id", referencedColumnName = "id",insertable=false, updatable=false)
+    @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     private Candidate candidate;
 
     @ManyToOne(fetch = FetchType.LAZY,targetEntity = Job.class)
-    @JoinColumn(name = "job_id", referencedColumnName = "id",insertable=false, updatable=false)
+    @JoinColumn(name = "job_id", referencedColumnName = "id")
     private Job job;
 
     public Report() {

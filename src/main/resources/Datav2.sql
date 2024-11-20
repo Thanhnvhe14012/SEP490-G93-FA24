@@ -1134,14 +1134,14 @@ CREATE TABLE `job`
     `end`                 datetime(6) DEFAULT NULL,
     `status`              int          DEFAULT NULL,
     `company_id`          bigint       DEFAULT NULL,
-    `recruiter_id`        int          DEFAULT NULL,
+    `recruiter_id`        bigint          DEFAULT NULL,
     `industry_id`         int          DEFAULT NULL,
     `salary_min`          int          DEFAULT NULL,
     `salary_max`          int          DEFAULT NULL,
     `company_description` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY                   `FK5q04favsasq8y70bsei7wv8fc` (`company_id`),
-    CONSTRAINT `FK5q04favsasq8y70bsei7wv8fc` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+    CONSTRAINT `FK5q04favsasq8y70bsei7wv8fc` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

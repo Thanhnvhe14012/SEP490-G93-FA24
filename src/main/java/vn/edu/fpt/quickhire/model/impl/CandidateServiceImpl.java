@@ -6,6 +6,8 @@ import vn.edu.fpt.quickhire.entity.Candidate;
 import vn.edu.fpt.quickhire.model.CandidateService;
 import vn.edu.fpt.quickhire.model.repository.CandidateRepository;
 
+import java.util.Optional;
+
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -15,6 +17,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public Candidate save(Candidate candidate) {
         return candidateRepository.save(candidate);
+    }
+
+    @Override
+    public Optional<Candidate> findById(long id) {
+        return candidateRepository.findById(id);
     }
 
 }
