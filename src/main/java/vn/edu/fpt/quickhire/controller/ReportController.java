@@ -1,5 +1,6 @@
 package vn.edu.fpt.quickhire.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,35 +40,51 @@ public class ReportController {
     private CandidateServiceImpl candidateService;
 
     @GetMapping("/report/addReport/{jobId}")
-    public String addReport (@SessionAttribute(name = "user", required = true) UserDTO userDTO,@PathVariable long jobId, Model model) {
-        if (userDTO != null && userDTO.getRole() == 3) {
-            Job job= jobService.GetJobById(jobId);
+    public String addReport(HttpSession session, @PathVariable long jobId, Model model) {
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO == null) {
+            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            return "redirect:/login";
+        }
+        if (userDTO.getRole() == 3) {
+            Job job = jobService.GetJobById(jobId);
             model.addAttribute("jobName", job.getName());
             model.addAttribute("jobId", job.getId());
             return "report/addReport";
         }
-        else return "homepage";
-
+        return "homepage";
     }
-
+    
     @PostMapping("/report/addReport")
-    public String addReport( Report report, Model model, @SessionAttribute(name = "user", required = true) UserDTO userDTO, long jobID) {
-        if (userDTO != null && userDTO.getRole() == 3) {
-            Optional<Candidate> candidate = candidateService.findById(userDTO.getId());
+    public String addReport(
+            Report report,
+            Model model,
+            HttpSession session,
+            @RequestParam long jobID) {
+
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        // Kiểm tra nếu user chưa đăng nhập
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        if (userDTO.getRole() == 3) {
+            Optional<Candidate> candidate = candidateService.findByAccountId(userDTO.getId());
             if (candidate.isPresent()) {
                 report.setCandidate(candidate.get());
             }
-            Job job= jobService.GetJobById(jobID);
+            Job job = jobService.GetJobById(jobID);
             report.setJob(job);
             report.setReportStatus(1);
             try {
                 reportService.save(report);
-                return "report/addReport";
+                model.addAttribute("report", "Tạo report thành công");
+                return "job/list";
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                model.addAttribute("error", "Đã xảy ra lỗi khi tạo report");
+                return "report/addReport";
             }
         }
-    model.addAttribute("report", "Tạo report thành công");
-    return "job/list";
+        return "homepage";
     }
+
 }

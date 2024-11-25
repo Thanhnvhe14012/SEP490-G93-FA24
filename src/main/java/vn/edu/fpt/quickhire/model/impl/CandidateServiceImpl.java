@@ -24,4 +24,9 @@ public class CandidateServiceImpl implements CandidateService {
         return candidateRepository.findById(id);
     }
 
+    @Override
+    public Optional<Candidate> findByAccountId(long id) {
+        return candidateRepository.findByAccount_Id(id);
+    }
+
 }
