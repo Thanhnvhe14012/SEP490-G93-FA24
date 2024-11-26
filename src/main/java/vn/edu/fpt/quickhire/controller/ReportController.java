@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.fpt.quickhire.entity.*;
+import vn.edu.fpt.quickhire.entity.DTO.ReportDTO;
 import vn.edu.fpt.quickhire.entity.DTO.StaffDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
@@ -43,7 +44,6 @@ public class ReportController {
     public String addReport(HttpSession session, @PathVariable long jobId, Model model) {
         UserDTO userDTO = (UserDTO) session.getAttribute("user");
         if (userDTO == null) {
-            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
             return "redirect:/login";
         }
         if (userDTO.getRole() == 3) {
@@ -54,7 +54,7 @@ public class ReportController {
         }
         return "homepage";
     }
-    
+
     @PostMapping("/report/addReport")
     public String addReport(
             Report report,
@@ -86,5 +86,62 @@ public class ReportController {
         }
         return "homepage";
     }
+
+
+    @GetMapping("/report/listReport")
+    public String listReport(HttpSession session, Model model) {
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+         if (userDTO == null) {
+            return "redirect:/login";
+        }
+        if (userDTO.getRole() == 1) {
+            List<Report> listReport = reportService.findAll();
+            model.addAttribute("listReport", listReport);
+            return "report/listReport";
+        }
+        return "homepage";
+    }
+
+    @GetMapping("/detailReport/{id}")
+    public String findById(HttpSession session, @PathVariable long id, Model model) {
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        if (userDTO.getRole() == 1) {
+            Report r = reportService.findById(id);
+            if (r == null) {
+                model.addAttribute("msg", "Report not found");
+                return "report/listReport";
+            }
+            model.addAttribute("report", r);
+            return "report/detailReport";
+        }
+        return "homepage";
+    }
+
+    @DeleteMapping("/deleteOrRestoreReport/{id}")
+    public ResponseEntity<String> deleteOrRestoreReport(@PathVariable long id) {
+        try {
+            Report existingReport = reportService.findById(id);
+            if (existingReport !=null) {
+                // Change the company status
+                if (existingReport.getReportStatus() == 1) {
+                    existingReport.setReportStatus(0);
+                    reportService.save(existingReport);
+                    return ResponseEntity.ok("Report deleted successfully.");
+                } else if (existingReport.getReportStatus() == 0) {
+                    existingReport.setReportStatus(1);
+                    reportService.save(existingReport);
+                    return ResponseEntity.ok("Report restored successfully.");
+                }
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Report not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update the Report status.");
+        }
+
+    }
+
 
 }
