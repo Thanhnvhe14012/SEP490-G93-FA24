@@ -316,7 +316,7 @@ CREATE TABLE `recruiter` (
   `company_name` varchar(255) DEFAULT NULL,
   `company_description` varchar(255) DEFAULT NULL,
   `company_scale` int DEFAULT NULL,
-  `company_status` varchar(255) DEFAULT NULl,
+  `company_status` varchar(255) DEFAULT 1,
   `company_logo` varchar(255) DEFAULT NULL,
   `manager_id` int DEFAULT NULL,
   `industry_id` int DEFAULT NULL,
@@ -332,7 +332,7 @@ CREATE TABLE `recruiter` (
 
 LOCK TABLES `recruiter` WRITE;
 /*!40000 ALTER TABLE `recruiter` DISABLE KEYS */;
-INSERT INTO `recruiter` VALUES (1,2,'Viettel','VDS',2,NULL,NULL),(2,4,'Samsung','Samsung VN',3,NULL,NULL),(3,5,'LG','LG Viet Nam',6,NULL,NULL),(5,7,'Viettel','VDS',2,2,0);
+-- INSERT INTO `recruiter` VALUES (1,2,'Viettel','VDS',2,NULL,NULL),(2,4,'Samsung','Samsung VN',3,NULL,NULL),(3,5,'LG','LG Viet Nam',6,NULL,NULL),(5,7,'Viettel','VDS',2,2,0);
 /*!40000 ALTER TABLE `recruiter` ENABLE KEYS */;
 UNLOCK TABLES;
 
