@@ -46,6 +46,11 @@ public class RecruiterServiceImpl implements RecruiterService {
     }
 
     @Override
+    public Recruiter findByAccount_Id(Long accountId) {
+        return recruiterRepository.findByAccount_Id(accountId);
+    }
+
+    @Override
     public List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode) {
         return recruiterRepository.findByManagerIdAndCompanyCode(managerId, companyCode);
     }

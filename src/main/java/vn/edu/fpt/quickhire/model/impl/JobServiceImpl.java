@@ -4,47 +4,62 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.model.JobService;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
+import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
+
 import java.util.*;
 @Service
 
 public class JobServiceImpl implements JobService {
     @Autowired
     JobRepository jobRepository;
-
-    @Transactional
-    @Override
-    public void CreateJob(Job job) {
-        jobRepository.save(job);
-    }
+    RecruiterRepository recruiterRepository;
 
     @Override
-    public Job GetJobById(Long id) {
-        Optional<Job> job = jobRepository.findById(id);
-        if(job.isPresent()) {
-            return job.get();
+    public Job createJob(Job jobDTO, Long accountId) {
+        Recruiter recruiter = recruiterRepository.findByAccount_Id(accountId);
+
+        if (recruiter == null) {
+            throw new RuntimeException("Recruiter not found for account ID: " + accountId);
         }
-        else return null;
+
+        Job job = new Job();
+        job.setName(jobDTO.getName());
+        job.setDescription(jobDTO.getDescription());
+        job.setBenefits(jobDTO.getBenefits());
+        job.setStart(jobDTO.getStart());
+        job.setEnd(jobDTO.getEnd());
+        job.setStatus(jobDTO.getStatus());
+        job.setIndustry_id(jobDTO.getIndustry_id());
+        job.setSalary_max(jobDTO.getSalary_max());
+        job.setSalary_min(jobDTO.getSalary_min());
+        job.setCompany_id(recruiter.getManagerId());
+        job.setCompany_description(recruiter.getCompanyDescription());
+        job.setRecruiter_id(recruiter.getId());
+
+        return jobRepository.save(job);
     }
 
     @Override
-    public void UpdateJob(Long id, Job job) {
-        Optional<Job> jobOptional = jobRepository.findById(id);
-        if(jobOptional.isPresent()) {
-            job.setId(id);
-            jobRepository.save(job);
-        }
-        else throw new IllegalArgumentException("Job not found");
+    public Job getJobById(Long id) {
+        return null;
     }
 
     @Override
-    public List<Job> GetAllJobs() {
+    public Job updateJob(Long id, Job job) {
+        return null;
+    }
+
+    @Override
+    public List<Job> getAllJobs() {
         return jobRepository.findAll();
     }
 
     @Override
-    public void DeleteById(Long id) {
-        jobRepository.deleteById(id);
+    public Job deleteById(Long id) {
+        return null;
     }
+
 }

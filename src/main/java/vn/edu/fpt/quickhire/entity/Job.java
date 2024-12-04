@@ -39,12 +39,20 @@ public class Job {
     @Column(name="company_id")
     private Long company_id;
 
+    @Column(name="recruiter_id")
+    private Long recruiter_id;
+
+    @Column(name="industry_id")
+    private Long industry_id;
+
+    @Column(name="salary_max")
+    private Integer salary_max;
+
+    @Column(name="salary_min")
+    private Integer salary_min;
+
     @Column(name = "company_description")
     private String company_description;
-
-    @ManyToOne(fetch = FetchType.LAZY,targetEntity = Company.class)
-    @JoinColumn(name = "company_id", referencedColumnName = "id",insertable=false, updatable=false)
-    private Company company;
 
     public Job() {
     }
