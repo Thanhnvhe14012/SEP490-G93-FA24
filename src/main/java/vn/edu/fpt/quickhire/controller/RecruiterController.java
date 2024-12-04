@@ -168,7 +168,7 @@ public class RecruiterController {
     }
 
     @GetMapping("/detailCompany/{id}")
-    public String findById(@PathVariable long id, Model model, @SessionAttribute(name = "user", required = true) UserDTO userDTO) {
+    public String findById(@PathVariable long id, Model model) {
 //        if (!userDTO.getRole() == 2) {
 //
 //
@@ -176,7 +176,7 @@ public class RecruiterController {
 //        }
         Optional<Recruiter> c = recruiterService.findById(id);
         if (!c.isPresent()) {
-            model.addAttribute("msg", "Company not found");
+            model.addAttribute("msg", "Không tìm thấy thông tin");
             return "company/listCompany";
         }
         Recruiter recruiter = c.get();

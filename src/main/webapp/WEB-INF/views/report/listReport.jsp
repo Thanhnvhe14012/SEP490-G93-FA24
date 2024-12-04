@@ -48,11 +48,11 @@
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <div class="wrapper">
-  <div class="main-panel" style="float: left">
+    <div class="main-panel" style="float: left">
         <div class="container">
             <div class="page-inner">
                 <div class="page-header">
-                     <ul class="breadcrumbs mb-3">
+                    <ul class="breadcrumbs mb-3">
                         <li class="nav-home">
                             <a href="#">
                                 <i class="icon-home"></i>
@@ -68,100 +68,98 @@
                             <i class="icon-arrow-right"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Danh sách công ty</a>
+                            <a href="#">Danh sách Report</a>
                         </li>
                     </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-body">
-                                <div class="table-responsive">
-                                    <table
-                                            id="basic-datatables"
-                                            class="display table table-striped table-hover"
-                                    >
-                                        <thead>
+                            <div class="table-responsive">
+                                <table
+                                        id="basic-datatables"
+                                        class="display table table-striped table-hover"
+                                >
+                                    <thead>
+                                    <tr>
+                                        <th>Lý do</th>
+                                        <th>Tin tuyển dụng</th>
+                                        <th>Người Report</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:if test="${listReport == null}">
                                         <tr>
-                                            <th>Mã Code</th>
-                                            <th>Logo</th>
-                                            <th>Tên Công ty</th>
-                                            <th>Mô tả công ty</th>
-                                            <th>Quy mô nhân viên</th>
-                                            <th>Trạng thái</th>
-                                            <th>Hành động</th>
+                                            <td colspan="8">${listNull}</td>
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        <c:if test="${listC == null}">
-                                            <tr>
-                                                <td colspan="8">${listNull}</td>
-                                            </tr>
-                                        </c:if>
-                                        <c:forEach var="company" items="${listC}">
-                                            <tr>
-                                                <td>${company.companyCode}</td>
-                                                <td><img src="${company.company_logo}" alt="Logo" width="50"/></td>
-                                                <td>${company.companyName}</td>
-                                                <td>${company.companyDescription}</td>
-                                                <td>${company.companyScale}</td>
-                                                <c:if test="${company.company_status==0}">
-                                                    <td>De-active</td>
-                                                </c:if>
-                                                <c:if test="${company.company_status==1}">
-                                                    <td>Active</td>
-                                                </c:if>
-                                                <td>
-                                                    <c:if test="${!isGuest}">
-                                                        <div class="form-button-action">
-                                                            <button
-                                                                    type="button"
-                                                                    class="btn btn-link btn-primary btn-lg"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-original-title="View Company"
-                                                                    onclick="window.location.href='${pageContext.request.contextPath}/detailCompany/${company.id}'">
-                                                                <i class="fa fa-edit"></i>
-                                                            </button>
-
+                                    </c:if>
+                                    <c:forEach var="report" items="${listReport}">
+                                        <tr>
+                                            <td>${report.reportReason}</td>
+                                            <td>${report.job.name}</td>
+                                            <td>${report.candidate.account.firstName}</td>
+                                            <c:if test="${report.reportStatus==0}">
+                                                <td>De-active</td>
+                                            </c:if>
+                                            <c:if test="${report.reportStatus==1}">
+                                                <td>Active</td>
+                                            </c:if>
+                                            <td>
+                                                <c:if test="${!isGuest}">
+                                                    <div class="form-button-action">
+                                                        <button
+                                                                type="button"
+                                                                class="btn btn-link btn-primary btn-lg"
+                                                                data-bs-toggle="tooltip"
+                                                                data-original-title="View Report"
+                                                                onclick="window.location.href='${pageContext.request.contextPath}/detailReport/${report.reportId}'">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <c:if test="${report.reportStatus==1}">
                                                             <button
                                                                     type="button"
                                                                     data-bs-toggle="tooltip"
                                                                     class="btn btn-link btn-danger"
                                                                     data-original-title="Remove"
-                                                                    onclick="deleteCompany(${company.id})">
+                                                                    onclick="deleteCompany(${report.reportId})">
                                                                 <i class="fa fa-times"></i>
                                                             </button>
-                                                        </div>
-                                                    </c:if>
-                                                    <c:if test="${isGuest}">
-                                                        <div class="form-button-action">
-                                                            <button
-                                                                    type="button"
-                                                                    class="btn btn-link btn-primary btn-lg"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-original-title="View Company"
-                                                                    onclick="window.location.href='${pageContext.request.contextPath}/detailCompany/${company.id}'">
-                                                                <i class="fa fa-eye"></i>
-                                                            </button>
-                                                        </div>
-                                                    </c:if>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                        </tbody>
+                                                        </c:if>
 
-                                    </table>
-                                </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${isGuest}">
+                                                    <div class="form-button-action">
+                                                        <button
+                                                                type="button"
+                                                                class="btn btn-link btn-primary btn-lg"
+                                                                data-bs-toggle="tooltip"
+                                                                data-original-title="View Report"
+                                                                onclick="window.location.href='${pageContext.request.contextPath}/detailReport/${report.reportId}'">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <footer class="footer">
-
-        </footer>
     </div>
+
+    <footer class="footer">
+
+    </footer>
+</div>
 
 
 </div>
@@ -236,9 +234,9 @@
     });
 </script>
 <script>
-    function deleteCompany(companyId) {
-        if (confirm('Xác định xóa công ty này ??')) {
-            fetch('${pageContext.request.contextPath}/Company/delete/' + companyId, {
+    function deleteCompany(reportId) {
+        if (confirm('Xác định xóa report này ??')) {
+            fetch('${pageContext.request.contextPath}/deleteOrRestoreReport/' + reportId, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -247,7 +245,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Xóa thành công !');
-                        window.location.href = '${pageContext.request.contextPath}/Company/listCompany';
+                        window.location.href = '${pageContext.request.contextPath}/report/listReport';
                     } else {
                         alert('Xóa thất bại.');
                     }

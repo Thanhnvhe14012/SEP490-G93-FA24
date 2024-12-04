@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="user" value="${sessionScope.user}"/>
 <c:set var="isGuest" value="${empty user}"/>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta
@@ -50,31 +52,31 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Thông tin chi tiết công ty </h3>
+                <h3 class="fw-bold mb-3">Thông tin chi tiết Report </h3>
             </div>
             <c:if test="${!isGuest}">
-                <c:if test="${company.company_status == 1}">
+                <c:if test="${report.reportStatus == 1}">
                     <div class="d-flex align-items-center">
                         <button
                                 class="btn btn-danger btn-round ms-auto"
                                 data-bs-toggle="modal"
                                 data-bs-target="#addRowModal"
                                 style="margin-bottom: 10px"
-                                onclick="deleteCompany(${company.id})"
+                                onclick="deleteCompany(${report.reportId})"
                         >
                             <i class="fa fa-trash"></i> <!-- Trash icon for delete -->
                             Xóa
                         </button>
                     </div>
                 </c:if>
-                <c:if test="${company.company_status == 0}">
+                <c:if test="${report.reportStatus == 0}">
                     <div class="d-flex align-items-center">
                         <button
                                 class="btn btn-warning btn-round ms-auto"
                                 data-bs-toggle="modal"
                                 data-bs-target="#addRowModal"
                                 style="margin-bottom: 10px"
-                                onclick="restoreCompany(${company.id})"
+                                onclick="restoreCompany(${report.reportId})"
                         >
                             <i class="fa fa-undo"></i> <!-- Trash icon for delete -->
                             Khôi phục
@@ -89,71 +91,49 @@
                         <%--                            <div class="card-title">Form Elements</div>--%>
                         <%--                        </div>--%>
                         <div class="card-body">
-                            <form action="/updateCompany/${company.id}" method="POST"
-                                  enctype="multipart/form-data">
+                            <form>
                                 <div class="row">
                                     <!-- Left (col-md-6) -->
                                     <div class="col-md-6">
                                         <div class="form-group form-group-default">
                                             <label>ID</label>
-                                            <input id="id" type="text" class="form-control" value="${company.id}"
+                                            <input id="id" type="text" class="form-control" value="${report.reportId}"
                                                    disabled/>
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <label>Mã Code</label>
-                                            <input id="code" type="text" class="form-control" name="companyCode"
-                                                   value="${company.companyCode}"/>
+                                            <label>Mô tả chi tiết</label>
+                                            <input id="code" type="text" class="form-control" name="reportDes"
+                                                   value="${report.reportDescription}"/>
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <label>Tên công ty</label>
-                                            <input id="name" type="text" class="form-control" name="companyName"
-                                                   value="${company.companyName}"/>
+                                            <label>Lý do</label>
+                                            <input id="name" type="text" class="form-control" name="reportReason"
+                                                   value="${report.reportReason}"/>
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <label>Địa chỉ công ty</label>
-                                            <input id="location" type="text" class="form-control"
-                                                   name="company_location"
-                                                   value="${company.company_location}"/>
+                                            <label>Tin tuyển dụng</label>
+                                            <input id="jobName" type="text" class="form-control"
+                                                   name="jobName"
+                                                   value="${report.job.name}"/>
                                         </div>
                                         <div class="form-group form-group-default">
-                                            <label>Quy mô nhân viên </label>
-                                            <input id="companyScale" type="number" class="form-control"
-                                                   name="companyScale"
-                                                   value="${company.companyScale}"/>
+                                            <label>Tên ứng viên report </label>
+                                            <input id="candidateName" type="text" class="form-control"
+                                                   name="candidateName"
+                                                   value="${report.candidate.account.firstName} ${report.candidate.account.middleName} ${report.candidate.account.lastName}"/>
                                         </div>
                                     </div>
 
                                     <!-- Right (col-md-6) -->
                                     <div class="col-md-6">
                                         <div class="form-group form-group-default">
-                                            <label>Mô tả công ty</label>
-                                            <input id="companyDescription" type="text"
-                                                   class="form-control form-control-lg h-1000" name="companyDescription"
-                                                   value="${company.companyDescription}"/>
-                                        </div>
-                                        <div class="form-group form-group-default">
-                                            <label>Logo</label>
-                                            <div>
-                                                <img id="logo-preview" src="${company.company_logo}" alt="Company Logo"
-                                                     style="max-height: 100px; margin-bottom: 10px;"/>
-                                            </div>
-                                            <input id="image" type="file" class="form-control" name="image"
-                                                   accept="image/*" onchange="previewImage(event)"/>
-                                        </div>
-                                        <div class="form-group form-group-default">
-                                            <label>Địa chỉ website: </label>
-                                            <input id="company_website" type="text" class="form-control"
-                                                   name="company_website"
-                                                   value="${company.company_website}"/>
-                                        </div>
-                                        <div class="form-group form-group-default">
                                             <label>Trạng thái</label>
-                                            <c:if test="${company.company_status == 0}">
+                                            <c:if test="${report.reportStatus == 0}">
                                                 <input id="status-display" type="text" class="form-control"
                                                        value="Bị Xóa" readonly/>
                                                 <input id="status" type="hidden" name="status" value="0"/>
                                             </c:if>
-                                            <c:if test="${company.company_status == 1}">
+                                            <c:if test="${report.reportStatus == 1}">
                                                 <input id="status-display" type="text" class="form-control"
                                                        value="Hoạt động" readonly/>
                                                 <input id="status" type="hidden" name="status" value="1"/>
@@ -166,7 +146,7 @@
                                         <div class="card-action">
                                             <button type="submit" class="btn btn-success">Xác nhận</button>
                                             <button type="button" class="btn btn-danger"
-                                                    onclick="window.location.href='/listCompany'">Hủy
+                                                    onclick="window.location.href='/report/listReport'">Hủy
                                             </button>
                                         </div>
                                     </c:if>
@@ -225,20 +205,11 @@
 
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
-<script>
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var output = document.getElementById('logo-preview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-</script>
+a
 <script>
     function deleteCompany(id) {
-        if (confirm('Xác nhận xóa công ty ?')) {
-            fetch(`/deleteOrRestoreCompany/${id}`, {method: 'DELETE'})
+        if (confirm('Xác nhận xóa report ?')) {
+            fetch(`/deleteOrRestoreReport/${id}`, {method: 'DELETE'})
                 .then(response => {
                     if (response.ok) {
                         alert('Xóa thành công');
@@ -252,8 +223,8 @@
     }
 
     function restoreCompany(id) {
-        if (confirm('Xác nhận khôi phục công ty ?')) {
-            fetch(`/deleteOrRestoreCompany/${id}`, {method: 'DELETE'})
+        if (confirm('Xác nhận khôi phục report ?')) {
+            fetch(`/deleteOrRestoreReport/${id}`, {method: 'DELETE'})
                 .then(response => {
                     if (response.ok) {
                         alert('Khôi phục thành công');
