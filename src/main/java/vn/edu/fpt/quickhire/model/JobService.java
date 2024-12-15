@@ -5,9 +5,10 @@ import vn.edu.fpt.quickhire.entity.Job;
 import java.util.List;
 
 public interface JobService {
-   void CreateJob(Job job);
-   Job GetJobById(Long id);
-   void UpdateJob(Long id,Job job);
-   List<Job> GetAllJobs();
-   void DeleteById(Long id);
+   Job createJob(Job jobDTO, Long accountId);
+   Job getJobById(Long id);
+   Job updateJob(Long id,Job job);
+   List<Job> getAllJobs();
+   Job deleteById(Long id);
+   List<Job> searchJobs(String name, Long industryId, String location);
 }

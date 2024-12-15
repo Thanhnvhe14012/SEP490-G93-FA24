@@ -18,5 +18,7 @@ public interface RecruiterService {
 
     Recruiter save(Recruiter recruiter);
 
+    Recruiter findByAccount_Id(Long accountId);
+
     List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode);
 }

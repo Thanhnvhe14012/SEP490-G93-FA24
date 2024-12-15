@@ -1,58 +1,67 @@
 package vn.edu.fpt.quickhire.model.impl;
 
-import jakarta.security.auth.message.config.AuthConfig;
 import jakarta.transaction.Transactional;
-import org.apache.http.auth.AUTH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.model.JobService;
-import vn.edu.fpt.quickhire.model.repository.CompanyRepository;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
+import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
+
 import java.util.*;
 @Service
 
 public class JobServiceImpl implements JobService {
     @Autowired
     JobRepository jobRepository;
-    @Autowired
-    CompanyRepository companyRepository;
-
-
-    @Transactional
-    @Override
-    public void CreateJob(Job job) {
-//        job.setRecruiter_id(4l);
-        job.setCompany(companyRepository.findById(job.getCompany_id()).get());
-        jobRepository.save(job);
-    }
+    RecruiterRepository recruiterRepository;
 
     @Override
-    public Job GetJobById(Long id) {
-        Optional<Job> job = jobRepository.findById(id);
-        if(job.isPresent()) {
-            return job.get();
+    public Job createJob(Job jobDTO, Long accountId) {
+        Recruiter recruiter = recruiterRepository.findByAccount_Id(accountId);
+
+        if (recruiter == null) {
+            throw new RuntimeException("Recruiter not found for account ID: " + accountId);
         }
-        else return null;
+
+        Job job = new Job();
+        job.setName(jobDTO.getName());
+        job.setDescription(jobDTO.getDescription());
+        job.setBenefits(jobDTO.getBenefits());
+        job.setStart(jobDTO.getStart());
+        job.setEnd(jobDTO.getEnd());
+        job.setStatus(jobDTO.getStatus());
+        job.setIndustry_id(jobDTO.getIndustry_id());
+        job.setSalary_max(jobDTO.getSalary_max());
+        job.setSalary_min(jobDTO.getSalary_min());
+        job.setCompany_id(recruiter.getManagerId());
+        job.setCompany_description(recruiter.getCompanyDescription());
+        job.setRecruiter_id(recruiter.getId());
+
+        return jobRepository.save(job);
     }
 
     @Override
-    public void UpdateJob(Long id, Job job) {
-        Optional<Job> jobOptional = jobRepository.findById(id);
-        if(jobOptional.isPresent()) {
-            job.setId(id);
-            jobRepository.save(job);
-        }
-        else throw new IllegalArgumentException("Job not found");
+    public Job getJobById(Long id) {
+        return jobRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Job> GetAllJobs() {
-        return jobRepository.findAll();
+    public Job updateJob(Long id, Job job) {
+        return null;
     }
 
     @Override
-    public void DeleteById(Long id) {
-        jobRepository.deleteById(id);
+    public List<Job> getAllJobs() {
+        return jobRepository.findAllWithIndustryAndRecruiter();
+    }
+
+    @Override
+    public Job deleteById(Long id) {
+        return null;
+    }
+    public List<Job> searchJobs(String name, Long industryId, String location) {
+        return jobRepository.searchJobs(name, industryId, location);
     }
 }

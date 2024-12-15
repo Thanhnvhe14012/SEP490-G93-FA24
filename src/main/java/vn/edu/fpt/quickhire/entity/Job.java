@@ -45,30 +45,22 @@ public class Job {
     @Column(name="industry_id")
     private Long industry_id;
 
-    @Column(name="salary_min")
-    private float salary_min;
-
     @Column(name="salary_max")
-    private float salary_max;
+    private Integer salary_max;
+
+    @Column(name="salary_min")
+    private Integer salary_min;
 
     @Column(name = "company_description")
     private String company_description;
 
-    @ManyToOne(fetch = FetchType.LAZY,targetEntity = Company.class)
-    @JoinColumn(name = "company_id", referencedColumnName = "id",insertable=false, updatable=false)
-    private Company company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "industry_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Industry industry; // Reference to the Industry
 
-    @Column(name = "province_code")
-    private String addressId1;
-
-    @Column(name = "district_code")
-    private String addressId2;
-
-    @Column(name = "ward_code")
-    private String addressId3;
-
-    @Column(name = "address")
-    private String address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    private Recruiter recruiter; // Reference to the Recruiter
 
     public Job() {
     }
@@ -83,5 +75,15 @@ public class Job {
         this.end = end;
         this.status = status;
         this.company_id = company_id;
+    }
+
+    public String getStatusAsString() {
+        switch (status) {
+            case 1: return "Toàn thời gian";
+            case 2: return "Bán thời gian";
+            case 3: return "Thời vụ";
+            case 4: return "Làm tại nhà";
+            default: return "N/A";
+        }
     }
 }

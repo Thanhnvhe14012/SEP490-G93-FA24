@@ -15,5 +15,5 @@ public class StaffDTO {
     private String addressId2;
     private String addressId3;
     private String address;
-    private int industryId;
+    private Long industryId;
 }
