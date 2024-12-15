@@ -36,14 +36,11 @@ public class AccountServiceImpl implements AccountService {
             userDTO.setMiddleName(account.getMiddleName());
             userDTO.setLastName(account.getLastName());
             userDTO.setEmail(account.getEmail());
-            if (account.getUserRole().getRole().getId() == 2) {
+            if (account.getUserRole().getRole().getId() == 2 || account.getUserRole().getRole().getId() == 3) {
                 userDTO.setCompanyName(account.getRecruiter().getCompanyName());
                 userDTO.setCompanyDescription(account.getRecruiter().getCompanyDescription());
                 userDTO.setCompanyScale(account.getRecruiter().getCompanyScale());
                 userDTO.setDisplayName(account.getRecruiter().getCompanyName());
-            }
-            else if(account.getUserRole().getRole().getId() == 3) {
-                userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
             }
             else if(account.getUserRole().getRole().getId() == 4) {
                 userDTO.setBiography(account.getCandidate().getBiography());

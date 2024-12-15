@@ -7,12 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.fpt.quickhire.entity.Handbook;
+import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
+import vn.edu.fpt.quickhire.entity.Industry;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.model.impl.IndustryServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.JobServiceImpl;
 
 import java.util.List;
-import java.util.Locale;
 
 
 @Controller
@@ -20,6 +21,8 @@ import java.util.Locale;
 public class JobController {
     @Autowired
     private JobServiceImpl jobService;
+    @Autowired
+    private IndustryServiceImpl industryService;
 
     @GetMapping("/create")
     public String showCreateJobForm() {
@@ -31,7 +34,8 @@ public class JobController {
             @RequestBody Job jobDTO, HttpSession session
     )
     {
-        Long accountId = (Long) session.getAttribute("accountId");
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        Long accountId = user.getId();
         if (accountId == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -40,4 +44,26 @@ public class JobController {
         return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
     }
 
+    @GetMapping()
+    public String getAllJobs(Model model) {
+        List<Job> jobs = jobService.getAllJobs();
+        List<Industry> industries = industryService.getAllIndustries();
+        System.out.println(jobs.get(0).getRecruiter());
+        model.addAttribute("jobs", jobs);
+        model.addAttribute("industries", industries);
+        return "job/listJob";
+    }
+
+    @GetMapping("/search")
+    public String searchJobs(@RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "industryId", required = false) Long industryId,
+                             @RequestParam(value = "location", required = false) String location,
+                             Model model) {
+        List<Job> jobs = jobService.searchJobs(name, industryId, location);
+        model.addAttribute("jobs", jobs);
+        model.addAttribute("searchName", name);
+        model.addAttribute("searchIndustryId", industryId);
+        model.addAttribute("searchLocation", location);
+        return "job/listJob";
+    }
 }

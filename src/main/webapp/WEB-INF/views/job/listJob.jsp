@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,192 +6,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Tái sử dụng CSS hiện tại */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .actions select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        button.add-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        button.add-btn:hover {
-            background-color: #218838;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table thead {
-            background-color: #007bff;
-            color: white;
-        }
-
-        table th, table td {
-            text-align: center;
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .btn-icon {
-            padding: 10px;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-
-        .btn-icon.edit-btn {
-            background-color: #007bff;
-        }
-
-        .btn-icon.delete-btn {
-            background-color: #dc3545;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination a {
-            margin: 0 5px;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #007bff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .pagination a:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-    </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Quản lý công việc</h1>
-    <h4 style="color:yellowgreen">${messsage} </h4>
-    <div class="actions">
-        <div>
-            <label for="filter">Lọc công việc:</label>
-            <select id="filter">
-                <option value="location">Địa điểm</option>
-                <option value="salary">Mức lương</option>
-                <option value="experience">Kinh nghiệm</option>
-                <option value="industry">Ngành nghề</option>
-            </select>
+<div id="wrapper">
+    <%@ include file="/WEB-INF/views/header.jsp" %>
+    <div id="titlebar" class="gradient">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Danh sách công việc</h2>
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a href="index-1.html">Home</a></li>
+                            <li>Danh sách công việc</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-        <a href="${pageContext.request.contextPath}/job/create">
-            <button class="add-btn">+ Thêm công việc</button>
-        </a>
     </div>
+    <!-- Search Jobs Start -->
+    <div class="inner_search_block_section padding-top-0 padding-bottom-40">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="utf-intro-banner-search-form-block">
+                    <div class="utf-intro-search-field-item">
+                        <i class="icon-feather-search"></i>
+                        <input id="intro-keywords" name="name" type="text" placeholder="Tên công việc">
+                    </div>
+                    <div class="utf-intro-search-field-item">
+                        <select name="location" class="selectpicker default" data-live-search="true" title="Vị trí">
+                            <option value="">Chọn vị trí</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                        </select>
+                    </div>
+                    <!-- Ensure the button is here, and not duplicated elsewhere -->
+                    <div class="utf-intro-search-button">
+                        <button class="button ripple-effect" type="submit">
+                            <i class="icon-material-outline-search"></i> Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Jobs End -->
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên công việc</th>
-            <th>Mô tả công việc</th>
-            <th>Địa chỉ<th>
-            <th>Hành động</th>
-        </tr>
-        </thead>
-        <tbody id="job-list">
-        <c:forEach var="job" items="${jobs}">
-            <tr>
-                <td>${job.id}</td>
-                <td>${job.name}</td>
-                <td>${job.description}</td>
-                <td>${job.addressId1 + job.addressId2 + job.addressId3}</td>
-                <td>
-                    <a href="/job/edit/${job.id}" class="btn-icon edit-btn">
-                        <i class="fas fa-pen"></i>
-                    </a>
-                    <button class="btn-icon delete-btn" onclick="deleteJob(${job.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4">
+                <div class="utf-sidebar-container-aera">
+                    <div class="utf-sidebar-widget-item">
+                        <h3>Category</h3>
+                        <select name="industryId" class="selectpicker" data-live-search="true"
+                                data-selected-text-format="count"
+                                data-size="7" title="All Categories">
+                            <option value="">All Categories</option>
+                            <c:forEach var="industry" items="${industries}">
+                                <option value="${industry.id}">${industry.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="utf-inner-search-section-title">
+                    <h4><i class="icon-material-outline-search"></i> Search Jobs Listing Results</h4>
+                </div>
+                <div class="utf-notify-box-aera margin-top-15">
+                    <div class="utf-switch-container-item">
+                        <span>Showing ${jobs.size()} Job Results :</span>
+                    </div>
+                    <div class="sort-by">
+                        <span>Sort By:</span>
+                        <select class="selectpicker hide-tick">
+                            <option>A to Z</option>
+                            <option>Newest</option>
+                            <option>Oldest</option>
+                            <option>Random</option>
+                        </select>
+                    </div>
+                </div>
 
-    <div class="pagination">
-        <a href="?page=1">1</a>
-        <a href="?page=2">2</a>
-        <a href="?page=3">3</a>
+                <div class="utf-listings-container-part compact-list-layout margin-top-35">
+                    <c:forEach var="job" items="${jobs}">
+                        <a href="single-job-page.html" class="utf-job-listing">
+                            <div class="utf-job-listing-details">
+                                <div class="utf-job-listing-company-logo">
+                                    <img src="${job.recruiter.company_logo}" alt="Company Logo">
+                                </div>
+                                <div class="utf-job-listing-description">
+                        <span class="dashboard-status-button utf-job-status-item green">
+                            <i class="icon-material-outline-business-center"></i> ${job.getStatusAsString()}
+                        </span>
+                                    <h3 class="utf-job-listing-title">${job.name}</h3>
+                                    <div class="utf-job-listing-footer">
+                                        <ul>
+                                            <li><i class="icon-feather-briefcase"></i> ${job.industry.name}</li>
+                                            <li>
+                                                <i class="icon-material-outline-account-balance-wallet"></i> ${job.salary_min}
+                                                - ${job.salary_max}</li>
+                                            <li>
+                                                <i class="icon-material-outline-location-on"></i> ${job.recruiter.company_location}
+                                            </li>
+                                            <li><i class="icon-material-outline-access-time"></i> ${job.start}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="bookmark-icon"></span>
+                            </div>
+                        </a>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script>
-    function deleteJob(jobId) {
-        if (confirm('Bạn có chắc chắn muốn xóa công việc này?')) {
-            fetch(`/job/delete/`+ jobId, {
-                method: 'DELETE'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Xóa công việc thành công!');
-                        window.location.reload(); // Tải lại danh sách
-                    } else {
-                        alert('Có lỗi xảy ra khi xóa công việc!');
-                    }
-                })
-                .catch(err => console.error(err));
-        }
-    }
-</script>
-
+<!-- Page Content -->
 </body>
 </html>

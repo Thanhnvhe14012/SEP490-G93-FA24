@@ -11,10 +11,8 @@ import java.util.List;
 @Service
 public class IndustryServiceImpl implements IndustryService {
     @Autowired
-    private IndustryRepository industryRepository;
+    IndustryRepository industryRepository;
 
     @Override
-    public List<Industry> getAllIndustries() {
-        return industryRepository.findAll();
-    }
+    public List<Industry> getAllIndustries() { return industryRepository.findAll(); }
 }

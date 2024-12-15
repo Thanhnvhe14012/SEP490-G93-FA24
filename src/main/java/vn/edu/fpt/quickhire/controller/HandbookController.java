@@ -79,7 +79,6 @@ public class HandbookController {
     @GetMapping()
     public String getAllHandbooks(Model model) {
         List<Handbook> handbookList = handbookService.findAllHandbooks();
-        System.out.println("Here is handbooklist: " + handbookList);
         model.addAttribute("handbookList", handbookList); // Add the list to the model
         return "handbook/handbookPage"; // Ensure this matches your JSP path
     }

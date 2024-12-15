@@ -10,4 +10,5 @@ public interface JobService {
    Job updateJob(Long id,Job job);
    List<Job> getAllJobs();
    Job deleteById(Long id);
+   List<Job> searchJobs(String name, Long industryId, String location);
 }

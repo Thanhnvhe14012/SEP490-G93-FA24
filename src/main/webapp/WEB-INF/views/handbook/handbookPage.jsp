@@ -17,8 +17,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-<%@ include file="/WEB-INF/views/header.jsp" %>
 <div id="wrapper">
+    <%@ include file="/WEB-INF/views/header.jsp" %>
     <div id="titlebar" class="gradient">
         <div class="container">
             <div class="row">

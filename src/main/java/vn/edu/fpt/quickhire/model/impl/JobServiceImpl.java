@@ -44,7 +44,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job getJobById(Long id) {
-        return null;
+        return jobRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -54,12 +54,14 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+        return jobRepository.findAllWithIndustryAndRecruiter();
     }
 
     @Override
     public Job deleteById(Long id) {
         return null;
     }
-
+    public List<Job> searchJobs(String name, Long industryId, String location) {
+        return jobRepository.searchJobs(name, industryId, location);
+    }
 }
