@@ -25,17 +25,25 @@ public class JobController {
     private IndustryServiceImpl industryService;
 
     @GetMapping("/create")
-    public String showCreateJobForm() {
+    public String showCreateJobForm(Model model, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("job", new Job());
+        List<Industry> industries = industryService.getAllIndustries();
+        model.addAttribute("industries", industries);
         return "job/createJob";
     }
 
     @PostMapping("/create")
     public ResponseEntity<Job>  createJob(
-            @RequestBody Job jobDTO, HttpSession session
+            @ModelAttribute Job jobDTO, HttpSession session
     )
     {
         UserDTO user = (UserDTO) session.getAttribute("user");
         Long accountId = user.getId();
+        System.out.println("Session user: " + accountId);
         if (accountId == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -48,7 +56,6 @@ public class JobController {
     public String getAllJobs(Model model) {
         List<Job> jobs = jobService.getAllJobs();
         List<Industry> industries = industryService.getAllIndustries();
-        System.out.println(jobs.get(0).getRecruiter());
         model.addAttribute("jobs", jobs);
         model.addAttribute("industries", industries);
         return "job/listJob";

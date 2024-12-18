@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="utf-job-listing-description">
                         <span class="dashboard-status-button utf-job-status-item green">
-                            <i class="icon-material-outline-business-center"></i> ${job.getStatusAsString()}
+                            <i class="icon-material-outline-business-center"></i> ${job.getTypeAsString()}
                         </span>
                                     <h3 class="utf-job-listing-title">${job.name}</h3>
                                     <div class="utf-job-listing-footer">

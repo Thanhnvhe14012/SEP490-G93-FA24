@@ -54,6 +54,12 @@ public class Job {
     @Column(name = "company_description")
     private String company_description;
 
+    @Column(name = "type")
+    private Integer type;
+
+    @Column(name = "level")
+    private Integer level;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "industry_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Industry industry; // Reference to the Industry
@@ -65,7 +71,7 @@ public class Job {
     public Job() {
     }
 
-    public Job(Long id, String company_description, String benefits, String name, String description, Date start, Date end, Integer status, Long company_id) {
+    public Job(Long id, String company_description, String benefits, String name, String description, Date start, Date end, Integer status, Long company_id, Integer type, Integer level) {
         this.id = id;
         this.company_description = company_description;
         this.benefits = benefits;
@@ -75,14 +81,26 @@ public class Job {
         this.end = end;
         this.status = status;
         this.company_id = company_id;
+        this.type = type;
+        this.level = level;
     }
 
-    public String getStatusAsString() {
-        switch (status) {
+    public String getTypeAsString() {
+        switch (type) {
             case 1: return "Toàn thời gian";
             case 2: return "Bán thời gian";
             case 3: return "Thời vụ";
             case 4: return "Làm tại nhà";
+            default: return "N/A";
+        }
+    }
+
+    public String getLevelAsString() {
+        switch (level) {
+            case 1: return "Thực tập sinh";
+            case 2: return "Nhân viên";
+            case 3: return "Quản Lý";
+            case 4: return "Giám đốc";
             default: return "N/A";
         }
     }
