@@ -68,163 +68,65 @@
 
 
 <h4 style="color:yellowgreen">${messsage} </h4>
-<body class="main">
 <body>
 <div class="container">
     <a href="${pageContext.request.contextPath}/job/list">< Quay lại danh sách</a>
 
     <h1 class="title">Tạo công việc</h1>
 
-    <form:form modelAttribute="job" class="form-main"  method="post" onsubmit="return validateForm();">
-<%--        <label for="id">Mã Công Việc</label>--%>
-<%--        <form:input path="id" type="number" id="id" name="id" required="true"/>--%>
+    <form:form modelAttribute="job" class="form-main" method="post"
+               action="${pageContext.request.contextPath}/job/create">
         <label for="name">Tên</label>
-        <form:input path="name" type="text" id="name" name="name" required="true"/>
+        <form:input path="name" type="text" id="name" required="true"/>
 
         <label for="industry_id">Chọn Lĩnh vực:</label>
-            <form:select id="industry_id" name="industry_id" path="industry_id">
-              <option value="">Select Industry</option>
-              <c:forEach var="industry" items="${industries}">
+        <form:select id="industry_id" path="industry_id">
+            <option value="">Chọn lĩnh vực</option>
+            <c:forEach var="industry" items="${industries}">
                 <option value="${industry.id}">${industry.name}</option>
-              </c:forEach>
-            </form:select>
-            <label for="description">Mô tả công việc</label>
-            <form:textarea path="description" id="description" rows="4" required="true" />
+            </c:forEach>
+        </form:select>
 
-            <label for="minSalary">Lương tối thiểu</label>
-            <form:textarea path="salary_min" id="minSalary" rows="1" required="true" />
+        <label for="description">Mô tả công việc</label>
+        <form:textarea path="description" id="description" rows="4" required="true"/>
 
-            <label for="maxSalary">Lương tối đa</label>
-            <form:textarea path="salary_max" id="maxSalary" rows="1" required="true" />
+        <label for="type">Loại công việc:</label>
+        <form:select id="type" path="type" required="true">
+            <form:option value="">Chọn loại công việc</form:option>
+            <form:option value="1">Toàn thời gian</form:option>
+            <form:option value="2">Bán thời gian</form:option>
+            <form:option value="3">Thời vụ</form:option>
+            <form:option value="4">Làm tại nhà</form:option>
+        </form:select>
 
-            <label for="benefits">Quyền lợi</label>
-            <form:textarea path="benefits" id="benefits" rows="4" required="true" />
+        <label for="level">Cấp bậc</label>
+        <form:select id="level" path="level" required="true">
+            <form:option value="">Cấp bậc</form:option>
+            <form:option value="1">Thực tập sinh</form:option>
+            <form:option value="2">Nhân viên</form:option>
+            <form:option value="3">Quản Lý</form:option>
+            <form:option value="4">Giám đốc</form:option>
+        </form:select>
 
-            <label>Địa chỉ:</label>
+        <label for="salary_min">Lương tối thiểu (VNĐ)</label>
+        <form:input path="salary_min" id="salary_min" type="number" required="true"/>
 
-            <!-- Select Province -->
-            <label for="addressId1">Chọn Tỉnh:</label>
-            <form:select id="addressId1" name="provinceCode" path="addressId1">
-              <option value="">Select Province</option>
-              <c:forEach var="province" items="${provinces}">
-                <option value="${province.code}">${province.name}</option>
-              </c:forEach>
-            </form:select>
+        <label for="salary_max">Lương tối đa (VNĐ)</label>
+        <form:input path="salary_max" id="salary_max" type="number" required="true"/>
 
-            <!-- Select District -->
-            <label for="addressId2">Chọn Huyện:</label>
-            <form:select id="addressId2" name="districtCode" path="addressId2">
-                <option value="">Select District</option>
-            </form:select>
+        <label for="benefits">Quyền lợi</label>
+        <form:textarea path="benefits" id="benefits" rows="4" required="true"/>
 
-            <!-- Select Ward -->
-            <label for="addressId3">Chọn Xã:</label>
-            <form:select id="addressId3" name="wardCode" path="addressId3">
-                <option value="">Select Ward</option>
-            </form:select>
-            <br>
+        <label for="start">Ngày bắt đầu nhận đơn</label>
+        <form:input path="start" id="start" type="date" required="true"/>
 
-            <div class="form-group">
-                <label for="address">Địa chỉ chi tiết:</label>
-                <form:input id="address" name="address" class="form-control" type="text" style="width: 100%;" path="address"/>
-            </div>
+        <label for="end">Ngày kết thúc nhận đơn</label>
+        <form:input path="end" id="end" type="date" required="true"/>
 
-            <label for="start">Ngày bắt đầu</label>
-            <form:input path="start" id="start" type="date" required="true" />
-
-            <label for="end">Ngày kết thúc</label>
-            <form:input path="end" id="end" type="date" required="true" />
-
-            <label for="status">Trạng thái</label>
-            <form:select path="status" id="status" required="true">
-                <form:option value="1">Mở </form:option>
-                <form:option value="2">Đóng</form:option>
-            </form:select>
-
-            <label for="company_id">ID công ty</label>
-            <form:select id="company_id" name="company_id" path="company_id">
-              <option value="">Select Company</option>
-              <c:forEach var="company" items="${companies}">
-                <option value="${company.id}">${company.companyName}</option>
-              </c:forEach>
-            </form:select>
-            <input type="submit" style="margin-top: 20px;" value="Create Job" />
+        <input type="submit" style="margin-top: 20px;" value="Tạo Công Việc"/>
     </form:form>
 </div>
 </body>
-<script>
-    $(document).ready(function () {
-        // Update Districts on Province Change
-        $('#addressId1').change(function () {
-            const provinceCode = $(this).val();
-            $.ajax({
-                url: 'getDistricts',
-                type: 'GET',
-                data: { provinceCode: provinceCode },
-                success: function (data) {
-                    let districtOptions = '<option value="">--Select District--</option>';
-                    data.forEach(district => {
-                        districtOption = '<option value="' + district.code + '">' + district.name + '</option>';
-                        <%--districtOptions += `<option value="${districtCode}">${districtName}</option>`;--%>
-                        districtOptions += districtOption;
-                    });
-                    $('#addressId2').html(districtOptions);
-                    $('#addressId3').html('<option value="">--Select Ward--</option>'); // Reset Wards
-                }
-            });
-        });
-
-        // Update Wards on District Change
-        $('#addressId2').change(function () {
-            const districtCode = $(this).val();
-            $.ajax({
-                url: 'getWards',
-                type: 'GET',
-                data: { districtCode: districtCode },
-                success: function (data) {
-                    let wardOptions = '<option value="">--Select Ward--</option>';
-                    data.forEach(ward => {
-                        wardOption = '<option value="' + ward.code + '">' + ward.name + '</option>';
-                        <%--districtOptions += `<option value="${districtCode}">${districtName}</option>`;--%>
-                        wardOptions += wardOption;
-                    });
-                    $('#addressId3').html(wardOptions);
-                }
-            });
-        });
-    });
-
-    function validateSalaries() {
-        const minSalary = parseFloat(document.getElementById('minSalary').value);
-        const maxSalary = parseFloat(document.getElementById('maxSalary').value);
-
-        if (isNaN(minSalary) || isNaN(maxSalary)) {
-            alert('Both salaries must be valid numbers.');
-            return false;
-        }
-
-        if (minSalary > maxSalary) {
-            alert('Minimum salary must be less than or equal to maximum salary.');
-            return false;
-        }
-
-        return true;
-    }
-    function validateForm() {
-        return validateSalaries() && validateDate();
-    }
-    function validateDate() {
-        const startDate = new Date(document.getElementById('start').value);
-        const endDate = new Date(document.getElementById('end').value);
-
-        if (startDate > endDate) {
-            alert('Start date must be before end date.');
-            return false;
-        }
-
-        return true;
-    }
-</script>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
 
 </html>

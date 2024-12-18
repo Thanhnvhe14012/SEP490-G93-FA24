@@ -15,6 +15,7 @@ import java.util.*;
 public class JobServiceImpl implements JobService {
     @Autowired
     JobRepository jobRepository;
+    @Autowired
     RecruiterRepository recruiterRepository;
 
     @Override
@@ -25,6 +26,15 @@ public class JobServiceImpl implements JobService {
             throw new RuntimeException("Recruiter not found for account ID: " + accountId);
         }
 
+        System.out.println("Recruiter id: " + recruiter.getAccount().getId());
+        System.out.println("Manager id: " + recruiter.getManagerId());
+        System.out.println("company " + recruiter.getCompanyDescription());
+        Job job = getJob(jobDTO, recruiter);
+
+        return jobRepository.save(job);
+    }
+
+    private static Job getJob(Job jobDTO, Recruiter recruiter) {
         Job job = new Job();
         job.setName(jobDTO.getName());
         job.setDescription(jobDTO.getDescription());
@@ -35,11 +45,12 @@ public class JobServiceImpl implements JobService {
         job.setIndustry_id(jobDTO.getIndustry_id());
         job.setSalary_max(jobDTO.getSalary_max());
         job.setSalary_min(jobDTO.getSalary_min());
+        job.setLevel(jobDTO.getLevel());
+        job.setType(jobDTO.getType());
         job.setCompany_id(recruiter.getManagerId());
         job.setCompany_description(recruiter.getCompanyDescription());
-        job.setRecruiter_id(recruiter.getId());
-
-        return jobRepository.save(job);
+        job.setRecruiter_id(recruiter.getAccount().getId());
+        return job;
     }
 
     @Override
