@@ -60,8 +60,15 @@ public class Account {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Recruiter recruiter;
 
+    // Quan hệ một account chỉ có duy nhất một staff
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Staff staff;
+
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserRole userRole;
+
+    @Column(name = "role")
+    private Long role;
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
@@ -77,5 +84,8 @@ public class Account {
         recruiter.setAccount(this);
     }
 
-
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+        staff.setAccount(this);
+    }
 }
