@@ -39,9 +39,6 @@
         @Column(name = "manager_id")
         private Long managerId;
 
-        @Column(name = "industry_id")
-        private Long industryId;
-
         @OneToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "account_id")
         private Account account;
@@ -58,7 +55,6 @@
             this.company_status = company_status;
             this.company_logo = company_logo;
             this.managerId = managerId;
-            this.industryId = industryId;
             this.account = account;
         }
     }
