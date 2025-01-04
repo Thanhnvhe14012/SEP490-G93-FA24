@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,12 +107,16 @@
                                         <ul>
                                             <li><i class="icon-feather-briefcase"></i> ${job.industry.name}</li>
                                             <li>
-                                                <i class="icon-material-outline-account-balance-wallet"></i> ${job.salary_min}
-                                                - ${job.salary_max}</li>
-                                            <li>
-                                                <i class="icon-material-outline-location-on"></i> ${job.recruiter.company_location}
+                                                <i class="icon-material-outline-account-balance-wallet"></i>
+                                                    ${job.salary_min/1000000} - ${job.salary_max/1000000} triệu
                                             </li>
-                                            <li><i class="icon-material-outline-access-time"></i> ${job.start}</li>
+                                            <li>
+                                            <i class="icon-material-outline-location-on"></i> ${job.recruiter.account.addressId1}
+                                            </li>
+                                            <li>
+                                                <i class="icon-material-outline-access-time"></i>
+                                                <fmt:formatDate value="${job.start}" pattern="dd/MM/yyyy"/>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

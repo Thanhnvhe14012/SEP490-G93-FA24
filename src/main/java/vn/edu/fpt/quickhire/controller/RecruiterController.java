@@ -89,7 +89,6 @@ public class RecruiterController {
             recruiter.setCompanyScale(userDTO.getCompanyScale());
             recruiter.setCompanyName(userDTO.getCompanyName());
             recruiter.setIndustryId(staff.getIndustryId());
-            recruiter.setManagerId(userDTO.getId());
 
 
             Role existingRole = roleRepository.findById(Long.valueOf(4))
@@ -109,63 +108,63 @@ public class RecruiterController {
     }
 
 
-    @DeleteMapping("/deleteOrRestoreCompany/{id}")
-    public ResponseEntity<String> deleteOrRestoreCompany(@PathVariable long id) {
-        try {
-            Optional<Recruiter> existingRecruiter = recruiterService.findById(id);
-            if (existingRecruiter.isPresent()) {
-                Recruiter oldR = existingRecruiter.get();
-                Hibernate.initialize(oldR.getAccount());
-                int status = oldR.getCompany_status();
-                List<Recruiter> listStaff = recruiterService.findByManagerIdAndCompanyCode(oldR.getAccount().getId(), oldR.getCompanyCode());
-
-                // Change the company status
-                if (status == 1) {
-                    oldR.setCompany_status(0);
-                    recruiterService.save(oldR);
-                    if (!listStaff.isEmpty()) {
-                        for (Recruiter staff : listStaff) {
-                            staff.setCompany_status(0);
-                            recruiterService.save(staff);
-                        }
-                    }
-                    return ResponseEntity.ok("Company deleted successfully.");
-                } else if (status == 0) {
-                    oldR.setCompany_status(1);
-                    recruiterService.save(oldR);
-                    if (!listStaff.isEmpty()) {
-                        for (Recruiter staff : listStaff) {
-                            staff.setCompany_status(1);
-                            recruiterService.save(staff);
-                        }
-                    }
-                    return ResponseEntity.ok("Company restored successfully.");
-                }
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update the company status.");
-        }
-    }
-
-
-    @GetMapping("/listCompany")
-    public String list(Model model) {
-        List<Recruiter> listC = recruiterService.findAll();
-        // dùng để lấy các bản ghi unique
-        List<Recruiter> listUniqueC= listC.stream()
-                .collect(Collectors.toMap(
-                        Recruiter::getCompanyCode,
-                        Function.identity(),
-                        (existing, replacement) -> existing // Keep the first encountered record
-                ))
-                .values()
-                .stream()
-                .collect(Collectors.toList());
-        model.addAttribute("listC", listUniqueC);
-        model.addAttribute("listNull", "listNullText");
-        return "company/listCompany";
-    }
+//    @DeleteMapping("/deleteOrRestoreCompany/{id}")
+//    public ResponseEntity<String> deleteOrRestoreCompany(@PathVariable long id) {
+//        try {
+//            Optional<Recruiter> existingRecruiter = recruiterService.findById(id);
+//            if (existingRecruiter.isPresent()) {
+//                Recruiter oldR = existingRecruiter.get();
+//                Hibernate.initialize(oldR.getAccount());
+//                int status = oldR.getCompany_status();
+//                List<Recruiter> listStaff = recruiterService.findByManagerIdAndCompanyCode(oldR.getAccount().getId(), oldR.getCompanyCode());
+//
+//                // Change the company status
+//                if (status == 1) {
+//                    oldR.setCompany_status(0);
+//                    recruiterService.save(oldR);
+//                    if (!listStaff.isEmpty()) {
+//                        for (Recruiter staff : listStaff) {
+//                            staff.setCompany_status(0);
+//                            recruiterService.save(staff);
+//                        }
+//                    }
+//                    return ResponseEntity.ok("Company deleted successfully.");
+//                } else if (status == 0) {
+//                    oldR.setCompany_status(1);
+//                    recruiterService.save(oldR);
+//                    if (!listStaff.isEmpty()) {
+//                        for (Recruiter staff : listStaff) {
+//                            staff.setCompany_status(1);
+//                            recruiterService.save(staff);
+//                        }
+//                    }
+//                    return ResponseEntity.ok("Company restored successfully.");
+//                }
+//            }
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update the company status.");
+//        }
+//    }
+//
+//
+//    @GetMapping("/listCompany")
+//    public String list(Model model) {
+//        List<Recruiter> listC = recruiterService.findAll();
+//        // dùng để lấy các bản ghi unique
+//        List<Recruiter> listUniqueC= listC.stream()
+//                .collect(Collectors.toMap(
+//                        Recruiter::getCompanyCode,
+//                        Function.identity(),
+//                        (existing, replacement) -> existing // Keep the first encountered record
+//                ))
+//                .values()
+//                .stream()
+//                .collect(Collectors.toList());
+//        model.addAttribute("listC", listUniqueC);
+//        model.addAttribute("listNull", "listNullText");
+//        return "company/listCompany";
+//    }
 
     @GetMapping("/detailCompany/{id}")
     public String findById(@PathVariable long id, Model model) {
@@ -184,88 +183,88 @@ public class RecruiterController {
         return "company/detailCompany";
     }
 
-    @PostMapping("/updateCompany/{id}")
-    public String update(@ModelAttribute Recruiter newRecruiter,
-                         @PathVariable Long id,
-                         @RequestParam(value = "image", required = false) MultipartFile image,
-                         Model model) {
-        Optional<Recruiter> existingRecruiter = recruiterService.findById(id);
-        // update the Recruiter
-        if (existingRecruiter.isPresent()) {
-            Recruiter oldR = existingRecruiter.get();
-            Hibernate.initialize(oldR.getAccount());
-            Long accId = oldR.getAccount().getId();
-            List<Recruiter> listStaff = recruiterService.findByManagerIdAndCompanyCode(oldR.getAccount().getId(), oldR.getCompanyCode());
-
-            // Update fields
-            oldR.setCompanyCode(newRecruiter.getCompanyCode());
-            oldR.setCompanyName(newRecruiter.getCompanyName());
-            oldR.setCompanyDescription(newRecruiter.getCompanyDescription());
-            oldR.setCompanyScale(newRecruiter.getCompanyScale());
-            oldR.setCompany_status(newRecruiter.getCompany_status());
-            oldR.setCompany_location(newRecruiter.getCompany_location());
-            oldR.setCompany_website(newRecruiter.getCompany_website());
-
-            // Update logo if a new image is uploaded
-            if (image != null && !image.isEmpty()) {
-                try {
-                    String imageUrl = fileUploadService.UploadFile(image);
-                    oldR.setCompany_logo(imageUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    model.addAttribute("message", "Cập nhập thất bại khi tải lên ảnh.");
-                    model.addAttribute("messageType", "error");
-                    return "errorPage"; // Or redirect to an error page if upload fails
-                }
-            }
-            try {
-                recruiterService.save(oldR);
-                model.addAttribute("message", "Cập nhập thành công!");
-                model.addAttribute("messageType", "success");
-            } catch (Exception e) {
-                model.addAttribute("message", "Cập nhập thất bại. Xin thử lại.");
-                model.addAttribute("messageType", "error");
-            }
-            //update recruiter's staffs
-            if (!listStaff.isEmpty()) {
-                for (Recruiter staff : listStaff) {
-                    staff.setCompanyCode(newRecruiter.getCompanyCode());
-                    staff.setCompanyName(newRecruiter.getCompanyName());
-                    staff.setCompanyDescription(newRecruiter.getCompanyDescription());
-                    staff.setCompanyScale(newRecruiter.getCompanyScale());
-                    staff.setCompany_status(newRecruiter.getCompany_status());
-                    staff.setCompany_location(newRecruiter.getCompany_location());
-                    staff.setCompany_website(newRecruiter.getCompany_website());
-                    staff.setCompany_logo(oldR.getCompany_logo());
-                    try {
-                        recruiterService.save(staff);
-                        model.addAttribute("message", "Cập nhập thành công!");
-                        model.addAttribute("messageType", "success");
-                    } catch (Exception e) {
-                        model.addAttribute("message", "Cập nhập thất bại. Xin thử lại.");
-                        model.addAttribute("messageType", "error");
-                    }
-                }
-            }
-        } else {
-            // Create new recruiter if not found
-            newRecruiter.setId(id);
-            if (image != null && !image.isEmpty()) {
-                try {
-                    String imageUrl = fileUploadService.UploadFile(image);
-                    newRecruiter.setCompany_logo(imageUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    model.addAttribute("message", "Cập nhập thất bại khi tải lên ảnh.");
-                    model.addAttribute("messageType", "error");
-                    return "errorPage"; // Or handle accordingly
-                }
-            }
-            recruiterService.save(newRecruiter);
-            model.addAttribute("message", "Tạo công ty mới thành công!");
-            model.addAttribute("messageType", "success");
-        }
-        return "redirect:/detailCompany/" + id;
-    }
+//    @PostMapping("/updateCompany/{id}")
+//    public String update(@ModelAttribute Recruiter newRecruiter,
+//                         @PathVariable Long id,
+//                         @RequestParam(value = "image", required = false) MultipartFile image,
+//                         Model model) {
+//        Optional<Recruiter> existingRecruiter = recruiterService.findById(id);
+//        // update the Recruiter
+//        if (existingRecruiter.isPresent()) {
+//            Recruiter oldR = existingRecruiter.get();
+//            Hibernate.initialize(oldR.getAccount());
+//            Long accId = oldR.getAccount().getId();
+//            List<Recruiter> listStaff = recruiterService.findByManagerIdAndCompanyCode(oldR.getAccount().getId(), oldR.getCompanyCode());
+//
+//            // Update fields
+//            oldR.setCompanyCode(newRecruiter.getCompanyCode());
+//            oldR.setCompanyName(newRecruiter.getCompanyName());
+//            oldR.setCompanyDescription(newRecruiter.getCompanyDescription());
+//            oldR.setCompanyScale(newRecruiter.getCompanyScale());
+//            oldR.setCompany_status(newRecruiter.getCompany_status());
+//            oldR.setCompany_location(newRecruiter.getCompany_location());
+//            oldR.setCompany_website(newRecruiter.getCompany_website());
+//
+//            // Update logo if a new image is uploaded
+//            if (image != null && !image.isEmpty()) {
+//                try {
+//                    String imageUrl = fileUploadService.UploadFile(image);
+//                    oldR.setCompany_logo(imageUrl);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    model.addAttribute("message", "Cập nhập thất bại khi tải lên ảnh.");
+//                    model.addAttribute("messageType", "error");
+//                    return "errorPage"; // Or redirect to an error page if upload fails
+//                }
+//            }
+//            try {
+//                recruiterService.save(oldR);
+//                model.addAttribute("message", "Cập nhập thành công!");
+//                model.addAttribute("messageType", "success");
+//            } catch (Exception e) {
+//                model.addAttribute("message", "Cập nhập thất bại. Xin thử lại.");
+//                model.addAttribute("messageType", "error");
+//            }
+//            //update recruiter's staffs
+//            if (!listStaff.isEmpty()) {
+//                for (Recruiter staff : listStaff) {
+//                    staff.setCompanyCode(newRecruiter.getCompanyCode());
+//                    staff.setCompanyName(newRecruiter.getCompanyName());
+//                    staff.setCompanyDescription(newRecruiter.getCompanyDescription());
+//                    staff.setCompanyScale(newRecruiter.getCompanyScale());
+//                    staff.setCompany_status(newRecruiter.getCompany_status());
+//                    staff.setCompany_location(newRecruiter.getCompany_location());
+//                    staff.setCompany_website(newRecruiter.getCompany_website());
+//                    staff.setCompany_logo(oldR.getCompany_logo());
+//                    try {
+//                        recruiterService.save(staff);
+//                        model.addAttribute("message", "Cập nhập thành công!");
+//                        model.addAttribute("messageType", "success");
+//                    } catch (Exception e) {
+//                        model.addAttribute("message", "Cập nhập thất bại. Xin thử lại.");
+//                        model.addAttribute("messageType", "error");
+//                    }
+//                }
+//            }
+//        } else {
+//            // Create new recruiter if not found
+//            newRecruiter.setId(id);
+//            if (image != null && !image.isEmpty()) {
+//                try {
+//                    String imageUrl = fileUploadService.UploadFile(image);
+//                    newRecruiter.setCompany_logo(imageUrl);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    model.addAttribute("message", "Cập nhập thất bại khi tải lên ảnh.");
+//                    model.addAttribute("messageType", "error");
+//                    return "errorPage"; // Or handle accordingly
+//                }
+//            }
+//            recruiterService.save(newRecruiter);
+//            model.addAttribute("message", "Tạo công ty mới thành công!");
+//            model.addAttribute("messageType", "success");
+//        }
+//        return "redirect:/detailCompany/" + id;
+//    }
 
 }

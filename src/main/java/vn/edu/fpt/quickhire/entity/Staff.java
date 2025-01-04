@@ -24,7 +24,7 @@ public class Staff {
     private Account account;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recruiter_id", nullable = false)
+    @JoinColumn(name = "recruiter_id", referencedColumnName = "account_id", nullable = false)
     private Recruiter recruiter;
 
 }

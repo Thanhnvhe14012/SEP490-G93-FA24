@@ -1,4 +1,9 @@
 package vn.edu.fpt.quickhire.model.repository;
 
-public interface StaffRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import vn.edu.fpt.quickhire.entity.Staff;
+
+public interface StaffRepository extends JpaRepository<Staff, Long> {
+    Staff save(Staff staff);
+    Staff findByAccount_Id(Long account_id);
 }

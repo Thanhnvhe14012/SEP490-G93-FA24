@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
 import vn.edu.fpt.quickhire.entity.Recruiter;
+import vn.edu.fpt.quickhire.entity.Staff;
 import vn.edu.fpt.quickhire.model.JobService;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
 import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
+import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
 import java.util.*;
 @Service
@@ -18,23 +20,23 @@ public class JobServiceImpl implements JobService {
     @Autowired
     RecruiterRepository recruiterRepository;
 
+    @Autowired
+    StaffRepository staffRepository;
+
     @Override
     public Job createJob(Job jobDTO, Long accountId) {
-        Recruiter recruiter = recruiterRepository.findByAccount_Id(accountId);
+        Staff staff = staffRepository.findByAccount_Id(accountId);
 
-        if (recruiter == null) {
-            throw new RuntimeException("Recruiter not found for account ID: " + accountId);
+        if (staff == null) {
+            throw new RuntimeException("Staff not found for account ID: " + accountId);
         }
 
-        System.out.println("Recruiter id: " + recruiter.getAccount().getId());
-        System.out.println("Manager id: " + recruiter.getManagerId());
-        System.out.println("company " + recruiter.getCompanyDescription());
-        Job job = getJob(jobDTO, recruiter);
+        Job job = getJob(jobDTO, staff);
 
         return jobRepository.save(job);
     }
 
-    private static Job getJob(Job jobDTO, Recruiter recruiter) {
+    private static Job getJob(Job jobDTO, Staff staff) {
         Job job = new Job();
         job.setName(jobDTO.getName());
         job.setDescription(jobDTO.getDescription());
@@ -47,9 +49,9 @@ public class JobServiceImpl implements JobService {
         job.setSalary_min(jobDTO.getSalary_min());
         job.setLevel(jobDTO.getLevel());
         job.setType(jobDTO.getType());
-        job.setCompany_id(recruiter.getManagerId());
-        job.setCompany_description(recruiter.getCompanyDescription());
-        job.setRecruiter_id(recruiter.getAccount().getId());
+        job.setCompany_id(staff.getRecruiter().getAccount().getId());
+        job.setCompany_description(staff.getRecruiter().getCompanyDescription());
+        job.setRecruiter_id(staff.getAccount().getId());
         return job;
     }
 

@@ -23,7 +23,4 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                          @Param("industryId") Long industryId,
                          @Param("location") String location);
 
-//    @Query("SELECT j from Job j LEFT JOIN FETCH j.industry LEFT JOIN FETCH j.recruiter WHERE "
-//            + " (j.id = )")
-//    Job findJobWithIndustryById(@Param("jobId") long id);
 }
