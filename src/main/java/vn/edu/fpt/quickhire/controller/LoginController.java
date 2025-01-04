@@ -68,6 +68,7 @@ public class LoginController {
         UserDTO account = userService.login(username, password);
         if (account != null) {
             session.setAttribute("user", account);
+            session.setAttribute("userDisplayName", account.getDisplayName());
             return "redirect:/home";
         } else {
             // Đăng nhập thất bại
