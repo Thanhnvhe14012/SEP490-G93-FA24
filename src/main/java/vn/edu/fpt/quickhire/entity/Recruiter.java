@@ -36,8 +36,8 @@
         @Column(name = "company_website")
         private String company_website;
 
-        @Column(name = "industry_id")
-        private Long industryId;
+        @Column(name = "manager_id")
+        private Long managerId;
 
         @OneToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "account_id")
@@ -46,7 +46,7 @@
         public Recruiter() {
         }
 
-        public Recruiter(Long id, String companyCode, String companyName, String companyDescription, Integer companyScale, int company_status, String company_logo, Long industryId, Account account) {
+        public Recruiter(Long id, String companyCode, String companyName, String companyDescription, Integer companyScale, int company_status, String company_logo, Account account) {
             this.id = id;
             this.companyCode = companyCode;
             this.companyName = companyName;
@@ -54,7 +54,6 @@
             this.companyScale = companyScale;
             this.company_status = company_status;
             this.company_logo = company_logo;
-            this.industryId = industryId;
             this.account = account;
         }
     }

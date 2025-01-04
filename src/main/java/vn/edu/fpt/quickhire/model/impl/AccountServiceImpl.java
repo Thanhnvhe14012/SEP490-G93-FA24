@@ -3,12 +3,15 @@ package vn.edu.fpt.quickhire.model.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Account;
+import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.AccountService;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -76,6 +79,40 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> findByEmail(String email) {
         return accountRepository.findAllByEmail(email);
     }
+
+    @Override
+    public List<AccountDTO> fillAllAccount() {
+        List<Account> listAll = accountRepository.findAllByOrderByIdDesc();
+        List<AccountDTO> accountDTOList = new ArrayList<>();
+        if(!listAll.isEmpty()) {
+            for (Account account : listAll) {
+                AccountDTO accountDTO = new AccountDTO();
+                accountDTO.setId(account.getId());
+                accountDTO.setUsername(account.getUsername());
+                accountDTO.setDisplayName((account.getFirstName() != null ? account.getFirstName() : "") + " " +
+                        (account.getMiddleName() != null ? account.getMiddleName() : "") + " " +
+                        (account.getLastName() != null ? account.getLastName() : ""));
+                accountDTO.setEmail(account.getEmail());
+                if(account.getRole() == 2){
+                    accountDTO.setRole("Nhà tuyển dụng");
+                    accountDTO.setCompanyName(account.getRecruiter().getCompanyName());
+                    accountDTO.setCompanyCode(account.getRecruiter().getCompanyCode());
+                } else if(account.getRole() == 3){
+                    accountDTO.setRole("Nhân viên công ty");
+                    accountDTO.setCompanyName(account.getRecruiter().getCompanyName());
+                    accountDTO.setCompanyCode(account.getRecruiter().getCompanyCode());
+                } else if(account.getRole() == 4){
+                    accountDTO.setRole("Người ứng tuyển");
+                }
+                accountDTO.setStatus(1);
+                accountDTOList.add(accountDTO);
+            }
+            return accountDTOList;
+        }
+        return null;
+    }
+
+
 }
 
 

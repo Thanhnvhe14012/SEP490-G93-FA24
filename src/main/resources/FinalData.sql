@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `quickhire` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quickhire`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: quickhire
@@ -38,6 +36,7 @@ CREATE TABLE `account` (
   `address_id_3` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `role` bigint DEFAULT NULL,
+  `status` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
@@ -49,7 +48,7 @@ CREATE TABLE `account` (
   CONSTRAINT `province` FOREIGN KEY (`address_id_1`) REFERENCES `provinces` (`code`),
   CONSTRAINT `role` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
   CONSTRAINT `ward` FOREIGN KEY (`address_id_3`) REFERENCES `wards` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,6 +57,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (2,'recruiter','123','recruiter@gmail.com',NULL,NULL,NULL,NULL,'24','215','07282','Yên Thế',2,NULL),(3,'candidate','123','candidate@gmail.com','2025-01-02 00:00:00.000000','Nguyễn','Văn','Thanh','19','165','05515','Thành phố TN',4,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +76,7 @@ CREATE TABLE `candidate` (
   PRIMARY KEY (`id`),
   KEY `account_id_idx` (`account_id`),
   CONSTRAINT `candidate_id` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,6 +85,7 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
+INSERT INTO `candidate` VALUES (1,'Là người đang thất nghiệp',3,NULL);
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,13 +431,11 @@ CREATE TABLE `recruiter` (
   `company_status` int DEFAULT NULL,
   `company_website` varchar(255) DEFAULT NULL,
   `account_id` bigint NOT NULL,
-  `industry_id` bigint NOT NULL,
+  `manager_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `account_id_idx` (`account_id`),
-  KEY `industry_id_idx` (`industry_id`),
-  CONSTRAINT `industry_id` FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`),
   CONSTRAINT `manager_id` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -445,7 +444,39 @@ CREATE TABLE `recruiter` (
 
 LOCK TABLES `recruiter` WRITE;
 /*!40000 ALTER TABLE `recruiter` DISABLE KEYS */;
+INSERT INTO `recruiter` VALUES (1,'FPT','FPT Telecom','Là công ty công nghệ',200,NULL,NULL,1,NULL,2,NULL);
 /*!40000 ALTER TABLE `recruiter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `report`
+--
+
+DROP TABLE IF EXISTS `report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `report` (
+  `report_id` bigint NOT NULL AUTO_INCREMENT,
+  `report_description` varchar(255) DEFAULT NULL,
+  `report_reason` varchar(255) DEFAULT NULL,
+  `report_status` int DEFAULT NULL,
+  `candidate_id` bigint DEFAULT NULL,
+  `job_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`report_id`),
+  KEY `FKrm51842bptcb41sm6e9ds54fd` (`candidate_id`),
+  KEY `FKg5pev9qjkdahxi4bxikpvmn7o` (`job_id`),
+  CONSTRAINT `FKg5pev9qjkdahxi4bxikpvmn7o` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`),
+  CONSTRAINT `FKrm51842bptcb41sm6e9ds54fd` FOREIGN KEY (`candidate_id`) REFERENCES `candidate` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -504,6 +535,35 @@ LOCK TABLES `staff` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `userrole`
+--
+
+DROP TABLE IF EXISTS `userrole`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `userrole` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `userid` bigint NOT NULL,
+  `roleid` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK1wkm7n1qkph4j0iaihjd6q7yd` (`userid`),
+  KEY `FKp9uqhbg64l2v6p5i1ixunb645` (`roleid`),
+  CONSTRAINT `FK2gm26sco7hby4inni3ohxvf6k` FOREIGN KEY (`userid`) REFERENCES `account` (`id`),
+  CONSTRAINT `FKp9uqhbg64l2v6p5i1ixunb645` FOREIGN KEY (`roleid`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userrole`
+--
+
+LOCK TABLES `userrole` WRITE;
+/*!40000 ALTER TABLE `userrole` DISABLE KEYS */;
+INSERT INTO `userrole` VALUES (1,2,2),(2,3,4);
+/*!40000 ALTER TABLE `userrole` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `wards`
 --
 
@@ -543,4 +603,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-25 22:46:52
+-- Dump completed on 2025-01-03 16:42:50

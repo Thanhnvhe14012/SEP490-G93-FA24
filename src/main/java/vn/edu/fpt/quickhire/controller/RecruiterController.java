@@ -88,7 +88,8 @@ public class RecruiterController {
             recruiter.setCompanyDescription(userDTO.getCompanyDescription());
             recruiter.setCompanyScale(userDTO.getCompanyScale());
             recruiter.setCompanyName(userDTO.getCompanyName());
-            recruiter.setIndustryId(staff.getIndustryId());
+//            recruiter.setIndustryId(staff.getIndustryId());
+//            recruiter.setManagerId(userDTO.getId());
 
 
             Role existingRole = roleRepository.findById(Long.valueOf(4))

@@ -144,6 +144,7 @@ public class LoginController {
 
             account.setUserRole(userRole);
             account.setRecruiter(recruiter);
+            account.setRole(2L);
             userService.save(account);
 
 
@@ -177,6 +178,7 @@ public class LoginController {
 
             account.setUserRole(userRole);
             account.setCandidate(candidate);
+            account.setRole(4L);
             userService.save(account);
         }
 
