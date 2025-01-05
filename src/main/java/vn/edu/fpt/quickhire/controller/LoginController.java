@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.fpt.quickhire.entity.*;
+import vn.edu.fpt.quickhire.entity.DTO.ExperienceDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
@@ -21,6 +19,7 @@ import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
 import java.io.IOException;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -245,6 +244,22 @@ public class LoginController {
             model.addAttribute("error", "Không tìm thấy tài khoản để đặt lại mật khẩu.");
             return "login/login";
         }
+    }
+
+    @GetMapping("/account/update")
+    public String showFormUpdateAccount(Model model, @RequestParam(value = "accountId", required = false) Long accountId,
+                                        @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
+
+        if(userDTO.getRole()==2 && userDTO.getId().equals(accountId)){
+            model.addAttribute("user",userDTO);
+            return "recruiter/updateprofile";
+        }
+
+
+        return "homepage";
+
+
+
     }
 
 
