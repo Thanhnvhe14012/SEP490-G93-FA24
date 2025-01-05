@@ -16,6 +16,7 @@ import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.UserRoleServiceImpl;
+import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
@@ -48,6 +49,8 @@ public class RecruiterController {
 
     @Autowired
     private FileUploadService fileUploadService;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @GetMapping("/createStaff")
     public String showCreateStaff(@SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) {
@@ -266,6 +269,109 @@ public class RecruiterController {
             model.addAttribute("messageType", "success");
         }
         return "redirect:/detailCompany/" + id;
+    }
+
+    @GetMapping("/viewCompany/{id}")
+    public String showViewCompany(@PathVariable Long id,
+                                  Model model) {
+        Recruiter recruiter = recruiterService.findByAccount_Id(id);
+        if(recruiter!=null) {
+            model.addAttribute("recruiter", recruiter);
+            return "recruiter/profile";
+        }
+        else {return "errorPage";}
+    }
+
+
+    @PostMapping("/updateAccount")
+    public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
+    ) throws ParseException {
+
+        if (user.getRole() == 2) {
+            Account account = accountRepository.findById(user.getId().longValue());
+            account.setUsername(user.getUsername());
+            account.setPassword(user.getPassword());
+            account.setEmail(user.getEmail());
+
+            account.setAddressId1(user.getAddressId1());
+            account.setAddressId2(user.getAddressId2());
+            account.setAddressId3(user.getAddressId3());
+            account.setAddress(user.getAddress());
+
+//            Account accountSaved = userService.save(account);
+
+            Recruiter existRecruiter= recruiterService.findByCode(user.getCompanyCode());
+            if(existRecruiter != null) {
+                model.addAttribute("message", "Failed to add recruiter . Company Code duplicate.");
+                model.addAttribute("messageType", "error");
+                return "login/register";
+            }
+
+            Recruiter recruiter = account.getRecruiter();
+            recruiter.setCompanyCode(user.getCompanyCode());
+            recruiter.setCompanyDescription(user.getCompanyDescription());
+            recruiter.setCompanyScale(user.getCompanyScale());
+            recruiter.setCompanyName(user.getCompanyName());
+            if (image!= null && !image .isEmpty()) {
+                try {
+                    String imageUrl = fileUploadService.UploadFile(image);
+                    recruiter.setCompany_logo(imageUrl);
+                } catch (IOException e) {
+                    // Handle the exception properly, log it, etc.
+                    e.printStackTrace();
+                }
+            }
+            recruiter.setCompany_status(1);
+
+            Role existingRole = roleRepository.findById(Long.valueOf(2))
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+
+            UserRole userRole = new UserRole();
+            userRole.setRole(existingRole);
+
+
+            account.setUserRole(userRole);
+            account.setRecruiter(recruiter);
+            account.setRole(2L);
+            userService.save(account);
+
+
+
+        } else if (user.getRole() == 3) {
+            Account account = accountRepository.findById(user.getId().longValue());
+            account.setUsername(user.getUsername());
+            account.setPassword(user.getPassword());
+            account.setEmail(user.getEmail());
+            Date dob=new SimpleDateFormat("yyyy-MM-dd").parse(user.getDateOfBirth());
+            account.setDateOfBirth(dob);
+            account.setFirstName(user.getFirstName());
+            account.setMiddleName(user.getMiddleName());
+            account.setLastName(user.getLastName());
+            account.setAddressId1(user.getAddressId1());
+            account.setAddressId2(user.getAddressId2());
+            account.setAddressId3(user.getAddressId3());
+            account.setAddress(user.getAddress());
+
+//            Account accountSaved = userService.save(account);
+
+            Candidate candidate = account.getCandidate();
+            candidate.setBiography(user.getBiography());
+
+
+            Role existingRole = roleRepository.findById(Long.valueOf(4))
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+
+            UserRole userRole = new UserRole();
+            userRole.setRole(existingRole);
+
+            account.setUserRole(userRole);
+            account.setCandidate(candidate);
+            account.setRole(4L);
+            userService.save(account);
+        }
+
+        model.addAttribute("error", "Đăng ký thành công!");
+        return "home";
     }
 
 }
