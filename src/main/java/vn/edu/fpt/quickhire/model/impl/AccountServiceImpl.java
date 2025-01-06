@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
                 userDTO.setCompanyName(account.getStaff().getRecruiter().getCompanyName());
                 userDTO.setCompanyDescription(account.getStaff().getRecruiter().getCompanyDescription());
                 userDTO.setCompanyScale(account.getStaff().getRecruiter().getCompanyScale());
-                userDTO.setDisplayName(account.getStaff().getRecruiter().getCompanyName());
+                userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
             }
             else if(account.getRole() == 4) {
                 userDTO.setBiography(account.getCandidate().getBiography());

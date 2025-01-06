@@ -52,6 +52,18 @@ public class Account {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id_1", referencedColumnName = "code", insertable = false, updatable = false)
+    private Province province;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id_2", referencedColumnName = "code", insertable = false, updatable = false)
+    private District district;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id_3", referencedColumnName = "code", insertable = false, updatable = false)
+    private Ward ward;
+
     // Quan hệ một account chỉ có duy nhất một candidate
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Candidate candidate;

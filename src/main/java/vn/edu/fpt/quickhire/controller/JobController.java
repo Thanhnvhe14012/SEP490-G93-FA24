@@ -2,6 +2,7 @@ package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.Industry;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.entity.Province;
 import vn.edu.fpt.quickhire.model.impl.IndustryServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.JobServiceImpl;
+import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 
 import java.util.List;
 
@@ -23,12 +26,17 @@ public class JobController {
     private JobServiceImpl jobService;
     @Autowired
     private IndustryServiceImpl industryService;
+    @Autowired
+    private ProvinceRepository provinceRepository;
 
     @GetMapping("/create")
     public String showCreateJobForm(Model model, HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
+        }
+        if (user.getRole() != 3) {
+            return "redirect:/home";
         }
         model.addAttribute("job", new Job());
         List<Industry> industries = industryService.getAllIndustries();
@@ -37,10 +45,9 @@ public class JobController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Job>  createJob(
+    public ResponseEntity<Job> createJob(
             @ModelAttribute Job jobDTO, HttpSession session
-    )
-    {
+    ) {
         UserDTO user = (UserDTO) session.getAttribute("user");
         Long accountId = user.getId();
         System.out.println("Session user: " + accountId);
@@ -52,25 +59,34 @@ public class JobController {
         return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
     }
 
-    @GetMapping()
-    public String getAllJobs(Model model) {
+    @GetMapping("/list")
+    public String listAllJobs(Model model) {
         List<Job> jobs = jobService.getAllJobs();
         List<Industry> industries = industryService.getAllIndustries();
+        List<Province> provinces = provinceRepository.findAll();
         model.addAttribute("jobs", jobs);
         model.addAttribute("industries", industries);
-        return "job/listJob";
+        model.addAttribute("provinces", provinces);
+        return "job/listJob"; // Return the main job listing JSP
     }
 
-    @GetMapping("/search")
-    public String searchJobs(@RequestParam(value = "name", required = false) String name,
-                             @RequestParam(value = "industryId", required = false) Long industryId,
-                             @RequestParam(value = "location", required = false) String location,
-                             Model model) {
-        List<Job> jobs = jobService.searchJobs(name, industryId, location);
+    @GetMapping("/searchJobs")
+    public String searchJobs(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) Long industryId,
+            @RequestParam(required = false) Integer salaryMin,
+            @RequestParam(required = false) Integer salaryMax,
+            @RequestParam(required = false) Integer level,
+            @RequestParam(required = false) Integer type,
+            @RequestParam(defaultValue = "createdDate") String sortBy,
+            Model model) {
+
+        Sort sort = Sort.by(sortBy.equals("name") ? Sort.Direction.ASC : Sort.Direction.DESC, "start");
+        List<Job> jobs = jobService.searchJobs(name, address, industryId, salaryMin, salaryMax, level, type, sort);
+        System.out.println("name: " + name + " Address: " + address + " industry: " + industryId + " salarymin: " + salaryMin + " salarymax: " + salaryMax + " level: " + level + " type: "+ type);
         model.addAttribute("jobs", jobs);
-        model.addAttribute("searchName", name);
-        model.addAttribute("searchIndustryId", industryId);
-        model.addAttribute("searchLocation", location);
-        return "job/listJob";
+
+        return "job/jobListingsFragment";
     }
 }

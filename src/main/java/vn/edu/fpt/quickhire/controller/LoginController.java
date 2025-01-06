@@ -148,7 +148,14 @@ public class LoginController {
             account.setRole(2L);
             userService.save(account);
 
+            String companyLocation = String.format("%s, %s, %s",
+                    account.getProvince() != null ? account.getProvince().getName() : "",
+                    account.getDistrict() != null ? account.getDistrict().getName() : "",
+                    account.getWard() != null ? account.getWard().getName() : ""
+            );
 
+            recruiter.setCompany_location(companyLocation);
+            recruiterService.save(recruiter);
 
         } else if (user.getRole() == 3) {
             Account account = new Account();

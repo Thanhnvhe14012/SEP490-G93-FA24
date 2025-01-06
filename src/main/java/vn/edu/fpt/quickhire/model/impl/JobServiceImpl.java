@@ -1,10 +1,9 @@
 package vn.edu.fpt.quickhire.model.impl;
 
-import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
-import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.entity.Staff;
 import vn.edu.fpt.quickhire.model.JobService;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
@@ -71,10 +70,19 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> getJobsByRecruiterId(Long recruiter_id) {
+        System.out.println(recruiter_id);
+        List<Job> jobs = jobRepository.findByRecruiter_id(recruiter_id);
+        System.out.println("Jobs retrieved from repository: " + jobs); // Log the results// Log the results
+        return jobs;
+    }
+
+    @Override
     public Job deleteById(Long id) {
         return null;
     }
-    public List<Job> searchJobs(String name, Long industryId, String location) {
-        return jobRepository.searchJobs(name, industryId, location);
+
+    public List<Job> searchJobs(String name, String address, Long industryId, Integer salaryMin, Integer salaryMax, Integer level, Integer type, Sort sort) {
+        return jobRepository.searchJobs(name, address, industryId, salaryMin, salaryMax, level, type);
     }
 }

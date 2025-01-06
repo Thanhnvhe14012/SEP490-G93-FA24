@@ -8,14 +8,6 @@
     <title>Error Page</title>
 </head>
 <body>
-<div class="preloader">
-    <div class="utf-preloader">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</div>
 <div id="wrapper">
     <%@ include file="/WEB-INF/views/header.jsp" %>
     <div class="clearfix"></div>

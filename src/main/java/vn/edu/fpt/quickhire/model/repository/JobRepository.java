@@ -11,16 +11,18 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     Job save(Job job);
     Job findById(long id);
     List<Job> findAll();
+    List<Job> findByRecruiter_id(Long recruiter_id);
 
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.industry LEFT JOIN FETCH j.recruiter")
     List<Job> findAllWithIndustryAndRecruiter();
 
-    @Query("SELECT j FROM Job j LEFT JOIN j.industry i LEFT JOIN j.recruiter r WHERE "
-            + "(:name IS NULL OR j.name LIKE %:name%) AND "
-            + "(:industryId IS NULL OR i.id = :industryId) AND "
-            + "(:location IS NULL OR r.company_location LIKE %:location%)")
-    List<Job> searchJobs(@Param("name") String name,
-                         @Param("industryId") Long industryId,
-                         @Param("location") String location);
-
+    @Query("SELECT j FROM Job j WHERE \n" +
+            "    (:name IS NULL OR :name = '' OR j.name LIKE %:name%) AND \n" +
+            "    (:address IS NULL OR :address = '' OR j.recruiter.account.province.code = :address) AND \n" +
+            "    (:industryId IS NULL OR j.industry.id = :industryId) AND \n" +
+            "    (:salaryMin IS NULL OR j.salary_min >= :salaryMin) AND \n" +
+            "    (:salaryMax IS NULL OR j.salary_max <= :salaryMax) AND \n" +
+            "    (:level IS NULL OR j.level = :level) AND \n" +
+            "    (:type IS NULL OR j.type = :type)")
+    List<Job> searchJobs(String name, String address, Long industryId, Integer salaryMin, Integer salaryMax, Integer level, Integer type);
 }

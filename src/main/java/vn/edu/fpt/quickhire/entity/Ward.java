@@ -21,6 +21,7 @@ public class Ward {
     private String fullNameEn;
     @Column(name = "code_name")
     private String codeName;
+
     @ManyToOne
     @JoinColumn(name = "district_code")
     private District district;
