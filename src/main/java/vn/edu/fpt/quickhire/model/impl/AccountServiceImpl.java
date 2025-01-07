@@ -5,8 +5,12 @@ import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
+import vn.edu.fpt.quickhire.entity.Recruiter;
+import vn.edu.fpt.quickhire.entity.Staff;
 import vn.edu.fpt.quickhire.model.AccountService;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
+import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
+import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -19,6 +23,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    RecruiterRepository recruiterRepository;
+    @Autowired
+    StaffRepository staffRepository;
 
     @Override
     public Account findUserById(long id) {
@@ -115,6 +123,33 @@ public class AccountServiceImpl implements AccountService {
             return accountDTOList;
         }
         return null;
+    }
+
+    @Override
+    public List<AccountDTO> fillAllStaffByRecruiterId(long recruiterId) {
+        Recruiter recruiter = recruiterRepository.findById(recruiterId).get();
+        List<Staff> staffs = staffRepository.findAllByRecruiter(recruiter);
+        List<AccountDTO> accountDTOList = new ArrayList<>();
+        if(!staffs.isEmpty()) {
+            for (Staff staff : staffs) {
+                AccountDTO accountDTO = new AccountDTO();
+                accountDTO.setId(staff.getAccount().getId());
+                accountDTO.setUsername(staff.getAccount().getUsername());
+                accountDTO.setDisplayName((staff.getAccount().getFirstName() != null ? staff.getAccount().getFirstName() : "") + " " +
+                        (staff.getAccount().getMiddleName() != null ? staff.getAccount().getMiddleName() : "") + " " +
+                        (staff.getAccount().getLastName() != null ? staff.getAccount().getLastName() : ""));
+                accountDTO.setEmail(staff.getAccount().getEmail());
+                    accountDTO.setRole("Nhân viên công ty");
+                    accountDTO.setCompanyName(staff.getAccount().getRecruiter().getCompanyName());
+                    accountDTO.setCompanyCode(staff.getAccount().getRecruiter().getCompanyCode());
+
+                accountDTO.setStatus(1);
+                accountDTOList.add(accountDTO);
+            }
+            return accountDTOList;
+        }
+        return null;
+
     }
 
 
