@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.Industry;
 import vn.edu.fpt.quickhire.entity.Job;
+import vn.edu.fpt.quickhire.entity.JobApplied;
 import vn.edu.fpt.quickhire.entity.Province;
 import vn.edu.fpt.quickhire.model.impl.IndustryServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.JobServiceImpl;
+import vn.edu.fpt.quickhire.model.repository.JobAppliedRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class JobController {
     private IndustryServiceImpl industryService;
     @Autowired
     private ProvinceRepository provinceRepository;
+
+    @Autowired
+    private JobAppliedRepository jobAppliedRepository;
 
     @GetMapping("/create")
     public String showCreateJobForm(Model model, HttpSession session) {
@@ -89,4 +94,41 @@ public class JobController {
 
         return "job/jobListingsFragment";
     }
+
+
+    @GetMapping("/editJob")
+    public String showEditJobForm(@RequestParam(required = false) long id, Model model, HttpSession session) {
+        Job job = jobService.getJobById(id);
+        model.addAttribute("job", job );
+        return "v2/editjob";
+    }
+
+    @GetMapping("/viewJobDetailRecruiter")
+    public String showViewJobDetailRecruiterForm(@RequestParam(required = false) long id,
+                                                 @RequestParam(required = false) long jobId,
+                                                 Model model, HttpSession session) {
+        Job job = jobService.getJobById(id);
+        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(jobId);
+        model.addAttribute("job", job );
+        model.addAttribute("listCV", jobApplieds);
+        return "v2/viewJobDetailRecruiter";
+    }
+
+    @GetMapping("/viewJobCreated")
+    public String showViewJobCreatedListForm(@RequestParam(required = false) long recruiterId,
+                                             Model model, HttpSession session) {
+        List<Job> jobs = jobService.getJobsByRecruiterId(recruiterId);
+        model.addAttribute("jobs", jobs);
+        return "v2/viewJobCreated";
+    }
+
+    @GetMapping("/viewJobApplied")
+    public String showViewJobAppliedForm(@RequestParam(required = false) long id,
+                                         @SessionAttribute(name = "user", required = false) UserDTO userDTO,
+                                         Model model, HttpSession session) {
+        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobIDAndUserID(id, userDTO.getId());
+        model.addAttribute("jobApplieds", jobApplieds);
+        return "v2/viewAppliedJob";
+    }
+
 }
