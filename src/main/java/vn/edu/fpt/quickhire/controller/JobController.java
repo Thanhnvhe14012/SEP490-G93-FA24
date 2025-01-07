@@ -19,6 +19,7 @@ import vn.edu.fpt.quickhire.model.repository.JobAppliedRepository;
 import vn.edu.fpt.quickhire.model.repository.JobRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -36,6 +37,8 @@ public class JobController {
     private JobAppliedRepository jobAppliedRepository;
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private JobServiceImpl jobServiceImpl;
 
     @GetMapping("/create")
     public String showCreateJobForm(Model model, HttpSession session) {
@@ -100,10 +103,20 @@ public class JobController {
 
 
     @GetMapping("/editJob")
-    public String showEditJobForm(@RequestParam(required = false) long id, Model model, HttpSession session) {
+    public String showEditJobForm(@RequestParam(required = false) Long id, Model model, HttpSession session) {
+        Job job = jobService.getJobById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedEndDate = job.getEnd() != null ? sdf.format(job.getEnd()) : "";
+        model.addAttribute("job", job );
+        model.addAttribute("formattedEndDate", formattedEndDate);
+        return "v2/editjob";
+    }
+
+    @GetMapping("/jobDetail")
+    public String showJobDetail(@RequestParam(required = false) long id, Model model) {
         Job job = jobService.getJobById(id);
         model.addAttribute("job", job );
-        return "v2/editjob";
+        return "job/jobDetail";
     }
 
     @GetMapping("/viewJobDetailRecruiter")
@@ -119,32 +132,29 @@ public class JobController {
     @GetMapping("/viewJobCreated")
     public String showViewJobCreatedListForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                              Model model, HttpSession session) {
-        List<Job> jobs = jobService.getJobsByRecruiterId(userDTO.getId());
+        if (userDTO == null) {return "redirect:/login";};
+        List<Job> jobs = jobServiceImpl.getJobsByRecruiterId(userDTO.getId());
         model.addAttribute("jobs", jobs);
-        return "v2/viewJobCreated";
-    }
-
-    @GetMapping("/viewJobApplied")
-    public String showViewJobAppliedForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
-                                         Model model, HttpSession session) {
-        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByUserID(userDTO.getId());
-        model.addAttribute("jobApplieds", jobApplieds);
-        return "v2/viewAppliedJob";
+        model.addAttribute("currentUserId", userDTO.getId());
+        return "job/viewJobCreated";
     }
 
     @PostMapping("/saveUpdateJob")
-    public String saveUpdateJob(@ModelAttribute Job jobDTO,Model model){
-        Job job = jobRepository.findById(jobDTO.getId().longValue());
+    public String saveUpdateJob(@RequestParam(required = false) Long id, @ModelAttribute Job jobDTO,Model model){
+        System.out.println("id cua job " + id);
+        Job job = jobService.getJobById(id);
         job.setName(jobDTO.getName());
         job.setDescription(jobDTO.getDescription());
-        job.setStart(jobDTO.getStart());
         job.setEnd(jobDTO.getEnd());
         job.setStatus(jobDTO.getStatus());
+        job.setBenefits(jobDTO.getBenefits());
         job.setSalary_min(jobDTO.getSalary_min());
         job.setSalary_max(jobDTO.getSalary_max());
+        job.setLevel(jobDTO.getLevel());
+        job.setType(jobDTO.getType());
         jobRepository.save(job);
         model.addAttribute("job", job );
-        return "v2/editjob";
+        return "redirect:/job/viewJobCreated";
     }
 
 }

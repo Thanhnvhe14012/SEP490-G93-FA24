@@ -24,4 +24,6 @@ public class JobApplied {
     @Column(name="cvID")
     private Long cvID;
 
+    @Column(name="message")
+    private String message;
 }
