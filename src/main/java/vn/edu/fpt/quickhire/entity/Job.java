@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 @Table(name = "job")
 @Data
-
 public class Job {
     @Id
     @Column(name="id")
@@ -37,10 +36,10 @@ public class Job {
     private Integer status;
 
     @Column(name="company_id")
-    private Long company_id;
+    private Long companyId;
 
     @Column(name="recruiter_id")
-    private Long recruiter_id;
+    private Long recruiterId;
 
     @Column(name="industry_id")
     private Long industry_id;
@@ -61,32 +60,40 @@ public class Job {
     private Integer level;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recruiter_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    @JoinColumn(name = "recruiter_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
     private Staff staff;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "industry_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Industry industry; // Reference to the Industry
 
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    @JoinColumn(name = "company_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
     private Recruiter recruiter; // Reference to the Recruiter
 
     public Job() {
     }
 
-    public Job(Long id, String company_description, String benefits, String name, String description, Date start, Date end, Integer status, Long company_id, Integer type, Integer level) {
+    public Job(Long id, String name, String description, String benefits, Date start, Date end, Integer status, Long companyId, Long recruiterId, Long industry_id, Integer salary_max, Integer salary_min, String company_description, Integer type, Integer level, Staff staff, Industry industry, Recruiter recruiter) {
         this.id = id;
-        this.company_description = company_description;
-        this.benefits = benefits;
         this.name = name;
         this.description = description;
+        this.benefits = benefits;
         this.start = start;
         this.end = end;
         this.status = status;
-        this.company_id = company_id;
+        this.companyId = companyId;
+        this.recruiterId = recruiterId;
+        this.industry_id = industry_id;
+        this.salary_max = salary_max;
+        this.salary_min = salary_min;
+        this.company_description = company_description;
         this.type = type;
         this.level = level;
+        this.staff = staff;
+        this.industry = industry;
+        this.recruiter = recruiter;
     }
 
     public String getTypeAsString() {

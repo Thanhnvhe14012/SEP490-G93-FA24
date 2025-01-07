@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Job</title>
+    <title>Đăng tin tuyển dụng</title>
 </head>
 <body>
 <div id="wrapper">
@@ -38,11 +40,10 @@
                             <ul>
                                 <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
                                     khiển</a></li>
-                                <li><a href="dashboard-jobs-post.html"><i class="icon-line-awesome-user-secret"></i>
-                                    Đăng tuyển công việc</a></li>
-                                <li class="active"><a href="dashboard-manage-jobs.html"><i
-                                        class="icon-material-outline-group"></i> Danh sách công việc <span
-                                        class="nav-tag">5</span></a></li>
+                                <li class="active"><a href="dashboard-jobs-post.html"><i class="icon-line-awesome-user-secret"></i>
+                                    Đăng tin tuyển dụng</a></li>
+                                <li><a href="dashboard-manage-jobs.html"><i
+                                        class="icon-material-outline-group"></i> Danh sách công việc </a></li>
                             </ul>
                         </div>
                     </div>
@@ -70,102 +71,98 @@
                     <div class="col-xl-12">
                         <div class="dashboard-box">
                             <div class="headline">
-                                <h3>Edit Job</h3>
+                                <h3>Đăng tin tuyển dụng</h3>
                             </div>
                             <div class="content with-padding padding-bottom-10">
-<%--                                <form action="saveUpdateJob" method="post">--%>
+                                <form action="/job/saveUpdateJob?id=${job.id}" method="post">
                                     <div class="row">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="utf-submit-field">
-                                                <h5>Job Name</h5>
+                                                <h5>Tên công việc</h5>
                                                 <input type="text" class="utf-with-border" name="name"
                                                        value="${job.name}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="utf-submit-field">
-                                                <h5>Job Description</h5>
+                                                <h5>Mô tả chi tiết</h5>
                                                 <textarea cols="40" rows="4" class="utf-with-border" name="description"
                                                           required>${job.description}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="utf-submit-field">
-                                                <h5>Benefits</h5>
+                                                <h5>Quyền lợi</h5>
                                                 <textarea cols="40" rows="2" class="utf-with-border" name="benefits"
                                                           required>${job.benefits}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>End Date</h5>
+                                                <h5>Ngày kết thúc</h5>
                                                 <input type="date" class="utf-with-border" name="end"
-                                                       value="${job.end != null ? job.end : ''}"
-                                                       required>
+                                                       value="${formattedEndDate}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Minimum Salary</h5>
+                                                <h5>Mức lương tối thiểu</h5>
                                                 <input type="number" class="utf-with-border" name="salary_min"
                                                        value="${job.salary_min}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Maximum Salary</h5>
+                                                <h5>Mức lương tối đa</h5>
                                                 <input type="number" class="utf-with-border" name="salary_max"
                                                        value="${job.salary_max}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Job Type</h5>
+                                                <h5>Hình thức làm việc</h5>
                                                 <select class="selectpicker utf-with-border" name="type" required>
-                                                    <option value="1" <c:if test="${job.type == 1}">selected</c:if>>Full
-                                                        Time
+                                                    <option value="1" <c:if test="${job.type == 1}">selected</c:if>>
+                                                        Toàn thời gian
                                                     </option>
-                                                    <option value="2" <c:if test="${job.type == 2}">selected</c:if>>Part
-                                                        Time
+                                                    <option value="2" <c:if test="${job.type == 2}">selected</c:if>>
+                                                        Bán thời gian
                                                     </option>
                                                     <option value="3" <c:if test="${job.type == 3}">selected</c:if>>
-                                                        Contract
+                                                        Thời vụ
                                                     </option>
                                                     <option value="4" <c:if test="${job.type == 4}">selected</c:if>>
-                                                        Internship
-                                                    </option>
-                                                    <option value="5" <c:if test="${job.type == 5}">selected</c:if>>
-                                                        Temporary
+                                                        Làm tại nhà
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Experience Level</h5>
+                                                <h5>Cấp bậc</h5>
                                                 <select class="selectpicker utf-with-border" name="level" required>
                                                     <option value="1" <c:if test="${job.level == 1}">selected</c:if>>
-                                                        Entry Level
+                                                        Thực tập sinh
                                                     </option>
-                                                    <option value="2" <c:if test="${job.level == 2}">selected</c:if>>Mid
-                                                        Level
+                                                    <option value="2" <c:if test="${job.level == 2}">selected</c:if>>
+                                                        Nhân viên
                                                     </option>
                                                     <option value="3" <c:if test="${job.level == 3}">selected</c:if>>
-                                                        Senior Level
+                                                        Quản Lý
                                                     </option>
                                                     <option value="4" <c:if test="${job.level == 4}">selected</c:if>>
-                                                        Management
+                                                        Giám đốc
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <button class="button utf-button-sliding-icon ripple-effect" type="submit">
-                                                Save Changes <i class="icon-material-outline-arrow-right-alt"></i>
+                                                Lưu <i class="icon-material-outline-arrow-right-alt"></i>
                                             </button>
                                         </div>
                                     </div>
-<%--                                </form>--%>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -173,9 +170,6 @@
             </div>
         </div>
     </div>
-
-    <%@ include file="/WEB-INF/views/footer.jsp" %>
 </div>
-
 </body>
 </html>

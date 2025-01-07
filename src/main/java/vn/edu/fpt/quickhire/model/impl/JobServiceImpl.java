@@ -48,9 +48,9 @@ public class JobServiceImpl implements JobService {
         job.setSalary_min(jobDTO.getSalary_min());
         job.setLevel(jobDTO.getLevel());
         job.setType(jobDTO.getType());
-        job.setCompany_id(staff.getRecruiter().getAccount().getId());
+        job.setCompanyId(staff.getRecruiter().getAccount().getId());
         job.setCompany_description(staff.getRecruiter().getCompanyDescription());
-        job.setRecruiter_id(staff.getAccount().getId());
+        job.setRecruiterId(staff.getAccount().getId());
         return job;
     }
 
@@ -70,10 +70,8 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getJobsByRecruiterId(Long recruiter_id) {
-        System.out.println(recruiter_id);
-        List<Job> jobs = jobRepository.findByRecruiter_id(recruiter_id);
-        System.out.println("Jobs retrieved from repository: " + jobs); // Log the results// Log the results
+    public List<Job> getJobsByRecruiterId(Long recruiterId) {
+        List<Job> jobs = jobRepository.findAllByRecruiterId(recruiterId);
         return jobs;
     }
 

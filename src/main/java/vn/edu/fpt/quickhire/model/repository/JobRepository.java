@@ -11,7 +11,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     Job save(Job job);
     Job findById(long id);
     List<Job> findAll();
-    List<Job> findByRecruiter_id(Long recruiter_id);
+    List<Job> findAllByRecruiterId(Long recruiterId);
+    List<Job> findAllByCompanyId(Long companyId);
 
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.industry LEFT JOIN FETCH j.recruiter")
     List<Job> findAllWithIndustryAndRecruiter();
