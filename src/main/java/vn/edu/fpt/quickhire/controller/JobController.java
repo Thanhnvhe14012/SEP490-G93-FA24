@@ -112,6 +112,13 @@ public class JobController {
         return "v2/editjob";
     }
 
+    @GetMapping("/jobDetail")
+    public String showJobDetail(@RequestParam(required = false) long id, Model model) {
+        Job job = jobService.getJobById(id);
+        model.addAttribute("job", job );
+        return "job/jobDetail";
+    }
+
     @GetMapping("/viewJobDetailRecruiter")
     public String showViewJobDetailRecruiterForm(@RequestParam(required = false) long id,
                                                  Model model, HttpSession session) {
@@ -130,14 +137,6 @@ public class JobController {
         model.addAttribute("jobs", jobs);
         model.addAttribute("currentUserId", userDTO.getId());
         return "job/viewJobCreated";
-    }
-
-    @GetMapping("/viewJobApplied")
-    public String showViewJobAppliedForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
-                                         Model model, HttpSession session) {
-        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByUserID(userDTO.getId());
-        model.addAttribute("jobApplieds", jobApplieds);
-        return "v2/viewAppliedJob";
     }
 
     @PostMapping("/saveUpdateJob")

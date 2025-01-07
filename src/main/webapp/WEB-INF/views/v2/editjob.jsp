@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng tin tuyển dụng</title>
+    <title>Quickhire</title>
 </head>
 <body>
 <div id="wrapper">
@@ -38,11 +38,11 @@
                             </div>
                             <div class="clearfix"></div>
                             <ul>
-                                <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
+                                <li><a href="/job/viewJobCreated"><i class="icon-material-outline-dashboard"></i> Bảng điều
                                     khiển</a></li>
-                                <li class="active"><a href="dashboard-jobs-post.html"><i class="icon-line-awesome-user-secret"></i>
+                                <li class="active"><a href="/job/create"><i class="icon-line-awesome-user-secret"></i>
                                     Đăng tin tuyển dụng</a></li>
-                                <li><a href="dashboard-manage-jobs.html"><i
+                                <li><a href="/job/viewJobCreated"><i
                                         class="icon-material-outline-group"></i> Danh sách công việc </a></li>
                             </ul>
                         </div>
@@ -58,8 +58,8 @@
                         <h3>Đăng tin tuyển dụng</h3>
                         <nav id="breadcrumbs">
                             <ul>
-                                <li><a href="index-1.html">Trang chủ</a></li>
-                                <li><a href="dashboard.html">Bảng điều khiển</a></li>
+                                <li><a href="/home">Trang chủ</a></li>
+                                <li><a href="/job/viewJobCreated">Bảng điều khiển</a></li>
                                 <li>Đăng tin tuyển dụng</li>
                             </ul>
                         </nav>

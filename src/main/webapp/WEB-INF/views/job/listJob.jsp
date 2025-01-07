@@ -32,7 +32,7 @@
                     <h2>Danh sách việc làm</h2>
                     <nav id="breadcrumbs">
                         <ul>
-                            <li><a href="index-1.html">Home</a></li>
+                            <li><a href="/home">Trang chủ</a></li>
                             <li>Danh sách việc làm</li>
                         </ul>
                     </nav>

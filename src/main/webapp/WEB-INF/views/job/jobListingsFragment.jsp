@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:forEach var="job" items="${jobs}">
-    <a href="single-job-page.html" class="utf-job-listing">
+    <a href="/job/jobDetail?id=${job.id}" class="utf-job-listing">
         <div class="utf-job-listing-details">
             <div class="utf-job-listing-company-logo">
                 <img src="${job.recruiter.company_logo}" alt="Company Logo">
@@ -18,7 +18,10 @@
                         <li><i class="icon-feather-briefcase"></i> ${job.industry.name}</li>
                         <li>
                             <i class="icon-material-outline-account-balance-wallet"></i>
-                                ${job.salary_min / 1000000} - ${job.salary_max / 1000000} triệu
+                            <fmt:formatNumber value="${job.salary_min / 1000000}" type="number"
+                                              pattern="#0.##"/> -
+                            <fmt:formatNumber value="${job.salary_max / 1000000}" type="number"
+                                              pattern="#0.##"/> triệu
                         </li>
                         <li>
                             <i class="icon-material-outline-location-on"></i> ${job.recruiter.account.province.name}

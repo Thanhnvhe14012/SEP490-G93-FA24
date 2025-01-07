@@ -68,7 +68,13 @@ public class LoginController {
         if (account != null) {
             session.setAttribute("user", account);
             session.setAttribute("userDisplayName", account.getDisplayName());
-            return "redirect:/home";
+            if (account.getRole() == 4){
+                return "redirect:/home";
+            }
+            else if (account.getRole() == 3){
+                return "redirect:/job/viewJobCreated";
+            }
+            else return "redirect:/home";
         } else {
             // Đăng nhập thất bại
             model.addAttribute("error", "Invalid username or password");

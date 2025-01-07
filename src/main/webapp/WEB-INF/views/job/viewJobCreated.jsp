@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng tin tuyển dụng</title>
+    <title>Quickhire</title>
 </head>
 <body>
 <div id="wrapper">
@@ -37,11 +37,12 @@
                             </div>
                             <div class="clearfix"></div>
                             <ul>
-                                <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
+                                <li><a href="/job/viewJobCreated"><i class="icon-material-outline-dashboard"></i> Bảng
+                                    điều
                                     khiển</a></li>
-                                <li><a href="dashboard-jobs-post.html"><i class="icon-line-awesome-user-secret"></i>
+                                <li><a href="/job/create"><i class="icon-line-awesome-user-secret"></i>
                                     Đăng tin tuyển dụng</a></li>
-                                <li class="active"><a href="dashboard-manage-jobs.html"><i
+                                <li class="active"><a href="/job/viewJobCreated"><i
                                         class="icon-material-outline-group"></i> Danh sách việc làm</a></li>
                             </ul>
                         </div>
@@ -59,8 +60,8 @@
                         <h3>Danh sách việc làm</h3>
                         <nav id="breadcrumbs">
                             <ul>
-                                <li><a href="index-1.html">Trang chủ</a></li>
-                                <li><a href="dashboard.html">Bảng điều khiển</a></li>
+                                <li><a href="/home">Trang chủ</a></li>
+                                <li><a href="/job/viewJobCreated">Bảng điều khiển</a></li>
                                 <li>Danh sách việc làm</li>
                             </ul>
                         </nav>
@@ -72,7 +73,7 @@
                     <div class="col-xl-12">
                         <div class="dashboard-box margin-top-0">
                             <div class="headline">
-                                <h3>My Job Listings</h3>
+                                <h3>Danh sách việc làm</h3>
                             </div>
                             <div class="content">
                                 <ul class="utf-dashboard-box-list">
@@ -97,8 +98,14 @@
                                                                 </li>
                                                                 <li>
                                                                     <i class="icon-material-outline-account-balance-wallet"></i>
-                                                                        ${job.salary_min / 1000000}
-                                                                    - ${job.salary_max / 1000000} triệu
+                                                                    <fmt:formatNumber
+                                                                            value="${job.salary_min / 1000000}"
+                                                                            type="number"
+                                                                            pattern="#0.##"/> -
+                                                                    <fmt:formatNumber
+                                                                            value="${job.salary_max / 1000000}"
+                                                                            type="number"
+                                                                            pattern="#0.##"/> triệu
                                                                 </li>
                                                                 <li>
                                                                     <i class="icon-material-outline-location-on"></i> ${job.recruiter.account.province.name}
@@ -115,12 +122,13 @@
                                                             </ul>
                                                             <div class="utf-buttons-to-right">
                                                                 <a href="/job/editJob?id=${job.id}"
-                                                                   class="button green ripple-effect ico" title="Edit" data-tippy-placement="top">
+                                                                   class="button green ripple-effect ico" title="Edit"
+                                                                   data-tippy-placement="top">
                                                                     <i class="icon-feather-edit"></i>
                                                                 </a>
                                                                 <form action="/job/deleteJob" method="post"
                                                                       style="display:inline;">
-                                                                    <input type="hidden" name="jobId" value="${job.id}" >
+                                                                    <input type="hidden" name="jobId" value="${job.id}">
                                                                     <button type="submit"
                                                                             class="button red ripple-effect ico"
                                                                             title="Remove"
