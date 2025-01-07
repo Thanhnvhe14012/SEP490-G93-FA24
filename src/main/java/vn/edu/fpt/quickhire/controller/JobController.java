@@ -97,8 +97,8 @@ public class JobController {
 
 
     @GetMapping("/editJob")
-    public String showEditJobForm(@RequestParam(required = false) long id, Model model, HttpSession session) {
-        Job job = jobService.getJobById(id);
+    public String showEditJobForm( Model model, HttpSession session) {
+        Job job = jobService.getJobById(3L);
         model.addAttribute("job", job );
         return "v2/editjob";
     }
