@@ -16,6 +16,7 @@ import vn.edu.fpt.quickhire.entity.Province;
 import vn.edu.fpt.quickhire.model.impl.IndustryServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.JobServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.JobAppliedRepository;
+import vn.edu.fpt.quickhire.model.repository.JobRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public class JobController {
 
     @Autowired
     private JobAppliedRepository jobAppliedRepository;
+    @Autowired
+    private JobRepository jobRepository;
 
     @GetMapping("/create")
     public String showCreateJobForm(Model model, HttpSession session) {
@@ -127,6 +130,21 @@ public class JobController {
         List<JobApplied> jobApplieds = jobAppliedRepository.findAllByUserID(userDTO.getId());
         model.addAttribute("jobApplieds", jobApplieds);
         return "v2/viewAppliedJob";
+    }
+
+    @PostMapping("/saveUpdateJob")
+    public String saveUpdateJob(@ModelAttribute Job jobDTO,Model model){
+        Job job = jobRepository.findById(jobDTO.getId().longValue());
+        job.setName(jobDTO.getName());
+        job.setDescription(jobDTO.getDescription());
+        job.setStart(jobDTO.getStart());
+        job.setEnd(jobDTO.getEnd());
+        job.setStatus(jobDTO.getStatus());
+        job.setSalary_min(jobDTO.getSalary_min());
+        job.setSalary_max(jobDTO.getSalary_max());
+        jobRepository.save(job);
+        model.addAttribute("job", job );
+        return "v2/editjob";
     }
 
 }
