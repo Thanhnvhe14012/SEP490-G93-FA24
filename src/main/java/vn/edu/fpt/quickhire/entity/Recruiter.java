@@ -25,7 +25,7 @@
         private Integer companyScale;
 
         @Column(name = "company_status")
-        private int company_status;
+        private Integer company_status;
 
         @Column(name = "company_logo")
         private String company_logo;
@@ -46,7 +46,7 @@
         public Recruiter() {
         }
 
-        public Recruiter(Long id, String companyCode, String companyName, String companyDescription, Integer companyScale, int company_status, String company_logo, Long managerId, Long industryId, Account account) {
+        public Recruiter(Long id, String companyCode, String companyName, String companyDescription, Integer companyScale, int company_status, String company_logo, Account account) {
             this.id = id;
             this.companyCode = companyCode;
             this.companyName = companyName;
@@ -54,7 +54,6 @@
             this.companyScale = companyScale;
             this.company_status = company_status;
             this.company_logo = company_logo;
-            this.managerId = managerId;
             this.account = account;
         }
     }

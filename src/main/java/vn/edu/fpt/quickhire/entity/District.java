@@ -21,6 +21,7 @@ public class District {
     private String fullNameEn;
     @Column(name = "code_name")
     private String codeName;
+
     @ManyToOne
     @JoinColumn(name = "province_code")
     private Province province;

@@ -20,5 +20,5 @@ public interface RecruiterService {
 
     Recruiter findByAccount_Id(Long accountId);
 
-    List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode);
+//    List<Recruiter> findByManagerIdAndCompanyCode(Long managerId, String companyCode);
 }

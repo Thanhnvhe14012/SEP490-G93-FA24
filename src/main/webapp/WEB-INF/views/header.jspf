@@ -17,7 +17,7 @@
         <!-- Logo -->
         <div>
             <a href="/home" style="text-decoration: none; color: white;">
-                <img src="/WEB-INF/fragment/logo.png" alt="JobFinder Logo" style="height: 50px;">
+                <img src="/assets/img/logo.png" alt="JobFinder Logo" style="height: 50px;">
             </a>
         </div>
 

@@ -61,6 +61,10 @@ public class Job {
     private Integer level;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recruiter_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    private Staff staff;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "industry_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Industry industry; // Reference to the Industry
 
@@ -104,4 +108,5 @@ public class Job {
             default: return "N/A";
         }
     }
+
 }

@@ -24,16 +24,19 @@
         <div class="container">
             <div class="utf-left-side">
                 <div id="logo">
-                    <a href="/home"><img src="/assets/img/arashmil.jpg" alt=""></a>
+                    <a href="/home"><img src="/assets/img/logo.png" alt=""></a>
                 </div>
                 <nav id="navigation">
                     <ul id="responsive">
                         <li><a href="/home">Trang chủ</a></li>
                         <li><a href="#">Việc Làm</a>
                             <ul class="dropdown-nav">
-                                <li><a href="jobs-list-layout-leftside.html"><i class="icon-feather-chevron-right"></i>Tìm việc làm</a></li>
-                                <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a></li>
-                                <li><a href="jobs-listing-with-map.html"><i class="icon-feather-chevron-right"></i>Danh sách công ty</a></li>
+                                <li><a href="jobs-list-layout-leftside.html"><i class="icon-feather-chevron-right"></i>Tìm
+                                    việc làm</a></li>
+                                <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a>
+                                </li>
+                                <li><a href="jobs-listing-with-map.html"><i class="icon-feather-chevron-right"></i>Danh
+                                    sách công ty</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Hồ sơ & CV</a>
@@ -55,16 +58,17 @@
             </div>
 
             <div class="utf-right-side">
+                <%if (session.getAttribute("user") == null) { %>
                 <div class="utf-header-widget-item">
-                    <a href="/login" class="log-in-button"><i
-                            class="icon-feather-log-in"></i> <span>Đăng Nhập</span></a>
+                    <a href="/login" class="log-in-button"><i class="icon-feather-log-in"></i>
+                        <span>Đăng Nhập</span></a>
                 </div>
+                <% } else { %>
                 <div class="utf-header-widget-item">
                     <div class="utf-header-notifications user-menu">
                         <div class="utf-header-notifications-trigger user-profile-title">
                             <a href="#">
-                                <div class="user-avatar status-online"><img src="/assets/img/arashmil.jpg" alt=""></div>
-                                <div class="user-name">Xin chào, John!</div>
+                                <div class="user-name">Xin chào, <%= session.getAttribute("userDisplayName") %>!</div>
                             </a>
                         </div>
                         <div class="utf-header-notifications-dropdown-block">
@@ -79,29 +83,30 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <span class="mmenu-trigger">
-                        <button class="hamburger utf-hamburger-collapse-item" type="button">
-                            <span class="utf-hamburger-box-item">
-                                <span class="utf-hamburger-inner-item"></span>
-                            </span>
-                        </button>
-                    </span>
+                    <button class="hamburger utf-hamburger-collapse-item" type="button">
+                        <span class="utf-hamburger-box-item">
+                            <span class="utf-hamburger-inner-item"></span>
+                        </span>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
 </header>
 <script src="/assets/js/jquery-3.3.1.min.js"></script>
-  <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
-  <script src="/assets/js/mmenu.min.js"></script>
-  <script src="/assets/js/tippy.all.min.js"></script>
-  <script src="/assets/js/simplebar.min.js"></script>
-  <script src="/assets/js/bootstrap-slider.min.js"></script>
-  <script src="/assets/js/bootstrap-select.min.js"></script>
-  <script src="/assets/js/snackbar.js"></script>
-  <script src="/assets/js/clipboard.min.js"></script>
-  <script src="/assets/js/counterup.min.js"></script>
-  <script src="/assets/js/magnific-popup.min.js"></script>
-  <script src="/assets/js/slick.min.js"></script>
-  <script src="/assets/js/custom_jquery.js"></script>
+<script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
+<script src="/assets/js/mmenu.min.js"></script>
+<script src="/assets/js/tippy.all.min.js"></script>
+<script src="/assets/js/simplebar.min.js"></script>
+<script src="/assets/js/bootstrap-slider.min.js"></script>
+<script src="/assets/js/bootstrap-select.min.js"></script>
+<script src="/assets/js/snackbar.js"></script>
+<script src="/assets/js/clipboard.min.js"></script>
+<script src="/assets/js/counterup.min.js"></script>
+<script src="/assets/js/magnific-popup.min.js"></script>
+<script src="/assets/js/slick.min.js"></script>
+<script src="/assets/js/custom_jquery.js"></script>
 </body>
 </html>
