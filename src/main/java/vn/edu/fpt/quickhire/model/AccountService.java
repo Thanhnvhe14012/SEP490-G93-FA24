@@ -19,4 +19,6 @@ public interface AccountService {
     Optional<Account> findByEmail(String email);
 
     List<AccountDTO> fillAllAccount();
+
+    List<AccountDTO> fillAllStaffByRecruiterId(long recruiterId);
 }
