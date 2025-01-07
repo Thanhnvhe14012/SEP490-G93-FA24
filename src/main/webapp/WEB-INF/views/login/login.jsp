@@ -1,16 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Page</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
     .login-container {
       background-color: #fff;
       padding: 20px;
@@ -60,9 +56,12 @@
   </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/header.jsp" %>
-<div class="login-container">
-  <h2>Login</h2>
+<div id="wrapper">
+  <%@ include file="/WEB-INF/views/header.jsp" %>
+  <div class="clearfix"></div>
+  <!-- Titlebar -->
+  <div class="login-container">
+  <h2>Đăng nhập</h2>
   <form action="login" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" aria-label="Username">
@@ -81,5 +80,9 @@
     <p class="error">${error}</p>
   </c:if>
 </div>
+
+  <%@ include file="/WEB-INF/views/footer.jsp" %>
+</div>
+
 </body>
 </html>

@@ -77,7 +77,7 @@
                                     khiển</a></li>
                                 <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                 </li>
-                                <li><a href="index-1.html"><i class="icon-material-outline-power-settings-new"></i> Đăng
+                                <li><a href="/sign-out"><i class="icon-material-outline-power-settings-new"></i> Đăng
                                     xuất</a></li>
                             </ul>
                         </div>
