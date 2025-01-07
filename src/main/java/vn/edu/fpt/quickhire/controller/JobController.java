@@ -114,9 +114,9 @@ public class JobController {
     }
 
     @GetMapping("/viewJobCreated")
-    public String showViewJobCreatedListForm(@RequestParam(required = false) long recruiterId,
+    public String showViewJobCreatedListForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                              Model model, HttpSession session) {
-        List<Job> jobs = jobService.getJobsByRecruiterId(recruiterId);
+        List<Job> jobs = jobService.getJobsByRecruiterId(userDTO.getId());
         model.addAttribute("jobs", jobs);
         return "v2/viewJobCreated";
     }
