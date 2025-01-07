@@ -105,10 +105,9 @@ public class JobController {
 
     @GetMapping("/viewJobDetailRecruiter")
     public String showViewJobDetailRecruiterForm(@RequestParam(required = false) long id,
-                                                 @RequestParam(required = false) long jobId,
                                                  Model model, HttpSession session) {
         Job job = jobService.getJobById(id);
-        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(jobId);
+        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(id);
         model.addAttribute("job", job );
         model.addAttribute("listCV", jobApplieds);
         return "v2/viewJobDetailRecruiter";
@@ -123,10 +122,9 @@ public class JobController {
     }
 
     @GetMapping("/viewJobApplied")
-    public String showViewJobAppliedForm(@RequestParam(required = false) long id,
-                                         @SessionAttribute(name = "user", required = false) UserDTO userDTO,
+    public String showViewJobAppliedForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                          Model model, HttpSession session) {
-        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobIDAndUserID(id, userDTO.getId());
+        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByUserID(userDTO.getId());
         model.addAttribute("jobApplieds", jobApplieds);
         return "v2/viewAppliedJob";
     }
