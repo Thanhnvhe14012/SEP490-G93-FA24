@@ -29,11 +29,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Danh sách công việc</h2>
+                    <h2>Danh sách việc làm</h2>
                     <nav id="breadcrumbs">
                         <ul>
-                            <li><a href="index-1.html">Home</a></li>
-                            <li>Danh sách công việc</li>
+                            <li><a href="/home">Trang chủ</a></li>
+                            <li>Danh sách việc làm</li>
                         </ul>
                     </nav>
                 </div>
@@ -87,16 +87,16 @@
         <div class="row">
             <div class="col-xl-3 col-lg-4">
                 <div class="utf-sidebar-container-aera">
-                    <div class="utf-sidebar-widget-item">
-                        <h3>Filter by Salary</h3>
-                        <input type="number" name="salaryMin" id="salaryMin" placeholder="Min Salary" onchange="filterJobs()"/>
-                        <input type="number" name="salaryMax" id="salaryMax" placeholder="Max Salary" onchange="filterJobs()"/>
-                    </div>
+<%--                    <div class="utf-sidebar-widget-item">--%>
+<%--                        <h3>Filter by Salary</h3>--%>
+<%--                        <input type="number" name="salaryMin" id="salaryMin" placeholder="Min Salary" onchange="filterJobs()"/>--%>
+<%--                        <input type="number" name="salaryMax" id="salaryMax" placeholder="Max Salary" onchange="filterJobs()"/>--%>
+<%--                    </div>--%>
 
                     <div class="utf-sidebar-widget-item">
-                        <h3>Filter by Level</h3>
+                        <h3>Cấp bậc</h3>
                         <select name="level" id="level" onchange="filterJobs()">
-                            <option value="">All Levels</option>
+                            <option value="">Cấp bậc</option>
                             <option value="1">Thực tập sinh</option>
                             <option value="2">Nhân viên</option>
                             <option value="3">Quản Lý</option>
@@ -105,9 +105,9 @@
                     </div>
 
                     <div class="utf-sidebar-widget-item">
-                        <h3>Filter by Type</h3>
+                        <h3>Hình thức làm việc</h3>
                         <select name="type" id="type" onchange="filterJobs()">
-                            <option value="">All Types</option>
+                            <option value="">Hình thức làm việc</option>
                             <option value="1">Toàn thời gian</option>
                             <option value="2">Bán thời gian</option>
                             <option value="3">Thời vụ</option>
@@ -119,20 +119,20 @@
 
             <div class="col-xl-9 col-lg-8">
                 <div class="utf-inner-search-section-title">
-                    <h4><i class="icon-material-outline-search"></i> Search Jobs Listing Results</h4>
+                    <h4><i class="icon-material-outline-search"></i> Danh sách việc làm</h4>
                 </div>
-                <div class="utf-notify-box-aera margin-top-15">
-                    <div class="utf-switch-container-item">
-                        <span>Showing ${jobs.size()} Job Results :</span>
-                    </div>
-                    <div class="sort-by">
-                        <span>Sort By:</span>
-                        <select name="sortBy" id="sortBy" onchange="filterJobs()">
-                            <option value="createdDate">Date Created</option>
-                            <option value="name">Name</option>
-                        </select>
-                    </div>
-                </div>
+<%--                <div class="utf-notify-box-aera margin-top-15">--%>
+<%--                    <div class="utf-switch-container-item">--%>
+<%--                        <span>Showing ${jobs.size()} Job Results :</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="sort-by">--%>
+<%--                        <span>Sort By:</span>--%>
+<%--                        <select name="sortBy" id="sortBy" onchange="filterJobs()">--%>
+<%--                            <option value="createdDate">Date Created</option>--%>
+<%--                            <option value="name">Name</option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
                 <div id="jobListings" class="utf-listings-container-part compact-list-layout margin-top-35">
                     <jsp:include page="jobListingsFragment.jsp"/>
