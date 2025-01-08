@@ -29,13 +29,13 @@
                 <nav id="navigation">
                     <ul id="responsive">
                         <li><a href="/home">Trang chủ</a></li>
-                        <li><a href="#">Việc Làm</a>
+                        <li><a href="/job/list">Việc Làm</a>
                             <ul class="dropdown-nav">
-                                <li><a href="jobs-list-layout-leftside.html"><i class="icon-feather-chevron-right"></i>Tìm
+                                <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Tìm
                                     việc làm</a></li>
                                 <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a>
                                 </li>
-                                <li><a href="jobs-listing-with-map.html"><i class="icon-feather-chevron-right"></i>Danh
+                                <li><a href="/company/list"><i class="icon-feather-chevron-right"></i>Danh
                                     sách công ty</a></li>
                             </ul>
                         </li>
@@ -46,12 +46,8 @@
                             </ul>
                         </li>
                         <li><a href="/handbook">Cẩm nang nghề nghiệp</a>
-                            <ul class="dropdown-nav">
-                                <li><a href="handbook-overview.html">Tổng quan cẩm nang</a></li>
-                                <li><a href="handbook-tips.html">Mẹo nghề nghiệp</a></li>
-                            </ul>
                         </li>
-                        <li><a href="#">Quickhire</a></li>
+                        <li><a href="">Quickhire</a></li>
                     </ul>
                 </nav>
                 <div class="clearfix"></div>
@@ -73,11 +69,9 @@
                         </div>
                         <div class="utf-header-notifications-dropdown-block">
                             <ul class="utf-user-menu-dropdown-nav">
-                                <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Bảng điều
-                                    khiển</a></li>
                                 <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                 </li>
-                                <li><a href="index-1.html"><i class="icon-material-outline-power-settings-new"></i> Đăng
+                                <li><a href="/sign-out"><i class="icon-material-outline-power-settings-new"></i> Đăng
                                     xuất</a></li>
                             </ul>
                         </div>

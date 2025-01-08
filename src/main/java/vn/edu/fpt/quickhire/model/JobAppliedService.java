@@ -8,4 +8,6 @@ public interface JobAppliedService {
     List<JobApplied> getJobAppliedByUserId(Long userId);
     List<JobApplied> getJobAppliedByJobId(Long jobId);
     JobApplied save(JobApplied jobApplied);
+    JobApplied getJobAppliedByJobIdAndUserId(Long jobID, Long userID);
+    boolean unapplyForJob(Long jobID, Long userID);
 }

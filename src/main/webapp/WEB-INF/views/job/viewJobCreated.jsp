@@ -81,7 +81,7 @@
                                         <li>
                                             <div class="utf-job-listing">
                                                 <div class="utf-job-listing-details">
-                                                    <a href="single-job-page.html" class="utf-job-listing-company-logo">
+                                                    <a href="/job/jobDetail?id=${job.id}" class="utf-job-listing-company-logo">
                                                         <img src="${job.recruiter.company_logo}" alt="Company Logo">
                                                     </a>
                                                     <div class="utf-job-listing-description">
@@ -89,7 +89,7 @@
                                                 <i class="icon-material-outline-business-center"></i> ${job.getTypeAsString()}
                                             </span>
                                                         <h3 class="utf-job-listing-title">
-                                                            <a href="single-job-page.html">${job.name}</a>
+                                                            <a href="/job/jobDetail?id=${job.id}">${job.name}</a>
                                                         </h3>
                                                         <div class="utf-job-listing-footer">
                                                             <ul>

@@ -153,10 +153,10 @@ public class LoginController {
             account.setRole(2L);
             userService.save(account);
 
-            String companyLocation = String.format("%s, %s, %s",
-                    account.getProvince() != null ? account.getProvince().getName() : "",
+            String companyLocation = account.getAddress() + ", " + String.format("%s, %s, %s",
+                    account.getWard() != null ? account.getWard().getName() : "",
                     account.getDistrict() != null ? account.getDistrict().getName() : "",
-                    account.getWard() != null ? account.getWard().getName() : ""
+                    account.getProvince() != null ? account.getProvince().getName() : ""
             );
 
             recruiter.setCompany_location(companyLocation);

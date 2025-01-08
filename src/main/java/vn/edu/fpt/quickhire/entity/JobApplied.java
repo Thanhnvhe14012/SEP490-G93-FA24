@@ -26,4 +26,28 @@ public class JobApplied {
 
     @Column(name="message")
     private String message;
+
+    @Column(name="status")
+    private Integer status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
+    private Candidate candidate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jobID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private Job job;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cvID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private CV cv;
+
+    public String getStatusAsString() {
+        switch (status) {
+            case 0: return "Ứng tuyển ngay";
+            case 1: return "Đã ứng tuyển";
+            case 2: return "Đã chấp thuận";
+            default: return "N/A";
+        }
+    }
 }

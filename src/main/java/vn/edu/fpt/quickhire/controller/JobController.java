@@ -32,7 +32,6 @@ public class JobController {
     private IndustryServiceImpl industryService;
     @Autowired
     private ProvinceRepository provinceRepository;
-
     @Autowired
     private JobAppliedRepository jobAppliedRepository;
     @Autowired
@@ -113,9 +112,13 @@ public class JobController {
     }
 
     @GetMapping("/jobDetail")
-    public String showJobDetail(@RequestParam(required = false) long id, Model model) {
+    public String showJobDetail(@RequestParam(required = false) long id, Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
         Job job = jobService.getJobById(id);
         model.addAttribute("job", job );
+        if (userDTO != null) {
+            JobApplied jobApplied = jobAppliedRepository.findByJobIDAndUserID(id, userDTO.getId());
+            model.addAttribute("jobApplied", jobApplied);
+        }
         return "job/jobDetail";
     }
 
@@ -124,8 +127,10 @@ public class JobController {
                                                  Model model, HttpSession session) {
         Job job = jobService.getJobById(id);
         List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(id);
-        model.addAttribute("job", job );
-        model.addAttribute("listCV", jobApplieds);
+        model.addAttribute("job", job);
+        model.addAttribute("jobApplieds", jobApplieds);
+        System.out.println(id);
+        System.out.println(jobApplieds);
         return "v2/viewJobDetailRecruiter";
     }
 
