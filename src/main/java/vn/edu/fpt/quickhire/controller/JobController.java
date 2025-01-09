@@ -55,18 +55,18 @@ public class JobController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Job> createJob(
+    public String createJob(
             @ModelAttribute Job jobDTO, HttpSession session
     ) {
         UserDTO user = (UserDTO) session.getAttribute("user");
         Long accountId = user.getId();
         System.out.println("Session user: " + accountId);
         if (accountId == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return "redirect:/error";
         }
 
         Job createdJob = jobService.createJob(jobDTO, accountId);
-        return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
+        return "redirect:/job/viewJobCreated";
     }
 
     @GetMapping("/list")

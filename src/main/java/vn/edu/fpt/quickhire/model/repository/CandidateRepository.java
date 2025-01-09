@@ -6,6 +6,6 @@ import vn.edu.fpt.quickhire.entity.Candidate;
 import java.util.Optional;
 
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
-    Optional<Candidate> findByAccount_Id(Long accountId);
+    Candidate findByAccount_Id(Long accountId);
 
 }

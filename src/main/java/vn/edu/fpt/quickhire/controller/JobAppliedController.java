@@ -11,6 +11,7 @@ import vn.edu.fpt.quickhire.entity.CV;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.JobApplied;
 import vn.edu.fpt.quickhire.model.impl.CVServiceImpl;
+import vn.edu.fpt.quickhire.model.impl.FileUploadServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.JobAppliedServiceImpl;
 
 import java.io.IOException;
@@ -24,6 +25,9 @@ public class JobAppliedController {
 
     @Autowired
     private CVServiceImpl cvService;
+
+    @Autowired
+    private FileUploadServiceImpl fileUploadService;
 
     @GetMapping("/viewJobApplied")
     public String showViewJobAppliedForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
@@ -42,7 +46,6 @@ public class JobAppliedController {
             RedirectAttributes redirectAttributes) {
 
         try {
-
             //Handle validate user is logged as candidate
             if (userDTO == null) {
                 return "redirect:/login";
@@ -50,8 +53,19 @@ public class JobAppliedController {
                 redirectAttributes.addFlashAttribute("errorMessage", "Bạn không có quyền ứng tuyển cho công việc này.");
                 return "redirect:/job/jobDetail?id=" + jobID;
             }
+            // Upload CV file to Cloudinary
+            String uploadedFileUrl = fileUploadService.uploadFile(file);
+            if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
+                // CV file uploaded successfully
+                System.out.println("CV uploaded cloud successfully. File URL: " + uploadedFileUrl);
+            }else {
+                System.out.println("CV uploaded cloud failed");
+            }
+//            In case you want to keep file content in database
+//            byte[] fileBytes = file.getBytes();
+//            cv.setFileContent(fileBytes);
             CV cv = new CV();
-            cv.setFileName(file.getOriginalFilename());
+            cv.setFileName(uploadedFileUrl);
             cv.setAccountId(userDTO.getId());
             cvService.save(cv, file);
 
