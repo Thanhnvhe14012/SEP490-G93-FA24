@@ -21,4 +21,5 @@ public class CV {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
     private Candidate candidate;
+
 }

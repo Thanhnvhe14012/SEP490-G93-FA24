@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -81,6 +80,9 @@ public class Account {
 
     @Column(name = "role")
     private Long role;
+
+    @Column(name= "phoneNumber")
+    private String phoneNumber;
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;

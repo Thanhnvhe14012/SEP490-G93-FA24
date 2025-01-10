@@ -130,15 +130,15 @@ public class LoginController {
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
-            if (image!= null && !image .isEmpty()) {
-                try {
-                    String imageUrl = fileUploadService.UploadFile(image);
-                    recruiter.setCompany_logo(imageUrl);
-                } catch (IOException e) {
-                    // Handle the exception properly, log it, etc.
-                    e.printStackTrace();
-                }
-            }
+//            if (image!= null && !image .isEmpty()) {
+//                try {
+//                    String imageUrl = fileUploadService.UploadFile(image);
+//                    recruiter.setCompany_logo(imageUrl);
+//                } catch (IOException e) {
+//                    // Handle the exception properly, log it, etc.
+//                    e.printStackTrace();
+//                }
+//            }
             recruiter.setCompany_status(1);
 
             Role existingRole = roleRepository.findById(Long.valueOf(2))
@@ -153,10 +153,10 @@ public class LoginController {
             account.setRole(2L);
             userService.save(account);
 
-            String companyLocation = String.format("%s, %s, %s",
-                    account.getProvince() != null ? account.getProvince().getName() : "",
+            String companyLocation = account.getAddress() + ", " + String.format("%s, %s, %s",
+                    account.getWard() != null ? account.getWard().getName() : "",
                     account.getDistrict() != null ? account.getDistrict().getName() : "",
-                    account.getWard() != null ? account.getWard().getName() : ""
+                    account.getProvince() != null ? account.getProvince().getName() : ""
             );
 
             recruiter.setCompany_location(companyLocation);

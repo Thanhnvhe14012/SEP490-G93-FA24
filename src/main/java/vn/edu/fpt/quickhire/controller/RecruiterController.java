@@ -315,15 +315,15 @@ public class RecruiterController {
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
-            if (image!= null && !image .isEmpty()) {
-                try {
-                    String imageUrl = fileUploadService.UploadFile(image);
-                    recruiter.setCompany_logo(imageUrl);
-                } catch (IOException e) {
-                    // Handle the exception properly, log it, etc.
-                    e.printStackTrace();
-                }
-            }
+//            if (image!= null && !image .isEmpty()) {
+//                try {
+//                    String imageUrl = fileUploadService.UploadFile(image);
+//                    recruiter.setCompany_logo(imageUrl);
+//                } catch (IOException e) {
+//                    // Handle the exception properly, log it, etc.
+//                    e.printStackTrace();
+//                }
+//            }
             recruiter.setCompany_status(1);
 
             Role existingRole = roleRepository.findById(Long.valueOf(2))
