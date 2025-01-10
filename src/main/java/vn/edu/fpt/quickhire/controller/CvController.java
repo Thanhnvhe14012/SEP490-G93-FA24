@@ -1,33 +1,42 @@
 package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.fpt.quickhire.entity.Account;
-import vn.edu.fpt.quickhire.entity.Education;
-import vn.edu.fpt.quickhire.entity.Experience;
+import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.model.ExperienceService;
+import vn.edu.fpt.quickhire.model.impl.CVServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.CandidateServiceImpl;
+import vn.edu.fpt.quickhire.model.impl.JobAppliedServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.EducationRepository;
 import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 @Controller
+@RequestMapping("/cv")
 public class CvController {
     @Autowired
     CandidateServiceImpl candidateService;
-//    @Autowired
-//    CvServiceImpl cvService;
+    @Autowired
+    CVServiceImpl cvService;
     @Autowired
     AccountRepository accountRepository;
     @Autowired
@@ -39,25 +48,50 @@ public class CvController {
     @Autowired
     private ExperienceService experienceService;
 
+    @Autowired
+    private JobAppliedServiceImpl jobAppliedServiceImpl;
+
     //CVController
-    @GetMapping("/cv/list")
+    @GetMapping("/list")
     public String cv(Model model) {
         return "cv/listCV";
     }
 
-//    @GetMapping("/cv/{id}")
-//    public String cvDetail(Model model, @PathVariable int id) {
-//        Candidate c = this.candidateService.findByID(1L);
-////        c.setCvSections(c.getCvSections().stream().filter(x -> x.getCandidateCvNo() == id).collect(Collectors.toList()));
-//        model.addAttribute("candidate", c);
-//        return "cv";
-//    }
+    @GetMapping("/viewCV")
+    public String viewCV(@RequestParam Long cvId, Model model) {
+        CV cv = cvService.findById(cvId);
 
-//    @PostMapping("/update-cv/{id}")
-//    public String updateCandidate(@PathVariable("id") Long id, @ModelAttribute("candidate") Candidate candidate, @RequestParam("imageInput") MultipartFile image) {
-//        candidateService.save(candidate, false, true, image);
-//        return "redirect:/cv/" + id;
-//    }
+        if (cv != null) {
+            model.addAttribute("cv", cv);
+            return "cv/viewCV";
+        } else {
+            return "redirect:/error";
+        }
+    }
+
+    @GetMapping("/viewCVContent")
+    public ResponseEntity<byte[]> viewCVContent(@RequestParam Long cvId) {
+        CV cv = cvService.findById(cvId);
+
+        if (cv != null) {
+            try {
+                URL url = new URL(cv.getFileName());
+                InputStream inputStream = url.openStream();
+                byte[] fileContent = IOUtils.toByteArray(inputStream);
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                String originalFileName = StringUtils.getFilename(cv.getFileName());
+                headers.setContentDispositionFormData("attachment", originalFileName);
+
+                return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching file content from Cloudinary.".getBytes());
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/download/generate-pdf")
     @ResponseBody
@@ -178,7 +212,7 @@ public class CvController {
         }
     }
 
-    @GetMapping("/cv/template1")
+    @GetMapping("/template1")
     public String cvTemplate1() {
         return "cv/cvTemplate/cvTemplate1";
     }

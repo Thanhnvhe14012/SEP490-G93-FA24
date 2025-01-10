@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface JobAppliedRepository extends JpaRepository<JobApplied, Long> {
     List<JobApplied> findAllByJobID(long jobID);
-    List<JobApplied> findAllByJobIDAndUserID(long jobID, long userID);
+    JobApplied findByJobIDAndUserID(long jobID, long userID);
     List<JobApplied> findAllByUserID(long userID);
     JobApplied save(JobApplied jobApplied);
+    void delete(JobApplied jobApplied);
 }

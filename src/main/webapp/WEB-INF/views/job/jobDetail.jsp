@@ -11,9 +11,21 @@
 </head>
 <body>
 <div id="wrapper">
+    <c:if test="${not empty message}">
+        <div class="alert alert-success" style="color: green; text-align: center; padding: 10px;">
+            <c:out value="${message}"/>
+        </div>
+    </c:if>
+
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger" style="color: red; text-align: center; padding: 10px;">
+            <c:out value="${errorMessage}"/>
+        </div>
+    </c:if>
     <%@ include file="/WEB-INF/views/header.jsp" %>
     <div class="clearfix"></div>
-    <div class="single-page-header" data-background-image="/assets/img/single-job.jpg">
+    <div class="single-page-header" data-background-image="/assets/img/single-job.jpg"
+         style="width: 100%; height: 200px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -96,9 +108,36 @@
                         </div>
                         <div class="utf-right-side">
                             <div class="salary-box">
-                                <a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-top-0">Ứng
-                                    tuyển ngay<i
-                                            class="icon-feather-chevron-right"></i></a>
+                                <c:choose>
+                                    <c:when test="${not empty jobApplied}">
+                                        <c:choose>
+                                            <c:when test="${jobApplied.status == 1}">
+                                                <button style="color: white; background: transparent; border: none; cursor: not-allowed;"
+                                                        disabled>Đã ứng tuyển
+                                                </button>
+                                                <form action="/jobApplied/unapply" method="post"
+                                                      style="display: inline;">
+                                                    <input type="hidden" name="jobID" value="${job.id}"/>
+                                                    <button type="submit" class="unapply-button"
+                                                            style="background-color: #ff4d4d; color: white; border: none; padding: 10px 20px; cursor: pointer;"
+                                                            onclick="return confirm('Bạn có chắc chắn muốn rút hồ sơ ứng tuyển cho công việc này?');">
+                                                        Rút hồ sơ
+                                                    </button>
+                                                </form>
+                                            </c:when>
+                                            <c:when test="${jobApplied.status == 2}">
+                                                <button style="color: white; background: transparent; border: none; cursor: not-allowed;"
+                                                        disabled>Đã chấp thuận
+                                                </button>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="#small-dialog"
+                                           class="apply-now-button popup-with-zoom-anim margin-top-0">Ứng
+                                            tuyển ngay<i class="icon-feather-chevron-right"></i></a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -148,9 +187,29 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-sm-24">
-                        <a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-top-0">Ứng tuyển
-                            ngay <i
-                                    class="icon-feather-chevron-right"></i></a>
+                        <c:choose>
+                            <c:when test="${not empty jobApplied}">
+                                <c:choose>
+                                    <c:when test="${jobApplied.status == 1}">
+                                        <button class="apply-now-button"
+                                                style="background-color: #28A745; color: white; border: none; padding: 10px 20px; cursor: not-allowed;"
+                                                disabled>Đã ứng tuyển
+                                        </button>
+                                    </c:when>
+                                    <c:when test="${jobApplied.status == 2}">
+                                        <button class="apply-now-button"
+                                                style="background-color: #28A745; color: white; border: none; padding: 10px 20px; cursor: not-allowed;"
+                                                disabled>Đã chấp thuận
+                                        </button>
+                                    </c:when>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-top-0"
+                                   style="background-color: #28A745; color: white; padding: 10px 20px; border-radius: 5px;">Ứng
+                                    tuyển ngay <i class="icon-feather-chevron-right"></i></a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -227,15 +286,17 @@
         </ul>
         <div class="utf-popup-container-part-tabs">
             <div class="utf-popup-tab-content-item" id="tab">
-                <form method="post" id="apply-now-form" action="/jobApplied/apply" enctype="multipart/form-data">
+                <form method="post" id="apply-now-form" action="/jobApplied/apply" enctype="multipart/form-data"
+                      onsubmit="return validateFileSize();">
                     <!-- Hidden input for jobID -->
                     <input type="hidden" name="jobID" value="${job.id}"/>
 
                     <div class="uploadButton">
                         <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload-cv"
-                               name="cv" required/>
+                               name="cv" required onchange="checkFileSize(this)"/>
                         <label class="uploadButton-button ripple-effect" for="upload-cv">Chọn CV</label>
                         <span class="uploadButton-file-name">Tải lên CV từ máy tính</span>
+                        <span id="file-error" style="color: red; display: none;"></span>
                     </div>
                     <div class="utf-no-border">
                         <label for="cover-letter" style="font-weight: bold; margin-bottom: 5px; display: block;">Thư
@@ -251,5 +312,44 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+
+        window.checkFileSize = function (input) {
+            const file = input.files[0];
+            const errorElement = document.getElementById('file-error');
+
+            if (file) {
+                if (file.size > MAX_FILE_SIZE) {
+                    errorElement.textContent = "Kích thước tệp tin quá lớn. Vui lòng chọn tệp tin nhỏ hơn 2MB.";
+                    errorElement.style.display = "block";
+                    input.value = ''; // Clear the input
+                } else {
+                    errorElement.style.display = "none"; // Hide the error message
+                }
+            }
+        };
+
+        window.validateFileSize = function () {
+            const input = document.getElementById('upload-cv');
+            const errorElement = document.getElementById('file-error');
+
+            if (input.files.length > 0 && input.files[0].size > MAX_FILE_SIZE) {
+                errorElement.textContent = "Kích thước tệp tin quá lớn. Vui lòng chọn tệp tin nhỏ hơn 2MB.";
+                errorElement.style.display = "block";
+                return false;
+            }
+            return true;
+        };
+    });
+
+    window.confirmUnapply = function (jobId) {
+        const confirmAction = confirm("Bạn có chắc chắn muốn rút hồ sơ ứng tuyển cho công việc này?");
+        if (confirmAction) {
+            window.location.href = `/jobApplied/unapply?jobID=` + jobId;
+        }
+    }
+</script>
 </body>
 </html>

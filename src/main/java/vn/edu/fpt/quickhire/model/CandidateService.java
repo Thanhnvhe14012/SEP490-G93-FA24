@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface CandidateService {
     Candidate save(Candidate candidate);
     Optional<Candidate> findById(long id);
-    Optional<Candidate> findByAccountId(long id);
+//    Optional<Candidate> findByAccountId(long id);
 }

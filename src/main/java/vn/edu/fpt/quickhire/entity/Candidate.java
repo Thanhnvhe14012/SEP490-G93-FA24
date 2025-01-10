@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public class Candidate {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
+
 }
