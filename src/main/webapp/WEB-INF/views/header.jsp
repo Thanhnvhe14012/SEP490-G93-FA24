@@ -39,10 +39,14 @@
                                     sách công ty</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Hồ sơ & CV</a>
+                        <li><a href="/viewCompany/${sessionScope.user.id}">Hồ sơ & CV</a>
                             <ul class="dropdown-nav">
-                                <li><a href="dashboard-my-profile.html">Quản lý hồ sơ</a></li>
-                                <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.role == 4}">
+                                        <li><a href="/candidate/profile">Quản lý hồ sơ</a></li>
+                                        <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
+                                    </c:when>
+                                </c:choose>
                             </ul>
                         </li>
                         <li><a href="/handbook">Cẩm nang nghề nghiệp</a>

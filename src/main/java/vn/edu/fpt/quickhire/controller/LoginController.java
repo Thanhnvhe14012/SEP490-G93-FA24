@@ -110,6 +110,7 @@ public class LoginController {
             account.setUsername(user.getUsername());
             account.setPassword(user.getPassword());
             account.setEmail(user.getEmail());
+            account.setPhoneNumber(user.getPhoneNumber());
 
             account.setAddressId1(user.getAddressId1());
             account.setAddressId2(user.getAddressId2());
