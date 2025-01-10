@@ -63,14 +63,14 @@
   <div class="login-container">
   <h2>Đăng nhập</h2>
   <form action="login" method="post">
-    <label for="username">Username:</label>
+    <label for="username">Tên đăng nhập:</label>
     <input type="text" id="username" name="username" aria-label="Username">
     <br>
-    <label for="password">Password:</label>
+    <label for="password">Mật khẩu:</label>
     <input type="password" id="password" name="password" aria-label="Password">
 
     <br>
-    <button type="submit">Login</button>
+    <button type="submit">Đăng nhập</button>
   </form>
   <a href="/forgot-password" class="forgot-password">Quên mật khẩu?</a>
   <a href="/register" class="forgot-password">Chưa có tài khoản? Tạo ngay!!</a>

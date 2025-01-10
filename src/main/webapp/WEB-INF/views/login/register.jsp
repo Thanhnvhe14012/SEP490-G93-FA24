@@ -61,13 +61,13 @@
 
       <!-- Username -->
       <div class="mb-3">
-        <label for="username" class="form-label">Username:</label>
+        <label for="username" class="form-label">Tên đăng nhập:</label>
         <form:input path="username" class="form-control" id="username" />
       </div>
 
       <!-- Password -->
       <div class="mb-3">
-        <label for="password" class="form-label">Password:</label>
+        <label for="password" class="form-label">Mật khẩu:</label>
         <form:password path="password" class="form-control" id="password" />
       </div>
 

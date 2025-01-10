@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="footer">
     <div class="utf-footer-section-item-block">
         <div class="container">
@@ -5,37 +6,37 @@
                 <div class="col-xl-4 col-md-12">
                     <div class="utf-footer-item-links">
                         <a href="/home"><img class="footer-logo" src="/assets/img/logo.png" alt=""></a>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        <p>Chúng tôi là công ty tư nhân. Được tài trợ bởi tập đoàn FPT với sứ mệnh giúp người dùng VN có thể dễ dàng tìm kiếm được công việc một cách đơn giản và thuận tiện. Với hơn 4 năm kinh nghiệm chúng tôi đang cố gắng trở thành một trong những trang web tìm kiếm việc làm lớn nhất VN</p>
                     </div>
                 </div>
 
                 <div class="col-xl-2 col-md-3 col-sm-6">
                     <div class="utf-footer-item-links">
                         <h3>Company Overview</h3>
-                        <p>Quickhire is a leading job platform that connects job seekers with employers.</p>
+                        <p>Quickhire là nền tảng việc làm hàng đầu kết nối người tìm việc với nhà tuyển dụng.</p>
                     </div>
                 </div>
 
                 <div class="col-xl-2 col-md-3 col-sm-6">
                     <div class="utf-footer-item-links">
-                        <h3>Contact Information</h3>
+                        <h3>Thông tin liên hệ</h3>
                         <p>Email: info@quickhire.com</p>
                         <p>Phone: +123456789</p>
-                        <p>Address: 123 Main Street, City, Country</p>
+                        <p>Address: 123 Hòa Lạc - VN </p>
                     </div>
                 </div>
 
                 <div class="col-xl-2 col-md-3 col-sm-6">
                     <div class="utf-footer-item-links">
                         <h3>Services</h3>
-                        <p>Quickhire offers a wide range of job opportunities for various job categories and job types.</p>
+                        <p>Quickhire cung cấp nhiều cơ hội việc làm cho các danh mục công việc và loại hình công việc khác nhau.</p>
                     </div>
                 </div>
 
                 <div class="col-xl-2 col-md-3 col-sm-6">
                     <div class="utf-footer-item-links">
                         <h3>Follow Us</h3>
-                        <p>Stay connected with Quickhire on social media for the latest updates and job postings.</p>
+                        <p>Hãy kết nối với Quickhire trên mạng xã hội để nhận thông tin cập nhật mới nhất và các bài đăng tuyển dụng.</p>
                     </div>
                 </div>
             </div>
