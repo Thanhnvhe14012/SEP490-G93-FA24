@@ -67,6 +67,9 @@ public class RecruiterController {
 
     @PostMapping("/createStaff")
     public String createStaff(@ModelAttribute("staff") StaffDTO staff, @SessionAttribute(name = "user", required = true) UserDTO userDTO, Model model) throws ParseException {
+        if(userDTO == null){
+            return "redirect:/login";
+        }
         if (userDTO.getRole() == 2) {
 
             Account account = new Account();
