@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
             userDTO.setAddressId1(account.getAddressId1());
             userDTO.setAddressId2(account.getAddressId2());
             userDTO.setAddressId3(account.getAddressId3());
-            userDTO.setAddress(account.getAddress());
+            userDTO.setAddress(account.getAddress() + " - " + account.getWard().getName() + " - " + account.getDistrict().getName() + " - " + account.getProvince().getName());
             userDTO.setEmail(account.getEmail());
             if (account.getRole() == 2) {
                 userDTO.setCompanyName(account.getRecruiter().getCompanyName());
@@ -57,14 +57,12 @@ public class AccountServiceImpl implements AccountService {
                 userDTO.setCompanyScale(account.getRecruiter().getCompanyScale());
                 userDTO.setDisplayName(account.getRecruiter().getCompanyName());
                 userDTO.setCompanyCode(account.getRecruiter().getCompanyCode());
-            }
-            else if (account.getRole() == 3) {
+            } else if (account.getRole() == 3) {
                 userDTO.setCompanyName(account.getStaff().getRecruiter().getCompanyName());
                 userDTO.setCompanyDescription(account.getStaff().getRecruiter().getCompanyDescription());
                 userDTO.setCompanyScale(account.getStaff().getRecruiter().getCompanyScale());
                 userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
-            }
-            else if(account.getRole() == 4) {
+            } else if (account.getRole() == 4) {
                 userDTO.setBiography(account.getCandidate().getBiography());
                 userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
                 userDTO.setDateOfBirth(formatter.format(account.getDateOfBirth()));
@@ -97,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountDTO> fillAllAccount() {
         List<Account> listAll = accountRepository.findAllByOrderByIdDesc();
         List<AccountDTO> accountDTOList = new ArrayList<>();
-        if(!listAll.isEmpty()) {
+        if (!listAll.isEmpty()) {
             for (Account account : listAll) {
                 AccountDTO accountDTO = new AccountDTO();
                 accountDTO.setId(account.getId());
@@ -106,15 +104,15 @@ public class AccountServiceImpl implements AccountService {
                         (account.getMiddleName() != null ? account.getMiddleName() : "") + " " +
                         (account.getLastName() != null ? account.getLastName() : ""));
                 accountDTO.setEmail(account.getEmail());
-                if(account.getRole() == 2){
+                if (account.getRole() == 2) {
                     accountDTO.setRole("Nhà tuyển dụng");
                     accountDTO.setCompanyName(account.getRecruiter().getCompanyName());
                     accountDTO.setCompanyCode(account.getRecruiter().getCompanyCode());
-                } else if(account.getRole() == 3){
+                } else if (account.getRole() == 3) {
                     accountDTO.setRole("Nhân viên công ty");
                     accountDTO.setCompanyName(account.getRecruiter().getCompanyName());
                     accountDTO.setCompanyCode(account.getRecruiter().getCompanyCode());
-                } else if(account.getRole() == 4){
+                } else if (account.getRole() == 4) {
                     accountDTO.setRole("Người ứng tuyển");
                 }
                 accountDTO.setStatus(1);
@@ -130,7 +128,7 @@ public class AccountServiceImpl implements AccountService {
         Recruiter recruiter = recruiterRepository.findById(recruiterId).get();
         List<Staff> staffs = staffRepository.findAllByRecruiter(recruiter);
         List<AccountDTO> accountDTOList = new ArrayList<>();
-        if(!staffs.isEmpty()) {
+        if (!staffs.isEmpty()) {
             for (Staff staff : staffs) {
                 AccountDTO accountDTO = new AccountDTO();
                 accountDTO.setId(staff.getAccount().getId());
@@ -139,9 +137,9 @@ public class AccountServiceImpl implements AccountService {
                         (staff.getAccount().getMiddleName() != null ? staff.getAccount().getMiddleName() : "") + " " +
                         (staff.getAccount().getLastName() != null ? staff.getAccount().getLastName() : ""));
                 accountDTO.setEmail(staff.getAccount().getEmail());
-                    accountDTO.setRole("Nhân viên công ty");
-                    accountDTO.setCompanyName(staff.getAccount().getRecruiter().getCompanyName());
-                    accountDTO.setCompanyCode(staff.getAccount().getRecruiter().getCompanyCode());
+                accountDTO.setRole("Nhân viên công ty");
+                accountDTO.setCompanyName(staff.getAccount().getRecruiter().getCompanyName());
+                accountDTO.setCompanyCode(staff.getAccount().getRecruiter().getCompanyCode());
 
                 accountDTO.setStatus(1);
                 accountDTOList.add(accountDTO);

@@ -57,7 +57,7 @@ public class HandbookController {
         try {
             Path filePath = Paths.get(uploadDir + fileName);
             Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            return "/uploads/" + fileName; // Return the URL where the image is saved
+            return "/upload/" + fileName; // Return the URL where the image is saved
         } catch (IOException e) {
             // Handle the exception
             return null;

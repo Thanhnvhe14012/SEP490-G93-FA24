@@ -28,13 +28,13 @@
 
         <!-- Username -->
         <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Tên đăng nhập:</label>
             <form:input path="username" class="form-control" placeholder="Enter Username"/>
         </div>
 
         <!-- Password -->
         <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Mật khẩu:</label>
             <form:password path="password" class="form-control" placeholder="Enter Password"/>
         </div>
 

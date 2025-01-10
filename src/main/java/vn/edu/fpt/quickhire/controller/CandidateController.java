@@ -47,9 +47,14 @@ public class CandidateController {
     private ExperienceService experienceService;
 
     @GetMapping("/experience/new")
-    public String showForm(Model model) {
-        model.addAttribute("experience", new ExperienceDTO());
-        return "candidate/add_experience";
+    public String showForm(Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        } else if (userDTO.getRole() == 4) {
+            model.addAttribute("experience", new ExperienceDTO());
+            return "candidate/add_experience";
+        } else return "redirect:/homepage";
+
     }
 
     @PostMapping("/experience/save")
@@ -70,13 +75,17 @@ public class CandidateController {
     }
 
     @GetMapping("/education/new")
-    public String showFormEducation(Model model) {
-        model.addAttribute("education", new EducationDTO());
-        return "candidate/add_education";
+    public String showFormEducation(Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        } else if (userDTO.getRole() == 4) {
+            model.addAttribute("education", new EducationDTO());
+            return "candidate/add_education";
+        } else return "redirect:/homepage";
     }
 
     @PostMapping("/education/save")
-    public String saveEducation(@ModelAttribute EducationDTO education , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
+    public String saveEducation(@ModelAttribute EducationDTO education, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(education.toString());
         Education ex = new Education();
         ex.setAccountId(education.getAccountId());
@@ -94,7 +103,7 @@ public class CandidateController {
     @GetMapping("/candidate/profile")
     public String showFormProfileCandidate(@SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) {
         if (userDTO == null) {
-            return "homepage";
+            return "redirect:/login";
         }
         System.out.println(userDTO.toString());
 
@@ -106,13 +115,13 @@ public class CandidateController {
             List<Cetificate> cetificateList = cetificateRepository.findAllByAccountId(userDTO.getId());
             model.addAttribute("listCetificate", cetificateList);
             return "candidate/profile";
-        } else return "homepage";
+        } else return "redirect:/homepage";
     }
 
     @GetMapping("/experience/update")
     public String showFormUpdateExperience(Model model, @RequestParam(value = "experienceId", required = false) Long experienceId) {
-        Experience experience =experienceService.getExperienceById(experienceId);
-        if(experience != null) {
+        Experience experience = experienceService.getExperienceById(experienceId);
+        if (experience != null) {
             ExperienceDTO experienceDTO = new ExperienceDTO();
             experienceDTO.setAccountId(experience.getAccountId());
             experienceDTO.setDescription(experience.getDescription());
@@ -123,17 +132,16 @@ public class CandidateController {
             experienceDTO.setStart(formatter.format(experience.getStart()));
             experienceDTO.setEnd(formatter.format(experience.getEnd()));
             experienceDTO.setExId((long) experience.getId());
-            model.addAttribute("experience",experienceDTO);
+            model.addAttribute("experience", experienceDTO);
             return "candidate/update-experience";
         }
         return "homepage";
 
 
-
     }
 
     @PostMapping("/experience/save-update")
-    public String updateExperience(@ModelAttribute ExperienceDTO experience , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
+    public String updateExperience(@ModelAttribute ExperienceDTO experience, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(experience.toString());
         Experience ex = experienceService.getExperienceById(experience.getExId());
         ex.setAccountId(experience.getAccountId());
@@ -153,7 +161,7 @@ public class CandidateController {
     public String showFormEducationUpdate(Model model, @RequestParam(value = "educationId", required = false) Long educationId) {
         System.out.println(educationId);
         Education edu = educationRepository.findEducationById(educationId);
-        if(edu != null) {
+        if (edu != null) {
             EducationDTO educationDTO = new EducationDTO();
             educationDTO.setAccountId(edu.getAccountId());
             Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -187,13 +195,18 @@ public class CandidateController {
     }
 
     @GetMapping("/cetificate/new")
-    public String showFormCetificate(Model model) {
-        model.addAttribute("cetificate", new CetificateDTO());
-        return "candidate/add-cetificate";
+    public String showFormCetificate(Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        } else if (userDTO.getRole() == 4) {
+            model.addAttribute("cetificate", new CetificateDTO());
+            return "candidate/add-cetificate";
+        } else return "redirect:/homepage";
+
     }
 
     @PostMapping("/cetificate/save")
-    public String saveCetificate(@ModelAttribute CetificateDTO cetificateDTO , @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
+    public String saveCetificate(@ModelAttribute CetificateDTO cetificateDTO, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws ParseException {
         System.out.println(cetificateDTO.toString());
         Cetificate ex = new Cetificate();
         ex.setAccountId(cetificateDTO.getAccountId());
@@ -212,7 +225,7 @@ public class CandidateController {
     public String showFormCetificateUpdate(Model model, @RequestParam(value = "cetificateId", required = false) Long cetificateId) {
         System.out.println(cetificateId);
         Cetificate cetificate = cetificateRepository.findCetificateById(cetificateId);
-        if(cetificate != null) {
+        if (cetificate != null) {
             CetificateDTO cetificateDTO = new CetificateDTO();
             cetificateDTO.setAccountId(cetificate.getAccountId());
             Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -246,17 +259,19 @@ public class CandidateController {
     }
 
     @GetMapping("/deleteExperience/{id}")
-    public String deleteExperience( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+    public String deleteExperience(@PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
         experienceRepository.deleteById(id);
         return showFormProfileCandidate(userDTO, model);
     }
+
     @GetMapping("/deleteEducation/{id}")
-    public String deleteEducation( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+    public String deleteEducation(@PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
         educationRepository.deleteById(id);
         return showFormProfileCandidate(userDTO, model);
     }
+
     @GetMapping("/deleteCetificate/{id}")
-    public String deleteCetificate( @PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
+    public String deleteCetificate(@PathVariable("id") long id, @SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) throws IOException {
         cetificateRepository.deleteById(id);
         return showFormProfileCandidate(userDTO, model);
     }
