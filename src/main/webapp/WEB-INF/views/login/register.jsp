@@ -131,7 +131,7 @@
           <form:input path="lastName" class="form-control" id="lastName" />
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth" class="form-label">Date of Birth:</label>
+          <label for="dateOfBirth" class="form-label">Ngày tháng năm sinh:</label>
           <form:input path="dateOfBirth" type="date" class="form-control" id="dateOfBirth" />
         </div>
       </div>
