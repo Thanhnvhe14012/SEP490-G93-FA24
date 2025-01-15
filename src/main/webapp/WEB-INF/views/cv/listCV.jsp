@@ -129,7 +129,7 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">CV số ${i}</h5>
+                    <h5 class="card-title">CV số 1</h5>
                     <p class="card-text">
                         <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
                         <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
@@ -149,11 +149,10 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">CV số ${i}</h5>
+                    <h5 class="card-title">CV số 2</h5>
                     <p class="card-text">
                         <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
                         <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
-                        <span class="px-2 py-1 badge bg-secondary">+5</span>
                     </p>
                 </div>
             </div>

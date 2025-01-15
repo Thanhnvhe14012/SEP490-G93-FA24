@@ -61,7 +61,7 @@ public class RecruiterController {
             List<Province> provinces = provinceRepository.findAll();
             model.addAttribute("provinces", provinces);
             return "recruiter/addstaff";
-        } else return "/homepage";
+        } else return "redirect:/";
 
     }
 

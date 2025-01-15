@@ -2,9 +2,6 @@ package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +33,6 @@ public class JobController {
     private JobAppliedRepository jobAppliedRepository;
     @Autowired
     private JobRepository jobRepository;
-    @Autowired
-    private JobServiceImpl jobServiceImpl;
 
     @GetMapping("/create")
     public String showCreateJobForm(Model model, HttpSession session) {
@@ -46,7 +41,7 @@ public class JobController {
             return "redirect:/login";
         }
         if (user.getRole() != 3) {
-            return "redirect:/home";
+            return "redirect:/";
         }
         model.addAttribute("job", new Job());
         List<Industry> industries = industryService.getAllIndustries();
@@ -70,14 +65,42 @@ public class JobController {
     }
 
     @GetMapping("/list")
-    public String listAllJobs(Model model) {
-        List<Job> jobs = jobService.getAllJobs();
+    public String listAllJobs(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) Long industryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            Model model) {
+
+        List<Job> jobs;
+        if (name != null || address != null || industryId != null) {
+            jobs = jobService.searchJobs(name, address, industryId, null, null, null, null);
+        } else {
+            jobs = jobService.getAllJobs();
+        }
+
+        if (jobs.isEmpty()) {
+            model.addAttribute("noJobsFound", true);
+        }
+
+        int totalJobs = jobs.size();
+        int totalPages = (int) Math.ceil((double) totalJobs / size);
+        int start = page * size;
+        int end = Math.min(start + size, totalJobs);
+
+        List<Job> paginatedJobs = jobs.subList(start, end);
+
         List<Industry> industries = industryService.getAllIndustries();
         List<Province> provinces = provinceRepository.findAll();
-        model.addAttribute("jobs", jobs);
+
+        model.addAttribute("jobs", paginatedJobs);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("industries", industries);
         model.addAttribute("provinces", provinces);
-        return "job/listJob"; // Return the main job listing JSP
+
+        return "job/listJob";
     }
 
     @GetMapping("/searchJobs")
@@ -89,13 +112,24 @@ public class JobController {
             @RequestParam(required = false) Integer salaryMax,
             @RequestParam(required = false) Integer level,
             @RequestParam(required = false) Integer type,
-            @RequestParam(defaultValue = "createdDate") String sortBy,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
             Model model) {
 
-        Sort sort = Sort.by(sortBy.equals("name") ? Sort.Direction.ASC : Sort.Direction.DESC, "start");
-        List<Job> jobs = jobService.searchJobs(name, address, industryId, salaryMin, salaryMax, level, type, sort);
-        System.out.println("name: " + name + " Address: " + address + " industry: " + industryId + " salarymin: " + salaryMin + " salarymax: " + salaryMax + " level: " + level + " type: "+ type);
-        model.addAttribute("jobs", jobs);
+        List<Job> jobs = jobService.searchJobs(name, address, industryId, salaryMin, salaryMax, level, type);
+
+        if (jobs.isEmpty()) {
+            model.addAttribute("noJobsFound", true);
+        }
+
+        int start = page * size;
+        int end = Math.min(start + size, jobs.size());
+        List<Job> paginatedJobs = jobs.subList(start, end);
+
+        model.addAttribute("jobs", paginatedJobs);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", (int) Math.ceil((double) jobs.size() / size));
+        model.addAttribute("pageSize", size);
 
         return "job/jobListingsFragment";
     }
@@ -106,7 +140,7 @@ public class JobController {
         Job job = jobService.getJobById(id);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedEndDate = job.getEnd() != null ? sdf.format(job.getEnd()) : "";
-        model.addAttribute("job", job );
+        model.addAttribute("job", job);
         model.addAttribute("formattedEndDate", formattedEndDate);
         return "v2/editjob";
     }
@@ -114,7 +148,7 @@ public class JobController {
     @GetMapping("/jobDetail")
     public String showJobDetail(@RequestParam(required = false) long id, Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
         Job job = jobService.getJobById(id);
-        model.addAttribute("job", job );
+        model.addAttribute("job", job);
         if (userDTO != null) {
             JobApplied jobApplied = jobAppliedRepository.findByJobIDAndUserID(id, userDTO.getId());
             model.addAttribute("jobApplied", jobApplied);
@@ -137,15 +171,18 @@ public class JobController {
     @GetMapping("/viewJobCreated")
     public String showViewJobCreatedListForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                              Model model, HttpSession session) {
-        if (userDTO == null) {return "redirect:/login";};
-        List<Job> jobs = jobServiceImpl.getJobsByRecruiterId(userDTO.getId());
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        ;
+        List<Job> jobs = jobService.getJobsByRecruiterId(userDTO.getId());
         model.addAttribute("jobs", jobs);
         model.addAttribute("currentUserId", userDTO.getId());
         return "job/viewJobCreated";
     }
 
     @PostMapping("/saveUpdateJob")
-    public String saveUpdateJob(@RequestParam(required = false) Long id, @ModelAttribute Job jobDTO,Model model){
+    public String saveUpdateJob(@RequestParam(required = false) Long id, @ModelAttribute Job jobDTO, Model model) {
         System.out.println("id cua job " + id);
         Job job = jobService.getJobById(id);
         job.setName(jobDTO.getName());
@@ -158,7 +195,7 @@ public class JobController {
         job.setLevel(jobDTO.getLevel());
         job.setType(jobDTO.getType());
         jobRepository.save(job);
-        model.addAttribute("job", job );
+        model.addAttribute("job", job);
         return "redirect:/job/viewJobCreated";
     }
 

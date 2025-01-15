@@ -137,9 +137,9 @@ function generateResume() {
         let opt = {
             margin: 0,
             filename: 'myCV-dark.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 4, useCORS: true },
-            jsPDF: { format: 'a4', orientation: 'portrait' }
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 4, useCORS: true},
+            jsPDF: {format: 'a4', orientation: 'portrait'}
         };
         html2pdf(areaCV, opt);
     } else {
@@ -147,9 +147,9 @@ function generateResume() {
         let opt = {
             margin: 0,
             filename: 'myCV-light.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 4, useCORS: true },
-            jsPDF: { format: 'a4', orientation: 'portrait' }
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 4, useCORS: true},
+            jsPDF: {format: 'a4', orientation: 'portrait'}
         };
         html2pdf(areaCV, opt);
     }
@@ -251,19 +251,48 @@ linkedinUsername.addEventListener('click', function (event) {
 // Add an event listener to update the link when editing is finished
 linkedinUsername.addEventListener('input', updateLinkedInLink);
 
-const addExperienceBtn = document.getElementById('add-experience-btn');
-const experienceContainer = document.getElementById('experience-container');
-const experienceTemplate = document.getElementById('experience-template');
+const experienceSection = document.getElementById("experience");
+const addButton = document.getElementById("add-experience");
+const experienceContainer = document.querySelector(".experience_container");
 
-let experienceCount = 0;
+// Show add button when experience section is clicked
+experienceSection.addEventListener("click", function () {
+    addButton.style.display = "block";
+});
 
-addExperienceBtn.addEventListener('click', function () {
-    const newExperience = experienceTemplate.cloneNode(true);
-    newExperience.removeAttribute('id');
-    newExperience.style.display = 'block';
-
-    // Update text content or add unique identifiers here if needed
+// Add experience section
+addButton.addEventListener("click", function () {
+    const newExperience = document.createElement("div");
+    newExperience.classList.add("experience_content");
+    newExperience.innerHTML = `
+        <div class="experience_time">
+            <span class="experience_rounder"></span>
+            <span class="experience_line"></span>
+        </div>
+        <div class="experience_data bd-grid">
+            <h3 class="editable experience_title" contenteditable="true">Lập Trình Viên</h3>
+            <span class="editable experience_company" contenteditable="true">Công ty THHH Một Mình Tôi - Hà Nội</span>
+            <span class="editable experience_year" contenteditable="true">10/2022 - Hiện tại</span>
+            <p class="editable experience_description" contenteditable="true">Mô tả kinh nghiệm</p>
+            <button class="delete-experience-btn"><i class="fa-solid fa-trash"></i>Xóa</button>
+        </div>
+    `;
     experienceContainer.appendChild(newExperience);
+});
 
-    experienceCount++;
+// Event delegation to handle delete button click for each experience section
+experienceContainer.addEventListener("click", function (event) {
+    if (event.target && event.target.classList.contains("delete-experience-btn")) {
+        // Remove the parent experience content of the clicked delete button
+        const experienceContent = event.target.closest(".experience_content");
+        experienceContent.remove();
+    }
+});
+
+// Hide buttons when clicking anywhere else
+document.addEventListener("click", function (event) {
+    if (!experienceSection.contains(event.target)) {
+        addButton.style.display = "none";
+        deleteButton.style.display = "none";
+    }
 });

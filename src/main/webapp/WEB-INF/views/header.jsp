@@ -24,11 +24,11 @@
         <div class="container">
             <div class="utf-left-side">
                 <div id="logo">
-                    <a href="/home"><img src="/assets/img/logo.png" alt=""></a>
+                    <a href="/"><img src="/assets/img/logo.png" alt=""></a>
                 </div>
                 <nav id="navigation">
                     <ul id="responsive">
-                        <li><a href="/home">Trang chủ</a></li>
+                        <li><a href="/">Trang chủ</a></li>
                         <li><a href="/job/list">Việc Làm</a>
                             <ul class="dropdown-nav">
                                 <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Tìm
