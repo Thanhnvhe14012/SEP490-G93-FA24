@@ -2,11 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:if test="${empty jobs}">
+    <div class="utf-alert alert alert-info">
+        <strong>No jobs found</strong> for your search criteria.
+    </div>
+</c:if>
+
 <c:forEach var="job" items="${jobs}">
     <a href="/job/jobDetail?id=${job.id}" class="utf-job-listing">
         <div class="utf-job-listing-details">
             <div class="utf-job-listing-company-logo">
-                <img src="${job.recruiter.company_logo}" alt="Company Logo">
+                <img src="${job.recruiter.company_logo}" alt="Logo Công ty">
             </div>
             <div class="utf-job-listing-description">
                 <span class="dashboard-status-button utf-job-status-item green">
@@ -31,7 +37,7 @@
                             <fmt:formatDate value="${job.start}" pattern="dd/MM/yyyy"/>
                         </li>
                         <li>
-                            <i class="icon-material-outline-access-time"></i>
+                            <i class="icon-material-outline-group"></i>
                                 ${job.getLevelAsString()}
                         </li>
                     </ul>
@@ -41,3 +47,38 @@
         </div>
     </a>
 </c:forEach>
+<c:if test="${totalPages > 0}">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="utf-pagination-container-aera margin-top-15 margin-bottom-15">
+                <nav class="pagination">
+                    <ul>
+                        <!-- Previous Page Button -->
+                        <li class="utf-pagination-arrow">
+                            <a href="?page=${currentPage - 1 >= 0 ? currentPage - 1 : 0}&size=${pageSize}">
+                                <i class="icon-material-outline-keyboard-arrow-left"></i>
+                            </a>
+                        </li>
+
+                        <!-- Loop through page numbers -->
+                        <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                            <li>
+                                <a href="?page=${i}&size=${pageSize}" class="${currentPage == i ? 'current-page' : ''}">
+                                        ${i + 1}
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <!-- Next Page Button -->
+                        <li class="utf-pagination-arrow">
+                            <a href="?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&size=${pageSize}">
+                                <i class="icon-material-outline-keyboard-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</c:if>

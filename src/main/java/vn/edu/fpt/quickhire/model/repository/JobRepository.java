@@ -1,5 +1,6 @@
 package vn.edu.fpt.quickhire.model.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,9 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAllByRecruiterId(Long recruiterId);
     List<Job> findAllByCompanyId(Long companyId);
 
+    @Query("SELECT j FROM Job j ORDER BY j.start DESC")
+    List<Job> findTopJobs(Pageable pageable);
+
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.industry LEFT JOIN FETCH j.recruiter")
     List<Job> findAllWithIndustryAndRecruiter();
 
@@ -26,4 +30,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
             "    (:level IS NULL OR j.level = :level) AND \n" +
             "    (:type IS NULL OR j.type = :type)")
     List<Job> searchJobs(String name, String address, Long industryId, Integer salaryMin, Integer salaryMax, Integer level, Integer type);
+
+    @Query("SELECT COUNT(j) FROM Job j WHERE j.industry.id = :industryId")
+    int countJobsByIndustryId(Long industryId);
 }

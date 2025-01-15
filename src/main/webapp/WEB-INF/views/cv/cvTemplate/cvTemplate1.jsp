@@ -196,13 +196,14 @@
 
             <!-- EXPERIENCE -->
             <section class="experience section" id="experience">
-                <div class="editable" id="section-title" contenteditable="true">
-                    <h2 class="section-title">Kinh nghiệm làm việc</h2>
+                <h2 class="section-title" contenteditable="true">Kinh nghiệm làm việc</h2>
+
+                <!-- Add buttons -->
+                <div class="experience-buttons">
+                    <button id="add-experience" class="btn-action-add"><i class="fa-solid fa-plus"></i>Thêm</button>
                 </div>
-                <div data-html2canvas-ignore="true" class="add-experience-container">
-                    <button id="add-experience-btn">Thêm Kinh Nghiệm</button>
-                </div>
-                <div class="experience_container bd-grid" id="experience-container">
+
+                <div class="experience_container bd-grid">
                     <div class="experience_content">
                         <div class="experience_time">
                             <span class="experience_rounder"></span>
@@ -210,26 +211,8 @@
                         </div>
                         <div class="experience_data bd-grid">
                             <h3 class="editable experience_title" contenteditable="true">Lập Trình Viên</h3>
-                            <span class="editable experience_company" contenteditable="true">Công ty THHH Một Mình
-                                    Tôi - Hà Nội</span>
+                            <span class="editable experience_company" contenteditable="true">Công ty THHH Một Mình Tôi - Hà Nội</span>
                             <span class="editable experience_year" contenteditable="true">10/2022 - Hiện tại</span>
-                            <p class="editable experience_description" contenteditable="true">
-                                Mô tả kinh nghiệm
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: none;" id="experience-template">
-                    <div class="experience_content">
-                        <div class="experience_time">
-                            <span class="experience_rounder"></span>
-                            <span class="experience_line"></span>
-                        </div>
-                        <div class="experience_data bd-grid">
-                            <h3 class="editable experience_title" contenteditable="true">Vị trí công việc</h3>
-                            <span class="editable experience_company" contenteditable="true">Tên công ty</span>
-                            <span class="editable experience_year" contenteditable="true">Bắt đầu - kết thúc</span>
                             <p class="editable experience_description" contenteditable="true">
                                 Mô tả kinh nghiệm
                             </p>
