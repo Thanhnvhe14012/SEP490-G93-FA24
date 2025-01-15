@@ -104,7 +104,7 @@
     </c:if>
     <form:form modelAttribute="user" method="POST" action="/updateAccount" enctype="multipart/form-data">
       <div class="form-group">
-        <label for="username">Username:</label>
+        <label for="username">Tên đăng nhập:</label>
         <form:input path="username" class="form-control" disabled="true"/>
       </div>
 
