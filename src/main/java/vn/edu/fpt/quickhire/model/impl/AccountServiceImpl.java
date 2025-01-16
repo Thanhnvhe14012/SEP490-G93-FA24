@@ -12,9 +12,13 @@ import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
 import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
+import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +152,26 @@ public class AccountServiceImpl implements AccountService {
         }
         return null;
 
+    }
+
+    @Override
+    public Account updateAccount(UserDTO userDTO) throws ParseException {
+        // Map DTO to Entity if needed
+        Account userProfile = accountRepository.findByUsername(userDTO.getUsername());
+        userProfile.setUsername(userDTO.getUsername());
+        userProfile.setEmail(userDTO.getEmail());
+        userProfile.setPhoneNumber(userDTO.getPhoneNumber());
+        Recruiter recruiter = userProfile.getRecruiter();
+
+        recruiter.setCompanyCode(userDTO.getCompanyCode());
+        recruiter.setCompanyName(userDTO.getCompanyName());
+        recruiter.setCompanyDescription(userDTO.getCompanyDescription());
+        recruiter.setCompanyScale(userDTO.getCompanyScale());
+
+        userProfile.setRecruiter(recruiter);
+
+        // Save to database (e.g., using JPA repository)
+        return accountRepository.save(userProfile);
     }
 
 

@@ -68,7 +68,16 @@
             <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu:</label>
-                <form:password path="password" class="form-control" id="password"/>
+                <form:password path="password" class="form-control" id="password" minlength="6" required="true"/>
+                <small class="text-danger" id="password-error" style="display:none;">Mật khẩu phải chứa ít nhất 6 ký
+                    tự</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Nhập lại mật khẩu:</label>
+                <input type="password" class="form-control" id="confirmPassword" required/>
+                <small class="text-danger" id="confirm-password-error" style="display:none;">Mật khẩu nhập lại không
+                    khớp</small>
             </div>
 
             <div class="mb-3">
@@ -227,6 +236,39 @@
             }
         });
     });
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        let valid = true;
+
+        // Kiểm tra độ dài mật khẩu
+        if (password.length < 6) {
+            document.getElementById('password-error').style.display = 'block';
+            valid = false;
+        } else {
+            document.getElementById('password-error').style.display = 'none';
+        }
+
+        // Kiểm tra khớp mật khẩu
+        if (password !== confirmPassword) {
+            document.getElementById('confirm-password-error').style.display = 'block';
+            valid = false;
+        } else {
+            document.getElementById('confirm-password-error').style.display = 'none';
+        }
+
+        // Nếu không hợp lệ, chặn gửi biểu mẫu
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    if (password.length < 6) {
+        document.getElementById('password-error').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('password-error').style.display = 'none';
+    }
 </script>
 
 <script>
