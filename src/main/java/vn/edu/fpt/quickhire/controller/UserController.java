@@ -19,6 +19,7 @@ import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -57,10 +58,22 @@ public class UserController {
         } else return "redirect:/login";
     }
 
+    @GetMapping("/my-profile-candidate")
+    public String showMyProfileCandidateForm(@SessionAttribute(name = "user", required = false) UserDTO user, Model model) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if (user.getRole() == 4) {
+            user.setDateOfBirth(outputFormat.format(inputFormat.parse(user.getDateOfBirth())));
+            model.addAttribute("user", user);
+            return "candidate/myprofile";
+        } else return "redirect:/login";
+    }
+
     @PostMapping("/saveAccountInfor")
-    public String saveAccountInfo(@RequestBody UserDTO userProfileDTO) throws ParseException {
+    public String saveAccountInfo(@RequestBody UserDTO userProfileDTO, @SessionAttribute(name = "user", required = false) UserDTO user) throws ParseException {
 
         // Validate and save user profile (e.g., via service)
+        userProfileDTO.setRole(user.getRole());
         accountService.updateAccount(userProfileDTO);
         return "redirect:/my-profile-recruiter";
 
