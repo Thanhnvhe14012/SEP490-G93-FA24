@@ -69,12 +69,12 @@ public class LoginController {
             session.setAttribute("user", account);
             session.setAttribute("userDisplayName", account.getDisplayName());
             if (account.getRole() == 4){
-                return "redirect:/home";
+                return "redirect:/";
             }
             else if (account.getRole() == 3){
                 return "redirect:/job/viewJobCreated";
             }
-            else return "redirect:/home";
+            else return "redirect:/";
         } else {
             // Đăng nhập thất bại
             model.addAttribute("error", "Invalid username or password");
@@ -85,7 +85,7 @@ public class LoginController {
     @GetMapping("/sign-out")
     public String logout(HttpSession session) {
         session.removeAttribute("user");
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/register")

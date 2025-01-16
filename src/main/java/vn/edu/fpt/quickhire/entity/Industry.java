@@ -15,4 +15,7 @@ public class Industry {
     // Mapping thông tin biến với tên cột trong Database
     @Column(name = "name")
     private String name;
+
+    @Column(name = "icon")
+    private String icon;
 }

@@ -15,6 +15,7 @@
             color: #888;
             display: none; /* Hidden by default */
         }
+
         .input-container {
             position: relative;
             display: flex;
@@ -53,7 +54,8 @@
                             <span class="clear-button" id="clearName">✖</span>
                         </div>
                         <div class="input-container utf-intro-search-field-item">
-                            <select name="address" id="address" class="selectpicker default" data-live-search="true" title="Địa điểm">
+                            <select name="address" id="address" class="selectpicker default" data-live-search="true"
+                                    title="Địa điểm">
                                 <option value="">Địa điểm</option>
                                 <c:forEach var="province" items="${provinces}">
                                     <option value="${province.code}">${province.name}</option>
@@ -62,7 +64,8 @@
                             <span class="clear-button" id="clearAddress">✖</span>
                         </div>
                         <div class="input-container utf-intro-search-field-item">
-                            <select name="industryId" id="industryId" class="selectpicker" data-live-search="true" title="Nhóm ngành nghề">
+                            <select name="industryId" id="industryId" class="selectpicker" data-live-search="true"
+                                    title="Nhóm ngành nghề">
                                 <option value="">Nhóm ngành nghề</option>
                                 <c:forEach var="industry" items="${industries}">
                                     <option value="${industry.id}">${industry.name}</option>
@@ -87,11 +90,11 @@
         <div class="row">
             <div class="col-xl-3 col-lg-4">
                 <div class="utf-sidebar-container-aera">
-<%--                    <div class="utf-sidebar-widget-item">--%>
-<%--                        <h3>Filter by Salary</h3>--%>
-<%--                        <input type="number" name="salaryMin" id="salaryMin" placeholder="Min Salary" onchange="filterJobs()"/>--%>
-<%--                        <input type="number" name="salaryMax" id="salaryMax" placeholder="Max Salary" onchange="filterJobs()"/>--%>
-<%--                    </div>--%>
+                    <%--                    <div class="utf-sidebar-widget-item">--%>
+                    <%--                        <h3>Filter by Salary</h3>--%>
+                    <%--                        <input type="number" name="salaryMin" id="salaryMin" placeholder="Min Salary" onchange="filterJobs()"/>--%>
+                    <%--                        <input type="number" name="salaryMax" id="salaryMax" placeholder="Max Salary" onchange="filterJobs()"/>--%>
+                    <%--                    </div>--%>
 
                     <div class="utf-sidebar-widget-item">
                         <h3>Cấp bậc</h3>
@@ -121,18 +124,18 @@
                 <div class="utf-inner-search-section-title">
                     <h4><i class="icon-material-outline-search"></i> Danh sách việc làm</h4>
                 </div>
-<%--                <div class="utf-notify-box-aera margin-top-15">--%>
-<%--                    <div class="utf-switch-container-item">--%>
-<%--                        <span>Showing ${jobs.size()} Job Results :</span>--%>
-<%--                    </div>--%>
-<%--                    <div class="sort-by">--%>
-<%--                        <span>Sort By:</span>--%>
-<%--                        <select name="sortBy" id="sortBy" onchange="filterJobs()">--%>
-<%--                            <option value="createdDate">Date Created</option>--%>
-<%--                            <option value="name">Name</option>--%>
-<%--                        </select>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+                <%--                <div class="utf-notify-box-aera margin-top-15">--%>
+                <%--                    <div class="utf-switch-container-item">--%>
+                <%--                        <span>Showing ${jobs.size()} Job Results :</span>--%>
+                <%--                    </div>--%>
+                <%--                    <div class="sort-by">--%>
+                <%--                        <span>Sort By:</span>--%>
+                <%--                        <select name="sortBy" id="sortBy" onchange="filterJobs()">--%>
+                <%--                            <option value="createdDate">Date Created</option>--%>
+                <%--                            <option value="name">Name</option>--%>
+                <%--                        </select>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
                 <div id="jobListings" class="utf-listings-container-part compact-list-layout margin-top-35">
                     <jsp:include page="jobListingsFragment.jsp"/>
@@ -149,9 +152,7 @@
         const salaryMax = $('#salaryMax').val();
         const level = $('#level').val();
         const type = $('#type').val();
-        const sortBy = $('#sortBy').val();
 
-        // Only filter by salary, level, type, and sorting
         $.ajax({
             url: '/job/searchJobs',
             method: 'GET',
@@ -160,7 +161,6 @@
                 salaryMax: salaryMax,
                 level: level,
                 type: type,
-                sortBy: sortBy
             },
             success: function (response) {
                 $('#jobListings').html(response); // Update the job listings container
@@ -177,14 +177,12 @@
             const name = $('#intro-keywords').val().trim() || null; // Get the name input
             const address = $('#address').val() || null; // Get the address input
             const industryId = $('#industryId').val() || null; // Get the industry input
-            const sortBy = $('#sortBy').val(); // Get the sort option
 
             // Prepare data for AJAX request
             const searchData = {
                 name: name, // Send empty string if name is empty
                 address: address, // Send empty string if address is empty
                 industryId: industryId, // Send empty string if industryId is empty
-                sortBy: sortBy // Include sort option
             };
 
             // Trigger search based on name, address, and industry

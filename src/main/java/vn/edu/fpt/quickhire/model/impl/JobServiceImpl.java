@@ -1,6 +1,7 @@
 package vn.edu.fpt.quickhire.model.impl;
 
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Job;
@@ -15,12 +16,12 @@ import java.util.*;
 
 public class JobServiceImpl implements JobService {
     @Autowired
-    JobRepository jobRepository;
+    private JobRepository jobRepository;
     @Autowired
-    RecruiterRepository recruiterRepository;
+    private RecruiterRepository recruiterRepository;
 
     @Autowired
-    StaffRepository staffRepository;
+    private StaffRepository staffRepository;
 
     @Override
     public Job createJob(Job jobDTO, Long accountId) {
@@ -70,6 +71,12 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> getLatestJobs(int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return jobRepository.findTopJobs(pageable);
+    }
+
+    @Override
     public List<Job> getJobsByRecruiterId(Long recruiterId) {
         List<Job> jobs = jobRepository.findAllByRecruiterId(recruiterId);
         return jobs;
@@ -80,7 +87,11 @@ public class JobServiceImpl implements JobService {
         return null;
     }
 
-    public List<Job> searchJobs(String name, String address, Long industryId, Integer salaryMin, Integer salaryMax, Integer level, Integer type, Sort sort) {
+    public List<Job> searchJobs(String name, String address, Long industryId, Integer salaryMin, Integer salaryMax, Integer level, Integer type) {
         return jobRepository.searchJobs(name, address, industryId, salaryMin, salaryMax, level, type);
+    }
+
+    public int getJobCountByIndustry(Long industryId) {
+        return jobRepository.countJobsByIndustryId(industryId);
     }
 }
