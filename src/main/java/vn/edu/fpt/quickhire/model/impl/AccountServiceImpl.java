@@ -3,6 +3,7 @@ package vn.edu.fpt.quickhire.model.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.fpt.quickhire.entity.Account;
+import vn.edu.fpt.quickhire.entity.Candidate;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.Recruiter;
@@ -55,6 +56,7 @@ public class AccountServiceImpl implements AccountService {
             userDTO.setAddressId3(account.getAddressId3());
             userDTO.setAddress(account.getAddress() + " - " + account.getWard().getName() + " - " + account.getDistrict().getName() + " - " + account.getProvince().getName());
             userDTO.setEmail(account.getEmail());
+            userDTO.setPhoneNumber(account.getPhoneNumber());
             if (account.getRole() == 2) {
                 userDTO.setCompanyName(account.getRecruiter().getCompanyName());
                 userDTO.setCompanyDescription(account.getRecruiter().getCompanyDescription());
@@ -161,14 +163,26 @@ public class AccountServiceImpl implements AccountService {
         userProfile.setUsername(userDTO.getUsername());
         userProfile.setEmail(userDTO.getEmail());
         userProfile.setPhoneNumber(userDTO.getPhoneNumber());
-        Recruiter recruiter = userProfile.getRecruiter();
+        if(userDTO.getRole() == 2){
+            Recruiter recruiter = userProfile.getRecruiter();
 
-        recruiter.setCompanyCode(userDTO.getCompanyCode());
-        recruiter.setCompanyName(userDTO.getCompanyName());
-        recruiter.setCompanyDescription(userDTO.getCompanyDescription());
-        recruiter.setCompanyScale(userDTO.getCompanyScale());
+            recruiter.setCompanyCode(userDTO.getCompanyCode());
+            recruiter.setCompanyName(userDTO.getCompanyName());
+            recruiter.setCompanyDescription(userDTO.getCompanyDescription());
+            recruiter.setCompanyScale(userDTO.getCompanyScale());
 
-        userProfile.setRecruiter(recruiter);
+            userProfile.setRecruiter(recruiter);
+        } else {
+            userProfile.setFirstName(userDTO.getFirstName());
+            userProfile.setMiddleName(userDTO.getMiddleName());
+            userProfile.setLastName(userDTO.getLastName());
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+            userProfile.setDateOfBirth(df.parse(userDTO.getDateOfBirth()));
+            Candidate candidate = userProfile.getCandidate();
+            candidate.setBiography(userDTO.getBiography());
+        }
+
 
         // Save to database (e.g., using JPA repository)
         return accountRepository.save(userProfile);

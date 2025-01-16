@@ -83,7 +83,17 @@
                         </div>
                         <div class="utf-header-notifications-dropdown-block">
                             <ul class="utf-user-menu-dropdown-nav">
-                                <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Trang cá nhân</a>
+                                    <c:choose>
+                                    <c:when test="${sessionScope.user.role == 2}">
+                                <li><a href="/my-profile-recruiter"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                    </c:when>
+                                    <c:when test="${sessionScope.user.role == 4}">
+                                <li><a href="/my-profile-candidate"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                    </c:when>
+
+                                    </c:choose>
+
                                 </li>
                                 <li><a href="/sign-out"><i class="icon-material-outline-power-settings-new"></i> Đăng
                                     xuất</a></li>
