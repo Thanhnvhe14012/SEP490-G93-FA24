@@ -4,6 +4,7 @@ import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,6 @@ public interface AccountService {
     List<AccountDTO> fillAllAccount();
 
     List<AccountDTO> fillAllStaffByRecruiterId(long recruiterId);
+
+    Account updateAccount(UserDTO userDTO) throws ParseException;
 }

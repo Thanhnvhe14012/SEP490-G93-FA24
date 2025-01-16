@@ -1,10 +1,6 @@
 package vn.edu.fpt.quickhire.controller;
 
-import jakarta.servlet.http.HttpSession;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +11,16 @@ import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
-import vn.edu.fpt.quickhire.model.impl.UserRoleServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
 import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Controller
 public class RecruiterController {
@@ -287,7 +279,7 @@ public class RecruiterController {
 
 
     @PostMapping("/updateAccount")
-    public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
+    public String updateAccount(@ModelAttribute("user") UserDTO user, Model model, @RequestParam("image") MultipartFile image
     ) throws ParseException {
 
         if (user.getRole() == 2) {

@@ -39,12 +39,26 @@
                                     sách công ty</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Hồ sơ & CV</a>
-                            <ul class="dropdown-nav">
-                                <li><a href="dashboard-my-profile.html">Quản lý hồ sơ</a></li>
-                                <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
-                            </ul>
-                        </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.user.role == 2}">
+                                <li><a href="/viewCompany/${sessionScope.user.id}">Công việc/Nhân sự</a>
+                                    <ul class="dropdown-nav">
+                                        <li><a href="/job/viewJobCreated">Quản lý công việc</a></li>
+                                        <li><a href="/listStaff">Quản lý nhân sự</a></li>
+                                    </ul>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="/candidate/profile">Hồ sơ/CV</a>
+                                    <ul class="dropdown-nav">
+                                        <li><a href="/candidate/profile">Quản lý hồ sơ</a></li>
+                                        <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
+                                    </ul>
+                                </li>
+
+                            </c:otherwise>
+                        </c:choose>
+
                         <li><a href="/handbook">Cẩm nang nghề nghiệp</a>
                         </li>
                         <li><a href="">Quickhire</a></li>
