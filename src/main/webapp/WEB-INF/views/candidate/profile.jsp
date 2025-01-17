@@ -103,7 +103,7 @@
                 <p>Email: <a href="mailto:${user.email}">${user.email}</a></p>
                 <p>Phone: 0395634568</p>
                 <p>Date of Birth: ${user.dateOfBirth}</p>
-                <p>Location: ${user.address}</p>
+                <p>Location: ${user.addressDisplay}</p>
             </div>
         </div>
 
