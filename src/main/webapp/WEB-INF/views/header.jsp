@@ -78,7 +78,13 @@
                     <div class="utf-header-notifications user-menu">
                         <div class="utf-header-notifications-trigger user-profile-title">
                             <a href="#">
-                                <div class="user-avatar status-online"><img src="${sessionScope.user.avatar}" alt="">
+                                <c:if test="${empty sessionScope.user.avatar}">
+                                    <div class="user-avatar status-online"><img src="https://ttpj.com.vn/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp" alt="">
+                                </c:if>
+                                <c:if test="${not empty sessionScope.user.avatar}">
+                                    <div class="user-avatar status-online"><img src="${sessionScope.user.avatar}" alt="">
+                                </c:if>
+
                                 </div>
                                 <div class="user-name">Xin chào, <%= session.getAttribute("userDisplayName") %>!</div>
                             </a>

@@ -54,7 +54,8 @@ public class AccountServiceImpl implements AccountService {
             userDTO.setAddressId1(account.getAddressId1());
             userDTO.setAddressId2(account.getAddressId2());
             userDTO.setAddressId3(account.getAddressId3());
-            userDTO.setAddress(account.getAddress() + " - " + account.getWard().getName() + " - " + account.getDistrict().getName() + " - " + account.getProvince().getName());
+            userDTO.setAddress(account.getAddress());
+            userDTO.setAddressDisplay(account.getAddress() + " - " + account.getWard().getName() + " - " + account.getDistrict().getName() + " - " + account.getProvince().getName());
             userDTO.setEmail(account.getEmail());
             userDTO.setPhoneNumber(account.getPhoneNumber());
             if (account.getRole() == 2) {
@@ -164,6 +165,10 @@ public class AccountServiceImpl implements AccountService {
         userProfile.setUsername(userDTO.getUsername());
         userProfile.setEmail(userDTO.getEmail());
         userProfile.setPhoneNumber(userDTO.getPhoneNumber());
+        userProfile.setAddressId1(userDTO.getAddressId1());
+        userProfile.setAddressId2(userDTO.getAddressId2());
+        userProfile.setAddressId3(userDTO.getAddressId3());
+        userProfile.setAddress(userDTO.getAddress());
         if(userDTO.getRole() == 2){
             Recruiter recruiter = userProfile.getRecruiter();
 
