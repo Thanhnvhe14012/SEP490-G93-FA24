@@ -28,6 +28,7 @@ public class UserDTO {
     private String company_logo;
     private String displayName;
     private String phoneNumber;
+    private String avatar;
 
     @Override
     public String toString() {

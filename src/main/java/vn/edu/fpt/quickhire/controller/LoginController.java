@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.edu.fpt.quickhire.entity.*;
-import vn.edu.fpt.quickhire.entity.DTO.ExperienceDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
@@ -16,10 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
-import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
 import java.io.IOException;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -32,9 +29,6 @@ import java.util.Random;
 public class LoginController {
     @Autowired
     private AccountServiceImpl userService;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private ProvinceRepository provinceRepository;
@@ -100,25 +94,32 @@ public class LoginController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
-    ) throws ParseException {
+    ) throws ParseException, IOException {
         if (!userService.checkRegister(user.getUsername())) {
             model.addAttribute("error", "Tài khoản đã tồn tại");
             return "login/register";
         }
+        Account account = new Account();
+        if(!image.isEmpty()){
+            String uploadedFileUrl = fileUploadService.uploadFile(image);
+            if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
+                account.setAvatar(uploadedFileUrl);
+                // CV file uploaded successfully
+                System.out.println("CV uploaded cloud successfully. File URL: " + uploadedFileUrl);
+            }else {
+                System.out.println("CV uploaded cloud failed");
+            }
+        }
+        account.setUsername(user.getUsername());
+        account.setPassword(user.getPassword());
+        account.setEmail(user.getEmail());
+        account.setPhoneNumber(user.getPhoneNumber());
+
+        account.setAddressId1(user.getAddressId1());
+        account.setAddressId2(user.getAddressId2());
+        account.setAddressId3(user.getAddressId3());
+        account.setAddress(user.getAddress());
         if (user.getRole() == 2) {
-            Account account = new Account();
-            account.setUsername(user.getUsername());
-            account.setPassword(user.getPassword());
-            account.setEmail(user.getEmail());
-            account.setPhoneNumber(user.getPhoneNumber());
-
-            account.setAddressId1(user.getAddressId1());
-            account.setAddressId2(user.getAddressId2());
-            account.setAddressId3(user.getAddressId3());
-            account.setAddress(user.getAddress());
-
-//            Account accountSaved = userService.save(account);
-
             Recruiter existRecruiter= recruiterService.findByCode(user.getCompanyCode());
             if(existRecruiter != null) {
                 model.addAttribute("message", "Failed to add recruiter . Company Code duplicate.");
@@ -131,6 +132,8 @@ public class LoginController {
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
+
+
 //            if (image!= null && !image .isEmpty()) {
 //                try {
 //                    String imageUrl = fileUploadService.UploadFile(image);
@@ -141,15 +144,6 @@ public class LoginController {
 //                }
 //            }
             recruiter.setCompany_status(1);
-
-            Role existingRole = roleRepository.findById(Long.valueOf(2))
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(existingRole);
-
-
-            account.setUserRole(userRole);
             account.setRecruiter(recruiter);
             account.setRole(2L);
             userService.save(account);
@@ -164,33 +158,13 @@ public class LoginController {
             recruiterService.save(recruiter);
 
         } else if (user.getRole() == 3) {
-            Account account = new Account();
-            account.setUsername(user.getUsername());
-            account.setPassword(user.getPassword());
-            account.setEmail(user.getEmail());
             Date dob=new SimpleDateFormat("yyyy-MM-dd").parse(user.getDateOfBirth());
             account.setDateOfBirth(dob);
             account.setFirstName(user.getFirstName());
             account.setMiddleName(user.getMiddleName());
             account.setLastName(user.getLastName());
-            account.setAddressId1(user.getAddressId1());
-            account.setAddressId2(user.getAddressId2());
-            account.setAddressId3(user.getAddressId3());
-            account.setAddress(user.getAddress());
-
-//            Account accountSaved = userService.save(account);
-
             Candidate candidate = new Candidate();
             candidate.setBiography(user.getBiography());
-
-
-            Role existingRole = roleRepository.findById(Long.valueOf(4))
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(existingRole);
-
-            account.setUserRole(userRole);
             account.setCandidate(candidate);
             account.setRole(4L);
             userService.save(account);

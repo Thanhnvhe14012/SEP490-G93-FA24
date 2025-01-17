@@ -74,6 +74,7 @@ public class AccountServiceImpl implements AccountService {
                 userDTO.setDateOfBirth(formatter.format(account.getDateOfBirth()));
             }
             userDTO.setRole(Math.toIntExact(account.getRole()));
+            userDTO.setAvatar(account.getAvatar());
 
             return userDTO;
         } else return null;

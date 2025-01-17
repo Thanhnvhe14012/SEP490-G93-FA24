@@ -14,7 +14,6 @@ import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
-import vn.edu.fpt.quickhire.model.repository.RoleRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,9 +28,6 @@ public class RecruiterController {
 
     @Autowired
     private RecruiterServiceImpl recruiterService;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private ProvinceRepository provinceRepository;
@@ -89,15 +85,6 @@ public class RecruiterController {
 //            recruiter.setIndustryId(staff.getIndustryId());
 //            recruiter.setManagerId(userDTO.getId());
 
-
-            Role existingRole = roleRepository.findById(Long.valueOf(4))
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(existingRole);
-
-
-            account.setUserRole(userRole);
             account.setRecruiter(recruiter);
             userService.save(account);
             return "homepage";
@@ -318,14 +305,6 @@ public class RecruiterController {
 //            }
             recruiter.setCompany_status(1);
 
-            Role existingRole = roleRepository.findById(Long.valueOf(2))
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(existingRole);
-
-
-            account.setUserRole(userRole);
             account.setRecruiter(recruiter);
             account.setRole(2L);
             userService.save(account);
@@ -353,13 +332,6 @@ public class RecruiterController {
             candidate.setBiography(user.getBiography());
 
 
-            Role existingRole = roleRepository.findById(Long.valueOf(4))
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(existingRole);
-
-            account.setUserRole(userRole);
             account.setCandidate(candidate);
             account.setRole(4L);
             userService.save(account);
