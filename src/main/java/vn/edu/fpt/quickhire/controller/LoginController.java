@@ -13,8 +13,10 @@ import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import org.springframework.mail.javamail.JavaMailSender;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
+import vn.edu.fpt.quickhire.model.repository.DistrictRepository;
 import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
+import vn.edu.fpt.quickhire.model.repository.WardRepository;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -44,6 +46,10 @@ public class LoginController {
 
     @Autowired
     RecruiterServiceImpl recruiterService;
+    @Autowired
+    private DistrictRepository districtRepository;
+    @Autowired
+    private WardRepository wardRepository;
 
     // Hiển thị form đăng nhập
     @GetMapping("/login")
@@ -122,7 +128,7 @@ public class LoginController {
         if (user.getRole() == 2) {
             Recruiter existRecruiter= recruiterService.findByCode(user.getCompanyCode());
             if(existRecruiter != null) {
-                model.addAttribute("message", "Failed to add recruiter . Company Code duplicate.");
+                model.addAttribute("message", "Tạo tài khoản nhà tuyển dụng không thành công. Mã công ty đã trùng lặp");
                 model.addAttribute("messageType", "error");
                 return "login/register";
             }
@@ -133,26 +139,21 @@ public class LoginController {
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
 
-
-//            if (image!= null && !image .isEmpty()) {
-//                try {
-//                    String imageUrl = fileUploadService.UploadFile(image);
-//                    recruiter.setCompany_logo(imageUrl);
-//                } catch (IOException e) {
-//                    // Handle the exception properly, log it, etc.
-//                    e.printStackTrace();
-//                }
-//            }
             recruiter.setCompany_status(1);
             account.setRecruiter(recruiter);
             account.setRole(2L);
             userService.save(account);
 
+            Province province = provinceRepository.findByCode(account.getAddressId1());
+            District district = districtRepository.findByCode(account.getAddressId2());
+            Ward ward = wardRepository.findByCode(account.getAddressId3());
+
             String companyLocation = account.getAddress() + ", " + String.format("%s, %s, %s",
-                    account.getWard() != null ? account.getWard().getName() : "",
-                    account.getDistrict() != null ? account.getDistrict().getName() : "",
-                    account.getProvince() != null ? account.getProvince().getName() : ""
+                    ward != null ? ward.getName() : "",
+                    district != null ? district.getName() : "",
+                    province != null ? province.getName() : ""
             );
+
 
             recruiter.setCompany_location(companyLocation);
             recruiterService.save(recruiter);
