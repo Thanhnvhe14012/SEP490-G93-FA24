@@ -81,8 +81,11 @@ public class Account {
     @Column(name = "role")
     private Long role;
 
-    @Column(name= "phoneNumber")
+    @Column(name= "phone_number")
     private String phoneNumber;
+
+    @Column(name= "avatar")
+    private String avatar;
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
