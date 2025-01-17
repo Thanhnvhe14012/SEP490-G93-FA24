@@ -90,6 +90,53 @@
                                                 <input type="text" class="utf-with-border" value="${user.phoneNumber}">
                                             </div>
                                         </div>
+
+                                        <div class="utf-no-border margin-bottom-18 col-xl-4 col-md-2 col-sm-2">
+                                            <div class="utf-submit-field">
+                                                <h5>Tỉnh:</h5>
+                                                <select class="selectpicker utf-with-border" id="addressId1"
+                                                        name="addressId1">
+                                                    <option value="">Chọn Tỉnh</option>
+                                                    <c:forEach var="province" items="${provinces}">
+                                                        <option value="${province.code}"
+                                                                <c:if test="${province.code == user.addressId1}">selected</c:if>>${province.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="utf-no-border margin-bottom-18 col-xl-4 col-md-2 col-sm-2">
+                                            <div class="utf-submit-field">
+                                                <h5>Huyện:</h5>
+                                                <select class="selectpicker utf-with-border" id="addressId2"
+                                                        name="addressId2">
+                                                    <option value="">Chọn Huyện</option>
+                                                    <c:forEach var="district" items="${districts}">
+                                                        <option value="${district.code}"
+                                                                <c:if test="${district.code == user.addressId2}">selected</c:if>>${district.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="utf-no-border margin-bottom-18 col-xl-4 col-md-2 col-sm-2">
+                                            <div class="utf-submit-field">
+                                                <h5>Xã:</h5>
+                                                <select class="selectpicker utf-with-border" id="addressId3"
+                                                        name="addressId3">
+                                                    <option value="">Chọn Xã</option>
+                                                    <c:forEach var="ward" items="${wards}">
+                                                        <option value="${ward.code}"
+                                                                <c:if test="${ward.code == user.addressId3}">selected</c:if>>${ward.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-6 col-sm-6">
+                                            <div class="utf-submit-field">
+                                                <h5>Địa chỉ chi tiết:</h5>
+                                                <input type="text" class="utf-with-border" value="${user.address}">
+                                            </div>
+                                        </div>
+
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Mã code công ty:</h5>
@@ -174,7 +221,7 @@
     </div>
 
 
-    <%@ include file="/WEB-INF/views/footer.jsp" %>
+<%--    <%@ include file="/WEB-INF/views/footer.jsp" %>--%>
 </div>
 
 <script>
@@ -187,6 +234,10 @@
             companyName: document.querySelector('input[value="${user.companyName}"]').value,
             companyDescription: document.querySelector('input[value="${user.companyDescription}"]').value,
             companyScale: document.querySelector('input[value="${user.companyScale}"]').value,
+            address: document.querySelector('input[value="${user.address}"]').value,
+            addressId1: document.getElementById('addressId1').value,
+            addressId2: document.getElementById('addressId2').value,
+            addressId3: document.getElementById('addressId3').value
         };
 
         fetch('/saveAccountInfor', {
@@ -245,7 +296,57 @@
             })
             .catch(error => console.error('Error:', error));
     });
+    // Load districts when a province is selected
+    $('#addressId1').change(function () {
+        var provinceCode = $(this).val();
+        $.ajax({
+            url: '/getDistricts', // Đường dẫn đến controller xử lý
+            type: 'GET',
+            data: {provinceCode: provinceCode},
+            success: function (response) {
+                var districtSelect = $('#addressId2');
+                districtSelect.empty(); // Xóa các tùy chọn cũ
+                districtSelect.append('<option value="">Chọn Huyện</option>'); // Thêm placeholder mặc định
 
+                // Thêm các huyện từ response vào dropdown
+                $.each(response, function (index, district) {
+                    districtSelect.append('<option value="' + district.code + '">' + district.name + '</option>');
+                });
+
+                // Đặt lại trạng thái hiển thị
+                districtSelect.selectpicker('refresh');
+            },
+            error: function () {
+                alert('Lỗi khi tải danh sách huyện!');
+            }
+        });
+    });
+
+    // Load wards when a district is selected
+    $('#addressId2').change(function () {
+        var districtCode = $(this).val();
+        $.ajax({
+            url: '/getWards', // Đường dẫn đến controller xử lý
+            type: 'GET',
+            data: {districtCode: districtCode},
+            success: function (response) {
+                var wardSelect = $('#addressId3');
+                wardSelect.empty(); // Xóa các tùy chọn cũ
+                wardSelect.append('<option value="">Chọn Xã</option>'); // Thêm placeholder mặc định
+
+                // Thêm các xã từ response vào dropdown
+                $.each(response, function (index, ward) {
+                    wardSelect.append('<option value="' + ward.code + '">' + ward.name + '</option>');
+                });
+
+                // Đặt lại trạng thái hiển thị
+                wardSelect.selectpicker('refresh');
+            },
+            error: function () {
+                alert('Lỗi khi tải danh sách xã!');
+            }
+        });
+    });
 
 </script>
 

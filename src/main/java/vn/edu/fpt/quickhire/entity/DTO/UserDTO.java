@@ -19,6 +19,7 @@ public class UserDTO {
     private String addressId2;
     private String addressId3;
     private String address;
+    private String addressDisplay;
     private String biography;
     private String companyCode;
     private String companyName;

@@ -14,9 +14,11 @@ import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.PasswordRequestDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
+import vn.edu.fpt.quickhire.entity.District;
+import vn.edu.fpt.quickhire.entity.Province;
+import vn.edu.fpt.quickhire.entity.Ward;
 import vn.edu.fpt.quickhire.model.AccountService;
-import vn.edu.fpt.quickhire.model.repository.AccountRepository;
-import vn.edu.fpt.quickhire.model.repository.StaffRepository;
+import vn.edu.fpt.quickhire.model.repository.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,13 @@ public class UserController {
 
     @Autowired
     StaffRepository staffRepository;
+
+    @Autowired
+    ProvinceRepository provinceRepository;
+    @Autowired
+    private DistrictRepository districtRepository;
+    @Autowired
+    private WardRepository wardRepository;
 
     @GetMapping("/listUser")
     public String showListUserForm(HttpSession session,
@@ -54,6 +63,10 @@ public class UserController {
 
         if (user.getRole() == 2) {
             model.addAttribute("user", user);
+            List<Province> provinces = provinceRepository.findAll();
+
+            // Đưa danh sách tỉnh vào model để sử dụng trong JSP
+            model.addAttribute("provinces", provinces);
             return "recruiter/myprofile";
         } else return "redirect:/login";
     }
@@ -65,6 +78,12 @@ public class UserController {
         if (user.getRole() == 4) {
             user.setDateOfBirth(outputFormat.format(inputFormat.parse(user.getDateOfBirth())));
             model.addAttribute("user", user);
+            List<Province> provinces = provinceRepository.findAll();
+            model.addAttribute("provinces", provinces);
+            List<District> districts = districtRepository.findByProvinceCode(user.getAddressId1());
+            model.addAttribute("districts", districts);
+            List<Ward> wards = wardRepository.findByDistrictCode(user.getAddressId2());
+            model.addAttribute("wards", wards);
             return "candidate/myprofile";
         } else return "redirect:/login";
     }
