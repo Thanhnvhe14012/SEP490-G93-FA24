@@ -48,7 +48,7 @@
                           <div class="utf-avatar-wrapper" data-tippy-placement="top"
                                title="Change Profile Picture">
                             <img class="profile-pic"
-                                 src="images/user-avatar-placeholder.png" alt=""/>
+                                 src="${user.avatar}" alt=""/>
                             <div class="upload-button"></div>
                             <input class="file-upload" type="file" accept="image/*"/>
                           </div>

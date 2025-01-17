@@ -119,6 +119,13 @@
                 <label for="detailedAddress" class="form-label">Địa chỉ chi tiết:</label>
                 <form:input path="address" class="form-control" id="detailedAddress"/>
             </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Ảnh đại diện:</label>
+                <img id="logo-preview" src="${company.logo}" alt="Avatar:"
+                     style="max-height: 100px; margin-bottom: 10px;"/>
+                <input id="image" type="file" class="form-control" name="image" accept="image/*"
+                       onchange="previewImage(event)"/>
+            </div>
 
             <!-- Account Type -->
             <div class="mb-3">
@@ -168,13 +175,7 @@
                     <label for="companyScale" class="form-label">Số lượng nhân viên:</label>
                     <form:input path="companyScale" type="number" class="form-control" id="companyScale"/>
                 </div>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Logo công ty:</label>
-                    <img id="logo-preview" src="${company.logo}" alt="Company Logo"
-                         style="max-height: 100px; margin-bottom: 10px;"/>
-                    <input id="image" type="file" class="form-control" name="image" accept="image/*"
-                           onchange="previewImage(event)"/>
-                </div>
+
             </div>
 
             <!-- Jobseeker Fields -->

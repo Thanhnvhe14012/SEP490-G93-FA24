@@ -131,7 +131,7 @@ public class CvController {
         List<Education> educationList = null;
 
         if (account != null) {
-            if (account.getUserRole().getRole().getId() == 4) {
+            if (account.getRole() == 4) {
                 experiencesList = experienceService.getAllExperiencesById(id);
                 educationList = educationRepository.findAllByAccountId(id);
             }

@@ -78,17 +78,20 @@
                     <div class="utf-header-notifications user-menu">
                         <div class="utf-header-notifications-trigger user-profile-title">
                             <a href="#">
+                                <div class="user-avatar status-online"><img src="${sessionScope.user.avatar}" alt="">
+                                </div>
                                 <div class="user-name">Xin chào, <%= session.getAttribute("userDisplayName") %>!</div>
                             </a>
                         </div>
                         <div class="utf-header-notifications-dropdown-block">
                             <ul class="utf-user-menu-dropdown-nav">
-                                <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Trang cá nhân</a>
-                                    <c:choose>
-                                    <c:when test="${sessionScope.user.role == 2}">
+
+                                <c:choose>
+                                <c:when test="${sessionScope.user.role == 2}">
                                 <li><a href="/my-profile-recruiter"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                     </c:when>
                                     <c:when test="${sessionScope.user.role == 4}">
+                                <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Trang cá nhân</a>
                                 <li><a href="/my-profile-candidate"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                     </c:when>
 

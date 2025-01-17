@@ -75,9 +75,6 @@ public class Account {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Staff staff;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserRole userRole;
-
     @Column(name = "role")
     private Long role;
 
@@ -86,11 +83,6 @@ public class Account {
 
     @Column(name= "avatar")
     private String avatar;
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-        userRole.setAccount(this); // Liên kết UserRole với Account
-    }
 
     public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
