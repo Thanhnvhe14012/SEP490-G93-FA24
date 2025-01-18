@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <i class="icon-material-outline-access-time"></i>
-                            <fmt:formatDate value="${job.start}" pattern="dd/MM/yyyy"/>
+                            <fmt:formatDate value="${job.end}" pattern="dd/MM/yyyy"/>
                         </li>
                         <li>
                             <i class="icon-material-outline-group"></i>

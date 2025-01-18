@@ -14,7 +14,7 @@ public class Experience {
     private int id;
 
     @Column(name = "account_id")
-    private Integer accountId;
+    private Long accountId;
 
     @Column(name = "company")
     private String company;

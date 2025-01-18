@@ -14,6 +14,7 @@ import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.IndustryRepository;
 import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
+import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,8 @@ public class RecruiterController {
     private FileUploadService fileUploadService;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private RecruiterRepository recruiterRepository;
 
     @GetMapping("/createStaff")
     public String showCreateStaff(@SessionAttribute(name = "user", required = false) UserDTO userDTO, Model model) {
@@ -69,6 +72,8 @@ public class RecruiterController {
             account.setAddressId2(staff.getAddressId2());
             account.setAddressId3(staff.getAddressId3());
             account.setAddress(staff.getAddress());
+            account.setRole(3L);
+            account.setStatus(1);
 
             Date dob = new SimpleDateFormat("yyyy-MM-dd").parse(staff.getDateOfBirth());
             account.setDateOfBirth(dob);
@@ -78,18 +83,16 @@ public class RecruiterController {
 
 //            Account accountSaved = userService.save(account);
 
-            Recruiter recruiter = new Recruiter();
-            recruiter.setCompanyDescription(userDTO.getCompanyDescription());
-            recruiter.setCompanyScale(userDTO.getCompanyScale());
-            recruiter.setCompanyName(userDTO.getCompanyName());
-//            recruiter.setIndustryId(staff.getIndustryId());
-//            recruiter.setManagerId(userDTO.getId());
+            Staff newStaff = new Staff();
+            newStaff.setRecruiter(recruiterRepository.findByAccount_Id(userDTO.getId()));
+            newStaff.setAccount(account);
+            newStaff.setIndustryId(staff.getIndustryId());
 
-            account.setRecruiter(recruiter);
+            account.setStaff(newStaff);
             userService.save(account);
-            return "homepage";
+            return "redirect:/";
         }
-        return "homepage";
+        return "redirect:/";
 
     }
 

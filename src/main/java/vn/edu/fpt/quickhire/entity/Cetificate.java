@@ -16,7 +16,7 @@ public class Cetificate {
     private Long id;
 
     @Column(name = "account_id")
-    private Integer accountId;
+    private Long accountId;
 
     @Column(name = "cetificate_name")
     private String cetificateName;

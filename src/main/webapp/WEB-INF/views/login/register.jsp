@@ -82,7 +82,7 @@
 
             <div class="mb-3">
                 <label for="phoneNumber" class="form-label">Số điện thoại:</label>
-                <form:password path="phoneNumber" class="form-control" id="phoneNumber"/>
+                <form:input path="phoneNumber" class="form-control" id="phoneNumber"/>
             </div>
 
             <!-- Email -->
@@ -121,7 +121,7 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Ảnh đại diện:</label>
-                <img id="logo-preview" src="${company.logo}" alt="Avatar:"
+                <img id="logo-preview" src="/assets/img/avatar.png" alt="Avatar:"
                      style="max-height: 100px; margin-bottom: 10px;"/>
                 <input id="image" type="file" class="form-control" name="image" accept="image/*"
                        onchange="previewImage(event)"/>
@@ -169,7 +169,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="companyDescription" class="form-label">Mô tả công ty:</label>
-                    <form:input path="companyDescription" class="form-control" id="companyDescription"/>
+                    <form:textarea path="companyDescription" class="form-control" id="companyDescription"
+                   style="resize: vertical; width: 100%; min-height: 120px;" />
                 </div>
                 <div class="mb-3">
                     <label for="companyScale" class="form-label">Số lượng nhân viên:</label>
@@ -204,7 +205,7 @@
 <script>
     // Load districts when a province is selected
     $('#addressId1').change(function () {
-        var provinceCode = $(this).val();
+        const provinceCode = $(this).val();
         $.ajax({
             url: '/getDistricts', // Đường dẫn đến controller xử lý
             type: 'GET',
@@ -222,13 +223,13 @@
 
     // Load wards when a district is selected
     $('#addressId2').change(function () {
-        var districtCode = $(this).val();
+        const districtCode = $(this).val();
         $.ajax({
             url: '/getWards', // Đường dẫn đến controller xử lý
             type: 'GET',
             data: {districtCode: districtCode},
             success: function (response) {
-                var wardSelect = $('#addressId3');
+                const wardSelect = $('#addressId3');
                 wardSelect.empty();
                 wardSelect.append('<option value="">Chọn Xã</option>');
                 $.each(response, function (index, ward) {
@@ -263,24 +264,6 @@
             e.preventDefault();
         }
     });
-
-    if (password.length < 6) {
-        document.getElementById('password-error').style.display = 'block';
-        valid = false;
-    } else {
-        document.getElementById('password-error').style.display = 'none';
-    }
-</script>
-
-<script>
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var output = document.getElementById('logo-preview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
 </script>
 </body>
 </html>

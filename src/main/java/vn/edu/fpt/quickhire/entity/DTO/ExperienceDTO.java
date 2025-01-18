@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class ExperienceDTO {
     private Long exId;
-    private Integer accountId;
+    private Long accountId;
     private String company;
     private String start;
     private String end;

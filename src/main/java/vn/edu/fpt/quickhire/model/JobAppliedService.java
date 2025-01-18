@@ -3,8 +3,10 @@ package vn.edu.fpt.quickhire.model;
 import vn.edu.fpt.quickhire.entity.JobApplied;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface JobAppliedService {
+    Optional<JobApplied> findById(Long id);
     List<JobApplied> getJobAppliedByUserId(Long userId);
     List<JobApplied> getJobAppliedByJobId(Long jobId);
     JobApplied save(JobApplied jobApplied);

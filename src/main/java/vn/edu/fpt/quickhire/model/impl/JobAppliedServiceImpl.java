@@ -7,12 +7,18 @@ import vn.edu.fpt.quickhire.model.JobAppliedService;
 import vn.edu.fpt.quickhire.model.repository.JobAppliedRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobAppliedServiceImpl implements JobAppliedService {
 
     @Autowired
     JobAppliedRepository jobAppliedRepository;
+
+    @Override
+    public Optional<JobApplied> findById(Long id) {
+        return jobAppliedRepository.findById(id);
+    }
 
     @Override
     public List<JobApplied> getJobAppliedByUserId(Long userId) {

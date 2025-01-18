@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -127,8 +128,22 @@
                                             </c:when>
                                             <c:when test="${jobApplied.status == 2}">
                                                 <button style="color: white; background: transparent; border: none; cursor: not-allowed;"
-                                                        disabled>Đã chấp thuận
+                                                        disabled>Đã được chấp thuận
                                                 </button>
+                                            </c:when>
+                                            <c:when test="${jobApplied.status == 3}">
+                                                <button style="color: white; background: transparent; border: none; cursor: not-allowed;"
+                                                        disabled>Hồ sơ chưa phù hợp
+                                                </button>0
+                                                <form action="/jobApplied/unapply" method="post"
+                                                      style="display: inline;">
+                                                    <input type="hidden" name="jobID" value="${job.id}"/>
+                                                    <button type="submit" class="unapply-button"
+                                                            style="background-color: #ff4d4d; color: white; border: none; padding: 10px 20px; cursor: pointer;"
+                                                            onclick="return confirm('Bạn có chắc chắn muốn rút hồ sơ ứng tuyển cho công việc này?');">
+                                                        Rút hồ sơ
+                                                    </button>
+                                                </form>
                                             </c:when>
                                         </c:choose>
                                     </c:when>
@@ -154,14 +169,16 @@
                     <div class="utf-boxed-list-headline-item">
                         <h3><i class="icon-material-outline-description"></i>Mô tả công việc</h3>
                     </div>
-                    <p>${job.description}</p>
+                    <% pageContext.setAttribute("newLine", "\n"); %>
+                    <c:out value="${fn:replace(job.description, newLine, '<br />')}" escapeXml="false"/>
                 </div>
 
                 <div class="utf-single-page-section-aera">
                     <div class="utf-boxed-list-headline-item">
                         <h3><i class="icon-feather-briefcase"></i>Quyền lợi</h3>
                     </div>
-                    <p>${job.benefits}</p>
+                    <% pageContext.setAttribute("newLine", "\n"); %>
+                    <c:out value="${fn:replace(job.benefits, newLine, '<br />')}" escapeXml="false"/>
                 </div>
 
                 <div class="utf-single-page-section-aera">
@@ -199,7 +216,13 @@
                                     <c:when test="${jobApplied.status == 2}">
                                         <button class="apply-now-button"
                                                 style="background-color: #28A745; color: white; border: none; padding: 10px 20px; cursor: not-allowed;"
-                                                disabled>Đã chấp thuận
+                                                disabled>Đã được chấp thuận
+                                        </button>
+                                    </c:when>
+                                    <c:when test="${jobApplied.status == 3}">
+                                        <button class="apply-now-button"
+                                                style="background-color: #28A745; color: white; border: none; padding: 10px 20px; cursor: not-allowed;"
+                                                disabled>Hồ sơ chưa phù hợp
                                         </button>
                                     </c:when>
                                 </c:choose>

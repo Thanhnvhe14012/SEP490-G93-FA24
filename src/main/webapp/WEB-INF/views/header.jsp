@@ -48,6 +48,10 @@
                                     </ul>
                                 </li>
                             </c:when>
+                            <c:when test="${sessionScope.user.role == 3}">
+                                <li><a href="/job/viewJobCreated">Quản lý công việc</a>
+                                </li>
+                            </c:when>
                             <c:otherwise>
                                 <li><a href="/candidate/profile">Hồ sơ/CV</a>
                                     <ul class="dropdown-nav">
@@ -79,14 +83,18 @@
                         <div class="utf-header-notifications-trigger user-profile-title">
                             <a href="#">
                                 <c:if test="${empty sessionScope.user.avatar}">
-                                    <div class="user-avatar status-online"><img src="https://ttpj.com.vn/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp" alt="">
-                                </c:if>
-                                <c:if test="${not empty sessionScope.user.avatar}">
-                                    <div class="user-avatar status-online"><img src="${sessionScope.user.avatar}" alt="">
-                                </c:if>
+                                <div class="user-avatar status-online"><img
+                                        src="https://ttpj.com.vn/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp"
+                                        alt="">
+                                    </c:if>
+                                    <c:if test="${not empty sessionScope.user.avatar}">
+                                    <div class="user-avatar status-online"><img src="${sessionScope.user.avatar}"
+                                                                                alt="">
+                                        </c:if>
 
-                                </div>
-                                <div class="user-name">Xin chào, <%= session.getAttribute("userDisplayName") %>!</div>
+                                    </div>
+                                    <div class="user-name">Xin chào, <%= session.getAttribute("userDisplayName") %>!
+                                    </div>
                             </a>
                         </div>
                         <div class="utf-header-notifications-dropdown-block">
