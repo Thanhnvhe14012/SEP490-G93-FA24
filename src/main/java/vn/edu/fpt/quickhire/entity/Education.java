@@ -14,7 +14,7 @@ public class Education {
     private Long id;
 
     @Column(name = "account_id")
-    private Integer accountId;
+    private Long accountId;
 
     @Column(name = "school_name")
     private String schoolName;

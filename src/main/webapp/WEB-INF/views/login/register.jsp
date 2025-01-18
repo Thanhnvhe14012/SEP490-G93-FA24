@@ -169,7 +169,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="companyDescription" class="form-label">Mô tả công ty:</label>
-                    <form:input path="companyDescription" class="form-control" id="companyDescription"/>
+                    <form:textarea path="companyDescription" class="form-control" id="companyDescription"
+                   style="resize: vertical; width: 100%; min-height: 120px;" />
                 </div>
                 <div class="mb-3">
                     <label for="companyScale" class="form-label">Số lượng nhân viên:</label>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +30,13 @@
                         <div class="utf-dashboard-nav-inner">
                             <div class="dashboard-profile-box">
                                 <span class="avatar-img">
-                                    <img alt="" src="images/user-avatar-placeholder.png" class="photo">
+                                    <c:if test="${empty sessionScope.user.avatar}">
+                                        <img src="https://ttpj.com.vn/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp"
+                                             alt="" class="photo">
+                                    </c:if>
+                                    <c:if test="${not empty sessionScope.user.avatar}">
+                                        <img src="${sessionScope.user.avatar}" alt="" class="photo">
+                                    </c:if>
                                 </span>
                                 <div class="user-profile-text">
                                     <span class="fullname"><%= session.getAttribute("userDisplayName") %></span>
@@ -141,14 +148,16 @@
                             <div class="utf-boxed-list-headline-item">
                                 <h3><i class="icon-material-outline-description"></i>Mô tả công việc</h3>
                             </div>
-                            <p>${job.description}</p>
+                            <% pageContext.setAttribute("newLine", "\n"); %>
+                            <c:out value="${fn:replace(job.description, newLine, '<br />')}" escapeXml="false"/>
                         </div>
 
                         <div class="utf-single-page-section-aera">
                             <div class="utf-boxed-list-headline-item">
                                 <h3><i class="icon-feather-briefcase"></i>Quyền lợi</h3>
                             </div>
-                            <p>${job.benefits}</p>
+                            <% pageContext.setAttribute("newLine", "\n"); %>
+                            <c:out value="${fn:replace(job.benefits, newLine, '<br />')}" escapeXml="false"/>
                         </div>
 
                         <div class="utf-single-page-section-aera">
@@ -176,10 +185,12 @@
                                             <div class="utf-manage-resume-overview-aera utf-manage-candidate">
                                                 <div class="utf-manage-resume-overview-aera-inner">
                                                     <div class="utf-manage-resume-avatar">
-                                                        <a href="#"><img src="images/user_big_1.jpg" alt=""></a>
+                                                        <a href="#"><img src="${jobApplied.candidate.account.avatar}"
+                                                                         alt=""></a>
                                                     </div>
                                                     <div class="utf-manage-resume-item">
-                                                        <h4><a href="#">${jobApplied.candidate.account.firstName}</a>
+                                                        <h4>
+                                                            <a href="#">${jobApplied.candidate.account.firstName} ${jobApplied.candidate.account.middleName} ${jobApplied.candidate.account.lastName} </a>
                                                         </h4>
                                                         <span class="utf-manage-resume-detail-item"><a href="#"><i
                                                                 class="icon-feather-mail"></i> ${jobApplied.candidate.account.email}</a></span>
@@ -188,15 +199,16 @@
                                                         <div class="utf-buttons-to-right">
                                                             <a href="#small-dialog"
                                                                class="popup-with-zoom-anim button ripple-effect"
-                                                               title="Send Message" data-tippy-placement="top"><i
-                                                                    class="icon-feather-mail"></i> Send</a>
-                                                            <a href="#" class="button green ripple-effect ico"
-                                                               title="Download CV" data-tippy-placement="top"><i
+                                                               title="Xem thư giới thiệu" data-tippy-placement="top"
+                                                               data-name="${jobApplied.candidate.account.firstName} ${jobApplied.candidate.account.middleName} ${jobApplied.candidate.account.lastName}"
+                                                               data-message="<c:out value="${jobApplied.message}" escapeXml="false"/>"
+                                                               data-id="${jobApplied.id}">
+                                                                <i class="icon-feather-mail"></i> Thư giới thiệu
+                                                            </a>
+                                                            <a href="/cv/downloadCV?cvID=${jobApplied.cvID}"
+                                                               class="button green ripple-effect ico"
+                                                               title="Tải xuống CV" data-tippy-placement="top"><i
                                                                     class="icon-feather-download"></i></a>
-                                                            <a href="#" class="button red ripple-effect ico"
-                                                               title="Remove"
-                                                               data-tippy-placement="top"><i
-                                                                    class="icon-feather-trash-2"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -207,7 +219,6 @@
                             </div>
                         </div>
                         <!-- End of Candidate List Section -->
-
                     </div>
                 </div>
             </div>
@@ -215,5 +226,73 @@
         </div>
     </div>
 </div>
+<div id="small-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs user-message-box-item">
+    <div class="utf-signin-form-part">
+        <ul class="utf-popup-tabs-nav-item">
+            <li class="modal-title">Thư giới thiệu
+                <span id="candidate-name"></span>
+            </li>
+        </ul>
+        <div class="utf-popup-container-part-tabs">
+            <div class="utf-popup-tab-content-item" id="tab">
+                <!-- Candidate's Message -->
+                <div class="candidate-message">
+                    <label style="font-weight: bold; margin-bottom: 5px; display: block;">Thư
+                        giới thiệu</label>
+                    <p id="candidate-message"></p>
+                </div>
+                <form action="/jobApplied/updateStatus" method="POST" style="display: inline;">
+                    <input type="hidden" name="applicationId" id="applicationId">
+                    <button type="submit" name="newStatus" value="2" class="button green ripple-effect">
+                        Chấp thuận
+                        <i class="icon-feather-check"></i>
+                    </button>
+                    <button type="submit" name="newStatus" value="3" class="button red ripple-effect">
+                        Từ chối
+                        <i class="icon-feather-x"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function formatMessage(message) {
+        // Escape HTML special characters
+        const div = document.createElement('div');
+        if (message) {
+            div.appendChild(document.createTextNode(message));
+            message = div.innerHTML;
+        }
+        // Replace newlines with <br> tags
+        return message.replace(/\n/g, "<br>");
+    }
+
+    // Capture click event on the "Send" button
+    document.querySelectorAll('.popup-with-zoom-anim').forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Get the data attributes (candidate's name and message)
+            const candidateName = button.getAttribute('data-name');
+            const candidateMessage = button.getAttribute('data-message');
+            const applicationId = button.getAttribute('data-id');
+
+            // Format the message with preserved line breaks and escape HTML characters
+            const formattedMessage = formatMessage(candidateMessage);
+
+            // Populate the modal with the candidate's data
+            document.getElementById('candidate-name').textContent = candidateName;
+            document.getElementById('candidate-message').innerHTML = formattedMessage;
+            document.getElementById('applicationId').value = applicationId;
+
+            // Open the modal
+            $('#small-dialog').magnificPopup('open');
+        });
+    });
+</script>
+
 </body>
 </html>

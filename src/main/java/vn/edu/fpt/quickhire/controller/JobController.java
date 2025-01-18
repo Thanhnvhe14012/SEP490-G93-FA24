@@ -44,8 +44,6 @@ public class JobController {
             return "redirect:/";
         }
         model.addAttribute("job", new Job());
-        List<Industry> industries = industryService.getAllIndustries();
-        model.addAttribute("industries", industries);
         return "job/createJob";
     }
 
@@ -157,14 +155,15 @@ public class JobController {
     }
 
     @GetMapping("/viewJobDetailRecruiter")
-    public String showViewJobDetailRecruiterForm(@RequestParam(required = false) long id,
+    public String showViewJobDetailRecruiterForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO, @RequestParam(required = false) long id,
                                                  Model model, HttpSession session) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
         Job job = jobService.getJobById(id);
         List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(id);
         model.addAttribute("job", job);
         model.addAttribute("jobApplieds", jobApplieds);
-        System.out.println(id);
-        System.out.println(jobApplieds);
         return "v2/viewJobDetailRecruiter";
     }
 
@@ -174,7 +173,6 @@ public class JobController {
         if (userDTO == null) {
             return "redirect:/login";
         }
-        ;
         List<Job> jobs = jobService.getJobsByRecruiterId(userDTO.getId());
         model.addAttribute("jobs", jobs);
         model.addAttribute("currentUserId", userDTO.getId());
@@ -199,4 +197,22 @@ public class JobController {
         return "redirect:/job/viewJobCreated";
     }
 
+    @PostMapping("/deleteJob")
+    public String deleteJob(@RequestParam("jobId") Long jobId, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Job job = jobService.getJobById(jobId);
+        if (job != null && (job.getStaff().getAccount().getId().equals(user.getId()) || job.getRecruiter().getAccount().getId().equals(user.getId()))) {
+            // Ensure only the owner of the job or the owner of the company can delete it
+            jobRepository.delete(job);
+        } else {
+            System.out.println("staffID: " + job.getStaff().getAccount().getId());
+            System.out.println("recruiterID: " + job.getRecruiter().getAccount().getId());
+            System.out.println("userID: " + user.getId());
+            return "redirect:/error";
+        }
+        return "redirect:/job/viewJobCreated";
+    }
 }

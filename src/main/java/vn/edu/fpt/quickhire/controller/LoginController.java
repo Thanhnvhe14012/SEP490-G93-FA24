@@ -77,7 +77,7 @@ public class LoginController {
             else return "redirect:/";
         } else {
             // Đăng nhập thất bại
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Không tìm thấy tài khoản hoặc tài khoản đã bị khóa");
             return "login/login";
         }
     }
@@ -105,9 +105,11 @@ public class LoginController {
             model.addAttribute("error", "Tài khoản đã tồn tại");
             return "login/register";
         }
+        System.out.println("arnh ne: " + image);
         Account account = new Account();
+        String uploadedFileUrl = "";
         if(!image.isEmpty()){
-            String uploadedFileUrl = fileUploadService.uploadFile(image);
+            uploadedFileUrl = fileUploadService.uploadFile(image);
             if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
                 account.setAvatar(uploadedFileUrl);
                 // CV file uploaded successfully
@@ -125,6 +127,7 @@ public class LoginController {
         account.setAddressId2(user.getAddressId2());
         account.setAddressId3(user.getAddressId3());
         account.setAddress(user.getAddress());
+        account.setStatus(1);
         if (user.getRole() == 2) {
             Recruiter existRecruiter= recruiterService.findByCode(user.getCompanyCode());
             if(existRecruiter != null) {
@@ -138,6 +141,7 @@ public class LoginController {
             recruiter.setCompanyDescription(user.getCompanyDescription());
             recruiter.setCompanyScale(user.getCompanyScale());
             recruiter.setCompanyName(user.getCompanyName());
+            recruiter.setCompany_logo(uploadedFileUrl);
 
             recruiter.setCompany_status(1);
             account.setRecruiter(recruiter);

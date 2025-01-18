@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findById(long id);
-    Account findByUsernameAndPassword(String username, String password);
+    Account findByUsernameAndPasswordAndStatus(String username, String password, Integer status);
     Account findByUsername(String username);
     Optional<Account> findAllByEmail(String email);
     List<Account> findAllByOrderByIdDesc();

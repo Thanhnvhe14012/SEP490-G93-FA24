@@ -42,7 +42,8 @@ public class AccountServiceImpl implements AccountService {
     public UserDTO login(String username, String password) {
 
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Account account = accountRepository.findByUsernameAndPassword(username, password);
+        Account account = accountRepository.findByUsernameAndPasswordAndStatus(username, password, 1);
+
         if (account != null) {
             UserDTO userDTO = new UserDTO();
             userDTO.setId(account.getId());

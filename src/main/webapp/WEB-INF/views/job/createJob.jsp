@@ -70,7 +70,7 @@
 <h4 style="color:yellowgreen">${messsage} </h4>
 <body>
 <div class="container">
-    <a href="${pageContext.request.contextPath}/job/list">< Quay lại danh sách</a>
+    <a href="${pageContext.request.contextPath}/job/viewJobCreated">< Quay lại danh sách</a>
 
     <h1 class="title">Tạo công việc</h1>
 
@@ -79,13 +79,13 @@
         <label for="name">Tên</label>
         <form:input path="name" type="text" id="name" required="true"/>
 
-        <label for="industry_id">Chọn Lĩnh vực:</label>
-        <form:select id="industry_id" path="industry_id">
-            <option value="">Chọn lĩnh vực</option>
-            <c:forEach var="industry" items="${industries}">
-                <option value="${industry.id}">${industry.name}</option>
-            </c:forEach>
-        </form:select>
+<%--        <label for="industry_id">Chọn Lĩnh vực:</label>--%>
+<%--        <form:select id="industry_id" path="industry_id">--%>
+<%--            <option value="">Chọn lĩnh vực</option>--%>
+<%--            <c:forEach var="industry" items="${industries}">--%>
+<%--                <option value="${industry.id}">${industry.name}</option>--%>
+<%--            </c:forEach>--%>
+<%--        </form:select>--%>
 
         <label for="description">Mô tả công việc</label>
         <form:textarea path="description" id="description" rows="4" required="true"/>
@@ -127,6 +127,5 @@
     </form:form>
 </div>
 </body>
-<%@ include file="/WEB-INF/views/footer.jsp" %>
 
 </html>

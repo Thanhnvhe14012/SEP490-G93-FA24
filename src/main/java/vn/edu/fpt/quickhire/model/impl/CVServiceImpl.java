@@ -18,12 +18,8 @@ public class CVServiceImpl implements CVService {
     @Autowired
     CVRepository cvRepository;
 
-    private final String UPLOAD_DIR = "src/main/resources/static/upload/";
-
     @Override
     public CV save(CV cv, MultipartFile file) throws IOException {
-        Path path = Paths.get(UPLOAD_DIR + "/" + file.getOriginalFilename());
-        Files.write(path, file.getBytes());
         return cvRepository.save(cv);
     }
 

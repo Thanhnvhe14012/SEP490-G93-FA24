@@ -44,7 +44,7 @@ public class JobServiceImpl implements JobService {
         job.setStart(jobDTO.getStart());
         job.setEnd(jobDTO.getEnd());
         job.setStatus(jobDTO.getStatus());
-        job.setIndustry_id(jobDTO.getIndustry_id());
+        job.setIndustry_id(staff.getIndustryId());
         job.setSalary_max(jobDTO.getSalary_max());
         job.setSalary_min(jobDTO.getSalary_min());
         job.setLevel(jobDTO.getLevel());
