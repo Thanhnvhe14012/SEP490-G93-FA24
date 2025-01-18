@@ -16,6 +16,7 @@ import vn.edu.fpt.quickhire.model.impl.JobAppliedServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/jobApplied")
@@ -53,6 +54,7 @@ public class JobAppliedController {
                 redirectAttributes.addFlashAttribute("errorMessage", "Bạn không có quyền ứng tuyển cho công việc này.");
                 return "redirect:/job/jobDetail?id=" + jobID;
             }
+
             // Upload CV file to Cloudinary
             String uploadedFileUrl = fileUploadService.uploadFile(file);
             if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
@@ -101,6 +103,26 @@ public class JobAppliedController {
         }
 
         return "redirect:/job/jobDetail?id=" + jobID;
+    }
+
+    @PostMapping("/updateStatus")
+    public String updateStatus(
+            @RequestParam("applicationId") Long applicationId,
+            @RequestParam("newStatus") Integer newStatus,
+            RedirectAttributes redirectAttributes) {
+
+        Optional<JobApplied> optionalJobApplied = jobAppliedService.findById(applicationId);
+
+        if (optionalJobApplied.isPresent()) {
+            JobApplied jobApplied = optionalJobApplied.get();
+            jobApplied.setStatus(newStatus);
+            jobAppliedService.save(jobApplied);
+            redirectAttributes.addFlashAttribute("message", "Trạng thái hồ sơ đã được cập nhật thành công.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy hồ sơ ứng tuyển.");
+        }
+
+        return "redirect:/job/viewJobDetailRecruiter?id?=" + optionalJobApplied.orElse(null).getJobID();
     }
 
 }

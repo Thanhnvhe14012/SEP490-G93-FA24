@@ -29,7 +29,13 @@
                         <div class="utf-dashboard-nav-inner">
                             <div class="dashboard-profile-box">
                                 <span class="avatar-img">
-                                    <img alt="" src="images/user-avatar-placeholder.png" class="photo">
+                                    <c:if test="${empty sessionScope.user.avatar}">
+                                        <img src="https://ttpj.com.vn/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp"
+                                             alt="" class="photo">
+                                    </c:if>
+                                    <c:if test="${not empty sessionScope.user.avatar}">
+                                        <img src="${sessionScope.user.avatar}" alt="" class="photo">
+                                    </c:if>
                                 </span>
                                 <div class="user-profile-text">
                                     <span class="fullname"><%= session.getAttribute("userDisplayName") %></span>
@@ -81,7 +87,8 @@
                                         <li>
                                             <div class="utf-job-listing">
                                                 <div class="utf-job-listing-details">
-                                                    <a href="/job/viewJobDetailRecruiter?id=${job.id}" class="utf-job-listing-company-logo">
+                                                    <a href="/job/viewJobDetailRecruiter?id=${job.id}"
+                                                       class="utf-job-listing-company-logo">
                                                         <img src="${job.recruiter.company_logo}" alt="Company Logo">
                                                     </a>
                                                     <div class="utf-job-listing-description">
@@ -112,7 +119,7 @@
                                                                 </li>
                                                                 <li>
                                                                     <i class="icon-material-outline-access-time"></i>
-                                                                    <fmt:formatDate value="${job.start}"
+                                                                    <fmt:formatDate value="${job.end}"
                                                                                     pattern="dd/MM/yyyy"/>
                                                                 </li>
                                                                 <li>
@@ -133,7 +140,7 @@
                                                                             class="button red ripple-effect ico"
                                                                             title="Remove"
                                                                             data-tippy-placement="top"
-                                                                            onclick="return confirm('Are you sure you want to delete this job?');">
+                                                                            onclick="return confirm('Bạn có chắc muốn xóa bài đăng này không?');">
                                                                         <i class="icon-feather-trash-2"></i>
                                                                     </button>
                                                                 </form>

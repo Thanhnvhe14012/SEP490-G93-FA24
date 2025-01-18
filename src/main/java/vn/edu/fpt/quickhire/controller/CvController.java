@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.model.ExperienceService;
 import vn.edu.fpt.quickhire.model.impl.CVServiceImpl;
@@ -55,6 +56,23 @@ public class CvController {
     @GetMapping("/list")
     public String cv(Model model) {
         return "cv/listCV";
+    }
+
+    @GetMapping("/downloadCV")
+    public String downloadCV(@RequestParam("cvID") Long cvID, RedirectAttributes redirectAttributes) {
+        try {
+            CV cv = cvService.findById(cvID);
+            if (cv != null) {
+                // Redirect to the file URL for download
+                return "redirect:" + cv.getFileName();
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy CV");
+                return "redirect:/jobApplied/viewJobApplied";
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tải xuống CV bị lỗi");
+            return "redirect:/jobApplied/viewJobApplied";
+        }
     }
 
     @GetMapping("/viewCV")

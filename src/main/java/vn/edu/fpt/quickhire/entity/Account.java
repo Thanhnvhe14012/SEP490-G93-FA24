@@ -84,6 +84,9 @@ public class Account {
     @Column(name= "avatar")
     private String avatar;
 
+    @Column(name="status")
+    private Integer status;
+
     public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
         candidate.setAccount(this);

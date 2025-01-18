@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CetificateDTO {
     private Long cetificateId;
-    private Integer accountId;
+    private Long accountId;
     private String cetificateName;
     private String organization;
     private String start;

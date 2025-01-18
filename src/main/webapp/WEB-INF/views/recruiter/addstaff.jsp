@@ -80,11 +80,11 @@
 
         <!-- Industry Selection -->
         <div class="form-group">
-            <label for="industry">Ngành nghề:</label>
-            <select id="industry" name="industry" class="form-control">
+            <label for="industryId">Ngành nghề:</label>
+            <select id="industryId" name="industryId" class="form-control">
                 <option value="">Chọn Ngành nghề</option>
-                <c:forEach var="industry" items="${industryList}">
-                    <option value="${industry.id}">${industry.name}</option>
+                <c:forEach var="industryId" items="${industryList}">
+                    <option value="${industryId.id}">${industryId.name}</option>
                 </c:forEach>
             </select>
         </div>
