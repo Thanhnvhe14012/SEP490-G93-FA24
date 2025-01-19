@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ sơ của tôi</title>
+    <title>Thông tin cá nhân</title>
 </head>
 <body>
 <div id="wrapper">
@@ -61,7 +61,7 @@
                                                                 <input type="radio" name="utf-account-type-radio"
                                                                        id="freelancer-radio"
                                                                        class="utf-account-type-radio" checked/>
-                                                                <label for="freelancer-radio" title="Người tìm việc"
+                                                                <label for="freelancer-radio" title="Employer"
                                                                        data-tippy-placement="top"
                                                                        class="utf-ripple-effect-dark"><i
                                                                         class="icon-material-outline-business-center"></i>

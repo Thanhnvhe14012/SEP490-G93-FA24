@@ -1,11 +1,15 @@
 package vn.edu.fpt.quickhire.entity.DTO;
 
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExperienceDTO {
     private Long exId;
     private Long accountId;

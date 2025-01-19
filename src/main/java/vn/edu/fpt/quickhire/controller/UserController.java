@@ -69,6 +69,10 @@ public class UserController {
 
             // Đưa danh sách tỉnh vào model để sử dụng trong JSP
             model.addAttribute("provinces", provinces);
+            List<District> districts = districtRepository.findByProvinceCode(user.getAddressId1());
+            model.addAttribute("districts", districts);
+            List<Ward> wards = wardRepository.findByDistrictCode(user.getAddressId2());
+            model.addAttribute("wards", wards);
             return "recruiter/myprofile";
         } else return "redirect:/login";
     }
@@ -91,11 +95,15 @@ public class UserController {
     }
 
     @PostMapping("/saveAccountInfor")
-    public String saveAccountInfo(@RequestBody UserDTO userProfileDTO, @SessionAttribute(name = "user", required = false) UserDTO user) throws ParseException {
+    public String saveAccountInfo(@RequestBody UserDTO userProfileDTO, @SessionAttribute(name = "user", required = false) UserDTO user, HttpSession session) throws ParseException {
 
         // Validate and save user profile (e.g., via service)
         userProfileDTO.setRole(user.getRole());
-        accountService.updateAccount(userProfileDTO);
+        Account x = accountService.updateAccount(userProfileDTO);
+        UserDTO account = accountService.login(x.getUsername(), x.getPassword());
+
+        session.setAttribute("user", account);
+        session.setAttribute("userDisplayName", account.getDisplayName());
         return "redirect:/my-profile-recruiter";
 
     }

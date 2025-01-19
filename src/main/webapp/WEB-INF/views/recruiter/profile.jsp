@@ -145,7 +145,7 @@
             <c:choose>
                 <c:when test="${sessionScope.user.role == 2}">
                     <button class="btn-action"
-                            onclick="location.href='/account/update?accountId=${recruiter.account.id}'">
+                            onclick="location.href='/my-profile-recruiter'">
                         Chỉnh sửa công ty
                     </button>
                 </c:when>
