@@ -80,41 +80,42 @@
     </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 <div class="container mt-4">
     <ul class="mb-4 nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" href="#">Mẫu CV theo style</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Mẫu CV theo vị trí ứng tuyển</a>
-        </li>
+        <%--        <li class="nav-item">--%>
+        <%--            <a class="nav-link" href="#">Mẫu CV theo vị trí ứng tuyển</a>--%>
+        <%--        </li>--%>
     </ul>
 
-    <div class="mb-3 row">
-        <div class="col-md-3">
-            <select class="form-select">
-                <option selected>Tiếng Việt</option>
-                <option>English</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select class="form-select">
-                <option selected>Tất cả thiết kế</option>
-                <option>Chuyên nghiệp</option>
-                <option>Đơn giản</option>
-            </select>
-        </div>
-        <div class="col-md-6 text-end">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sortOption" id="newUpdates" value="new">
-                <label class="form-check-label" for="newUpdates">Mới cập nhật</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sortOption" id="mostUsed" value="popular">
-                <label class="form-check-label" for="mostUsed">Được dùng nhiều nhất</label>
-            </div>
-        </div>
-    </div>
+    <%--    <div class="mb-3 row">--%>
+    <%--        <div class="col-md-3">--%>
+    <%--            <select class="form-select">--%>
+    <%--                <option selected>Tiếng Việt</option>--%>
+    <%--                <option>English</option>--%>
+    <%--            </select>--%>
+    <%--        </div>--%>
+    <%--        <div class="col-md-3">--%>
+    <%--            <select class="form-select">--%>
+    <%--                <option selected>Tất cả thiết kế</option>--%>
+    <%--                <option>Chuyên nghiệp</option>--%>
+    <%--                <option>Đơn giản</option>--%>
+    <%--            </select>--%>
+    <%--        </div>--%>
+    <%--        <div class="col-md-6 text-end">--%>
+    <%--            <div class="form-check form-check-inline">--%>
+    <%--                <input class="form-check-input" type="radio" name="sortOption" id="newUpdates" value="new">--%>
+    <%--                <label class="form-check-label" for="newUpdates">Mới cập nhật</label>--%>
+    <%--            </div>--%>
+    <%--            <div class="form-check form-check-inline">--%>
+    <%--                <input class="form-check-input" type="radio" name="sortOption" id="mostUsed" value="popular">--%>
+    <%--                <label class="form-check-label" for="mostUsed">Được dùng nhiều nhất</label>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
 
     <div class="row">
 
@@ -122,7 +123,8 @@
             <div class="card">
                 <div class="badge-corner">Mới</div>
                 <img
-                        src="https://marketplace.canva.com/EAEuQ3DaPWw/1/0/1131w/canva-m%C3%A0u-kem-v%C3%A0-xanh-l%C3%A1-s%C3%A1ng-t%E1%BA%A1o-s%C6%A1-y%E1%BA%BFu-l%C3%BD-l%E1%BB%8Bch-kIi9FwknLmM.jpg"
+                        src="https://marketplace.canva.com/EAFzfwx_Qik/3/0/1131w/canva-blue-simple-professional-cv-resume-HZVmncd0LSs.jpg"
+                <%--                        src="https://marketplace.canva.com/EAEuQ3DaPWw/1/0/1131w/canva-m%C3%A0u-kem-v%C3%A0-xanh-l%C3%A1-s%C3%A1ng-t%E1%BA%A1o-s%C6%A1-y%E1%BA%BFu-l%C3%BD-l%E1%BB%8Bch-kIi9FwknLmM.jpg"--%>
                         class="card-img-top" alt="CV Template">
                 <div class="card-overlay">
                     <button class="use-template-btn"><a href="template1">Dùng mẫu</a>
@@ -138,25 +140,25 @@
                 </div>
             </div>
         </div>
-        <div class="mb-4 col-md-3">
-            <div class="card">
-                <div class="badge-corner">Mới</div>
-                <img
-                        src="https://marketplace.canva.com/EAFzfwx_Qik/3/0/1131w/canva-blue-simple-professional-cv-resume-HZVmncd0LSs.jpg"
-                        class="card-img-top" alt="CV Template">
-                <div class="card-overlay">
-                    <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a>
-                    </button>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">CV số 2</h5>
-                    <p class="card-text">
-                        <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>
-                        <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <%--        <div class="mb-4 col-md-3">--%>
+        <%--            <div class="card">--%>
+        <%--                <div class="badge-corner">Mới</div>--%>
+        <%--                <img--%>
+        <%--                        src="https://marketplace.canva.com/EAFzfwx_Qik/3/0/1131w/canva-blue-simple-professional-cv-resume-HZVmncd0LSs.jpg"--%>
+        <%--                        class="card-img-top" alt="CV Template">--%>
+        <%--                <div class="card-overlay">--%>
+        <%--                    <button class="use-template-btn"><a href="/generate-pdf/${sessionScope.user.id}">Dùng mẫu</a>--%>
+        <%--                    </button>--%>
+        <%--                </div>--%>
+        <%--                <div class="card-body">--%>
+        <%--                    <h5 class="card-title">CV số 2</h5>--%>
+        <%--                    <p class="card-text">--%>
+        <%--                        <span class="px-2 py-1 badge bg-secondary">Chuyên nghiệp</span>--%>
+        <%--                        <span class="px-2 py-1 badge bg-secondary">Đơn giản</span>--%>
+        <%--                    </p>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
 
     </div>
 </div>

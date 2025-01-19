@@ -10,4 +10,5 @@ public interface CVRepository extends JpaRepository<CV, Long> {
     CV save(CV cv);
     CV findById(long id);
     List<CV> findAll();
+    List<CV> findAllByAccountId(long accountId);
 }

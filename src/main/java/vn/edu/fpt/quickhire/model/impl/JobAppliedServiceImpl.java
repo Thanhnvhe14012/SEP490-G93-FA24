@@ -26,8 +26,8 @@ public class JobAppliedServiceImpl implements JobAppliedService {
     }
 
     @Override
-    public List<JobApplied> getJobAppliedByJobId(Long jobID) {
-        return jobAppliedRepository.findAllByJobID(jobID);
+    public List<JobApplied> getJobAppliedByJobIdAndStatus(Long jobID, int status) {
+        return jobAppliedRepository.findAllByJobIDAndStatus(jobID, status);
     }
 
     @Override

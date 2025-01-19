@@ -47,6 +47,7 @@ public class JobApplied {
             case 0: return "Ứng tuyển ngay";
             case 1: return "Đã ứng tuyển";
             case 2: return "Đã chấp thuận";
+            case 3: return "Hồ sơ chưa phù hợp";
             default: return "N/A";
         }
     }

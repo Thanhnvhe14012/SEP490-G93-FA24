@@ -1,4 +1,3 @@
-<!-- homepage.jsp -->
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -19,8 +18,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="utf-banner-headline-text-part">
-                        <h3>Find Nearby Jobs <span class="typed-words"></span></h3>
-                        <span>It is a Long Established Fact That a Reader Will be Distracted by The Readable.</span>
+                        <h3>Tìm việc làm tốt nhất<span class="typed-words"></span></h3>
                     </div>
                 </div>
             </div>
@@ -146,12 +144,12 @@
                             </a>
                         </c:forEach>
                     </div>
-                    <div class="utf-centered-button margin-top-10">
-                        <a href="jobs-categorie-one.html"
-                           class="button utf-ripple-effect-dark utf-button-sliding-icon margin-top-20">Danh sách các
-                            ngành nghề<i
-                                    class="icon-feather-chevron-right"></i></a>
-                    </div>
+<%--                    <div class="utf-centered-button margin-top-10">--%>
+<%--                        <a href="jobs-categorie-one.html"--%>
+<%--                           class="button utf-ripple-effect-dark utf-button-sliding-icon margin-top-20">Danh sách các--%>
+<%--                            ngành nghề<i--%>
+<%--                                    class="icon-feather-chevron-right"></i></a>--%>
+<%--                    </div>--%>
                 </div>
             </div>
         </div>

@@ -46,8 +46,16 @@
                                 <li><a href="/job/viewJobCreated"><i class="icon-material-outline-dashboard"></i> Bảng
                                     điều
                                     khiển</a></li>
-                                <li><a href="/job/create"><i class="icon-line-awesome-user-secret"></i>
-                                    Đăng tin tuyển dụng</a></li>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.role == 2}">
+                                        <li><a href="/staffList"><i class="icon-line-awesome-user-secret"></i>
+                                            Danh sách nhân viên</a></li>
+                                    </c:when>
+                                    <c:when test="${sessionScope.user.role == 3}">
+                                        <li><a href="/job/create"><i class="icon-line-awesome-user-secret"></i>
+                                            Đăng tin tuyển dụng</a></li>
+                                    </c:when>
+                                </c:choose>
                                 <li class="active"><a href="/job/viewJobCreated"><i
                                         class="icon-material-outline-group"></i> Danh sách việc làm</a></li>
                             </ul>
@@ -66,8 +74,15 @@
                         <h3>Danh sách việc làm</h3>
                         <nav id="breadcrumbs">
                             <ul>
-                                <li><a href="/home">Trang chủ</a></li>
-                                <li><a href="/job/viewJobCreated">Bảng điều khiển</a></li>
+                                <li><a href="/">Trang chủ</a></li>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.role == 2}">
+                                        <li><a href="/job/viewCompanyJob">Bảng điều khiển</a></li>
+                                    </c:when>
+                                    <c:when test="${sessionScope.user.role == 3}">
+                                        <li><a href="/job/viewJobCreated">Bảng điều khiển</a></li>
+                                    </c:when>
+                                </c:choose>
                                 <li>Danh sách việc làm</li>
                             </ul>
                         </nav>
@@ -155,21 +170,21 @@
                             </div>
                         </div>
                         <!-- Pagination -->
-                        <div class="clearfix"></div>
-                        <div class="utf-pagination-container-aera margin-top-20 margin-bottom-0">
-                            <nav class="pagination">
-                                <ul>
-                                    <li class="utf-pagination-arrow"><a href="#" class="ripple-effect"><i
-                                            class="icon-material-outline-keyboard-arrow-left"></i></a></li>
-                                    <li><a href="#" class="ripple-effect current-page">1</a></li>
-                                    <li><a href="#" class="ripple-effect">2</a></li>
-                                    <li><a href="#" class="ripple-effect">3</a></li>
-                                    <li class="utf-pagination-arrow"><a href="#" class="ripple-effect"><i
-                                            class="icon-material-outline-keyboard-arrow-right"></i></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="clearfix"></div>
+                        <%--                        <div class="clearfix"></div>--%>
+                        <%--                        <div class="utf-pagination-container-aera margin-top-20 margin-bottom-0">--%>
+                        <%--                            <nav class="pagination">--%>
+                        <%--                                <ul>--%>
+                        <%--                                    <li class="utf-pagination-arrow"><a href="#" class="ripple-effect"><i--%>
+                        <%--                                            class="icon-material-outline-keyboard-arrow-left"></i></a></li>--%>
+                        <%--                                    <li><a href="#" class="ripple-effect current-page">1</a></li>--%>
+                        <%--                                    <li><a href="#" class="ripple-effect">2</a></li>--%>
+                        <%--                                    <li><a href="#" class="ripple-effect">3</a></li>--%>
+                        <%--                                    <li class="utf-pagination-arrow"><a href="#" class="ripple-effect"><i--%>
+                        <%--                                            class="icon-material-outline-keyboard-arrow-right"></i></a></li>--%>
+                        <%--                                </ul>--%>
+                        <%--                            </nav>--%>
+                        <%--                        </div>--%>
+                        <%--                        <div class="clearfix"></div>--%>
                     </div>
                 </div>
             </div>

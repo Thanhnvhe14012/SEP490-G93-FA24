@@ -8,6 +8,7 @@ import java.util.List;
 public interface JobAppliedRepository extends JpaRepository<JobApplied, Long> {
     //Get list of cvs that a job has
     List<JobApplied> findAllByJobID(long jobID);
+    List<JobApplied> findAllByJobIDAndStatus(long jobID, int status);
     //Get a specific job applied
     JobApplied findByJobIDAndUserID(long jobID, long userID);
     //Get list of job that user has applied

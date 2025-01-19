@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface JobAppliedService {
     Optional<JobApplied> findById(Long id);
     List<JobApplied> getJobAppliedByUserId(Long userId);
-    List<JobApplied> getJobAppliedByJobId(Long jobId);
+    List<JobApplied> getJobAppliedByJobIdAndStatus(Long jobId, int status);
     JobApplied save(JobApplied jobApplied);
     JobApplied getJobAppliedByJobIdAndUserId(Long jobID, Long userID);
     boolean unapplyForJob(Long jobID, Long userID);

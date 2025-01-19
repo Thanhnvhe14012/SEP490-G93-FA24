@@ -1,6 +1,7 @@
 package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -15,15 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.quickhire.entity.*;
+import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.model.ExperienceService;
 import vn.edu.fpt.quickhire.model.impl.CVServiceImpl;
 import vn.edu.fpt.quickhire.model.impl.CandidateServiceImpl;
-import vn.edu.fpt.quickhire.model.impl.JobAppliedServiceImpl;
+import vn.edu.fpt.quickhire.model.impl.FileUploadServiceImpl;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.EducationRepository;
-import vn.edu.fpt.quickhire.model.repository.ExperienceRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +42,6 @@ public class CvController {
     CVServiceImpl cvService;
     @Autowired
     AccountRepository accountRepository;
-    @Autowired
-    private ExperienceRepository experienceRepository;
 
     @Autowired
     private EducationRepository educationRepository;
@@ -50,12 +50,69 @@ public class CvController {
     private ExperienceService experienceService;
 
     @Autowired
-    private JobAppliedServiceImpl jobAppliedServiceImpl;
+    private FileUploadServiceImpl fileUploadService;
 
     //CVController
-    @GetMapping("/list")
+    @GetMapping("/template")
     public String cv(Model model) {
-        return "cv/listCV";
+        return "cv/templateList";
+    }
+
+    @GetMapping("/list")
+    public String cv(Model model, @SessionAttribute(name = "user", required = false) UserDTO userDTO) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        List<CV> cvs = cvService.findAllByAccountId(userDTO.getId());
+        model.addAttribute("cvs", cvs);
+        return "cv/cvList";
+    }
+
+    @PostMapping("/upload")
+    public String uploadCV(@RequestParam("cv") MultipartFile file,
+                           @SessionAttribute(name = "user", required = false) UserDTO userDTO,
+                           RedirectAttributes redirectAttributes) throws IOException {
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        String uploadedFileUrl = fileUploadService.uploadFile(file);
+        if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
+            // CV file uploaded successfully
+            System.out.println("CV uploaded cloud successfully. File URL: " + uploadedFileUrl);
+        } else {
+            System.out.println("CV uploaded cloud failed");
+        }
+
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName == null || originalFileName.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên file không hợp lệ.");
+            return "redirect:/cv/list";
+        }
+        CV cv = new CV();
+        cv.setFileName(uploadedFileUrl);
+        cv.setName(originalFileName);
+        cv.setAccountId(userDTO.getId());
+        cvService.save(cv, file);
+        return "redirect:/cv/list";
+    }
+
+    @PostMapping("/delete")
+    public String deleteCV(HttpSession session,
+                           @RequestParam("id") long cvId) {
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        CV cv = cvService.findById(cvId);
+        if (cv != null && (cv.getAccountId().equals(user.getId()))) {
+            // Ensure only the owner of the cv can delete it
+            cvService.delete(cv);
+        } else {
+            System.out.println("staffID: " + cv.getAccountId());
+            System.out.println("userID: " + user.getId());
+            return "redirect:/error";
+        }
+        return "redirect:/cv/list";
     }
 
     @GetMapping("/downloadCV")
@@ -76,15 +133,8 @@ public class CvController {
     }
 
     @GetMapping("/viewCV")
-    public String viewCV(@RequestParam Long cvId, Model model) {
-        CV cv = cvService.findById(cvId);
-
-        if (cv != null) {
-            model.addAttribute("cv", cv);
-            return "cv/viewCV";
-        } else {
-            return "redirect:/error";
-        }
+    public String viewCV(Model model) {
+        return "cvList";
     }
 
     @GetMapping("/viewCVContent")

@@ -174,6 +174,17 @@
                             <p>Hạn nộp hồ sơ: <fmt:formatDate value="${job.end}" pattern="dd/MM/yyyy"/></p>
                         </div>
 
+                        <form method="get" action="/job/viewJobDetailRecruiter" class="utf-filter-form">
+                            <input type="hidden" name="id" value="${job.id}">
+                            <label for="status-filter">Lọc theo trạng thái:</label>
+                            <select name="status" id="status-filter" onchange="this.form.submit()">
+                                <option value="0" ${selectedStatus == 0 ? 'selected' : ''}>Tất cả</option>
+                                <option value="1" ${selectedStatus == 1 ? 'selected' : ''}>Chờ xử lý</option>
+                                <option value="2" ${selectedStatus == 2 ? 'selected' : ''}>Đã chấp thuận</option>
+                                <option value="3" ${selectedStatus == 3 ? 'selected' : ''}>Đã từ chối</option>
+                            </select>
+                        </form>
+
                         <div class="dashboard-box margin-top-0">
                             <div class="headline">
                                 <h3>Danh sách ứng viên</h3>
@@ -189,6 +200,9 @@
                                                                          alt=""></a>
                                                     </div>
                                                     <div class="utf-manage-resume-item">
+                                                    <span class="dashboard-status-button utf-job-status-item green">
+                    <i class="icon-material-outline-business-center"></i> ${jobApplied.getStatusAsString()}
+                </span>
                                                         <h4>
                                                             <a href="#">${jobApplied.candidate.account.firstName} ${jobApplied.candidate.account.middleName} ${jobApplied.candidate.account.lastName} </a>
                                                         </h4>

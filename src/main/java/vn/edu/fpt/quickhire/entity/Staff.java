@@ -19,6 +19,10 @@ public class Staff {
     @Column(name = "industry_id")
     private Long industryId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "industry_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Industry industry;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;

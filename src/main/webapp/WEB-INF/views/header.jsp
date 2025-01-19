@@ -31,20 +31,20 @@
                         <li><a href="/">Trang chủ</a></li>
                         <li><a href="/job/list">Việc Làm</a>
                             <ul class="dropdown-nav">
-                                <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Tìm
-                                    việc làm</a></li>
                                 <li><a href="/job/list"><i class="icon-feather-chevron-right"></i>Danh sách việc làm</a>
                                 </li>
-                                <li><a href="/company/list"><i class="icon-feather-chevron-right"></i>Danh
-                                    sách công ty</a></li>
+                                <li><a href="/jobApplied/list"><i class="icon-feather-chevron-right"></i>Việc làm đã ứng
+                                    tuyển</a></li>
+                                <%--                                <li><a href="/company/list"><i class="icon-feather-chevron-right"></i>Danh--%>
+                                <%--                                    sách công ty</a></li>--%>
                             </ul>
                         </li>
                         <c:choose>
                             <c:when test="${sessionScope.user.role == 2}">
                                 <li><a href="/viewCompany/${sessionScope.user.id}">Công việc/Nhân sự</a>
                                     <ul class="dropdown-nav">
-                                        <li><a href="/job/viewJobCreated">Quản lý công việc</a></li>
-                                        <li><a href="/listStaff">Quản lý nhân sự</a></li>
+                                        <li><a href="/job/viewCompanyJob">Quản lý công việc</a></li>
+                                        <li><a href="/staffList">Quản lý nhân sự</a></li>
                                     </ul>
                                 </li>
                             </c:when>
@@ -56,15 +56,15 @@
                                 <li><a href="/candidate/profile">Hồ sơ/CV</a>
                                     <ul class="dropdown-nav">
                                         <li><a href="/candidate/profile">Quản lý hồ sơ</a></li>
-                                        <li><a href="dashboard-manage-resume.html">Quản lý CV</a></li>
+                                        <li><a href="/cv/list">Quản lý CV</a></li>
                                     </ul>
                                 </li>
 
                             </c:otherwise>
                         </c:choose>
 
-                        <li><a href="/handbook">Cẩm nang nghề nghiệp</a>
-                        </li>
+                        <%--                        <li><a href="/handbook">Cẩm nang nghề nghiệp</a>--%>
+                        <%--                        </li>--%>
                         <li><a href="">Quickhire</a></li>
                     </ul>
                 </nav>

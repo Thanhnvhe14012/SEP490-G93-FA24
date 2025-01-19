@@ -15,6 +15,9 @@ public class CV {
     @Column(name="file_name")
     private String fileName;
 
+    @Column(name="name")
+    private String name;
+
     @Column(name="account_id")
     private Long accountId;
 

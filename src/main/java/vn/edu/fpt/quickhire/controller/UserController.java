@@ -2,21 +2,16 @@ package vn.edu.fpt.quickhire.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import vn.edu.fpt.quickhire.entity.Account;
+import vn.edu.fpt.quickhire.entity.*;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
 import vn.edu.fpt.quickhire.entity.DTO.PasswordRequestDTO;
 import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
-import vn.edu.fpt.quickhire.entity.District;
-import vn.edu.fpt.quickhire.entity.Province;
-import vn.edu.fpt.quickhire.entity.Ward;
 import vn.edu.fpt.quickhire.model.AccountService;
 import vn.edu.fpt.quickhire.model.repository.*;
 
@@ -41,6 +36,8 @@ public class UserController {
     private DistrictRepository districtRepository;
     @Autowired
     private WardRepository wardRepository;
+    @Autowired
+    private RecruiterRepository recruiterRepository;
 
     @GetMapping("/listUser")
     public String showListUserForm(HttpSession session,
@@ -50,12 +47,17 @@ public class UserController {
         return "admin/listaccounts";
     }
 
-    @GetMapping("/listStaff")
-    public String showListStaffForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
+    @GetMapping("/staffList")
+    public String listAllStaff(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                     Model model) {
-        List<AccountDTO> lstAccount = accountService.fillAllStaffByRecruiterId(userDTO.getId());
-        model.addAttribute("accounts", lstAccount);
-        return "admin/liststaff";
+        if (userDTO == null) {
+            return "redirect:/login";
+        }
+        Recruiter recruiter = recruiterRepository.findByAccount_Id(userDTO.getId());
+        List<Staff> staffs = staffRepository.findAllByRecruiter(recruiter);
+        model.addAttribute("staffs", staffs);
+        System.out.println(staffs);
+        return "recruiter/staffList";
     }
 
     @GetMapping("/my-profile-recruiter")

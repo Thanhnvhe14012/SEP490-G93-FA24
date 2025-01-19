@@ -134,7 +134,7 @@
                                             <c:when test="${jobApplied.status == 3}">
                                                 <button style="color: white; background: transparent; border: none; cursor: not-allowed;"
                                                         disabled>Hồ sơ chưa phù hợp
-                                                </button>0
+                                                </button>
                                                 <form action="/jobApplied/unapply" method="post"
                                                       style="display: inline;">
                                                     <input type="hidden" name="jobID" value="${job.id}"/>
@@ -310,7 +310,7 @@
         <div class="utf-popup-container-part-tabs">
             <div class="utf-popup-tab-content-item" id="tab">
                 <form method="post" id="apply-now-form" action="/jobApplied/apply" enctype="multipart/form-data"
-                      onsubmit="return validateFileSize();">
+                      onsubmit="return checkFileSize(this);">
                     <!-- Hidden input for jobID -->
                     <input type="hidden" name="jobID" value="${job.id}"/>
 
@@ -337,7 +337,7 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+        const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
         window.checkFileSize = function (input) {
             const file = input.files[0];
@@ -345,25 +345,13 @@
 
             if (file) {
                 if (file.size > MAX_FILE_SIZE) {
-                    errorElement.textContent = "Kích thước tệp tin quá lớn. Vui lòng chọn tệp tin nhỏ hơn 2MB.";
+                    errorElement.textContent = "Kích thước tệp tin quá lớn. Vui lòng chọn tệp tin nhỏ hơn 5MB.";
                     errorElement.style.display = "block";
                     input.value = ''; // Clear the input
                 } else {
                     errorElement.style.display = "none"; // Hide the error message
                 }
             }
-        };
-
-        window.validateFileSize = function () {
-            const input = document.getElementById('upload-cv');
-            const errorElement = document.getElementById('file-error');
-
-            if (input.files.length > 0 && input.files[0].size > MAX_FILE_SIZE) {
-                errorElement.textContent = "Kích thước tệp tin quá lớn. Vui lòng chọn tệp tin nhỏ hơn 2MB.";
-                errorElement.style.display = "block";
-                return false;
-            }
-            return true;
         };
     });
 
