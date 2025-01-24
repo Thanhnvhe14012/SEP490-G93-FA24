@@ -53,7 +53,10 @@ public class LoginController {
 
     // Hiển thị form đăng nhập
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return "redirect:/";
+        }
         return "login/login";
     }
 

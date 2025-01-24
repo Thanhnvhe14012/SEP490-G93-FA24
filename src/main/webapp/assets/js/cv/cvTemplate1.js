@@ -274,7 +274,7 @@ addButton.addEventListener("click", function () {
             <span class="editable experience_company" contenteditable="true">Công ty THHH Một Mình Tôi - Hà Nội</span>
             <span class="editable experience_year" contenteditable="true">10/2022 - Hiện tại</span>
             <p class="editable experience_description" contenteditable="true">Mô tả kinh nghiệm</p>
-            <button class="delete-experience-btn"><i class="fa-solid fa-trash"></i>Xóa</button>
+<!--            <button class="delete-experience-btn"><i class="fa-solid fa-trash"></i>Xóa</button>-->
         </div>
     `;
     experienceContainer.appendChild(newExperience);

@@ -198,10 +198,10 @@
             <section class="experience section" id="experience">
                 <h2 class="section-title" contenteditable="true">Kinh nghiệm làm việc</h2>
 
-                <!-- Add buttons -->
-                <div class="experience-buttons">
-                    <button id="add-experience" class="btn-action-add"><i class="fa-solid fa-plus"></i>Thêm</button>
-                </div>
+                <button id="add-experience" class="btn-action-add" data-ignore="true">
+                    <i class="fa-solid fa-plus"></i>Thêm
+                </button>
+
 
                 <div class="experience_container bd-grid">
                     <div class="experience_content">

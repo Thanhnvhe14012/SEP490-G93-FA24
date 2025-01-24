@@ -103,6 +103,7 @@ public class CvController {
         if (user == null) {
             return "redirect:/login";
         }
+        System.out.println(cvId);
         CV cv = cvService.findById(cvId);
         if (cv != null && (cv.getAccountId().equals(user.getId()))) {
             // Ensure only the owner of the cv can delete it

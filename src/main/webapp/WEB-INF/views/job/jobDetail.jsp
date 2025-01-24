@@ -148,9 +148,18 @@
                                         </c:choose>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="#small-dialog"
-                                           class="apply-now-button popup-with-zoom-anim margin-top-0">Ứng
-                                            tuyển ngay<i class="icon-feather-chevron-right"></i></a>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.user != null && sessionScope.user.role == 4}">
+                                                <a href="#small-dialog"
+                                                   class="apply-now-button popup-with-zoom-anim margin-top-0">Ứng
+                                                    tuyển ngay<i class="icon-feather-chevron-right"></i></a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="/login"
+                                                   class="apply-now-button margin-top-0">Ứng
+                                                    tuyển ngay<i class="icon-feather-chevron-right"></i></a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
                             </div>

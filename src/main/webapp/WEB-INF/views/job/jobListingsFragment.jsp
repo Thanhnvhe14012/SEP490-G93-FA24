@@ -4,7 +4,7 @@
 
 <c:if test="${empty jobs}">
     <div class="utf-alert alert alert-info">
-        <strong>No jobs found</strong> for your search criteria.
+        <strong>Không tìm thấy việc làm</strong> phù hợp với yêu cầu của bạn.
     </div>
 </c:if>
 

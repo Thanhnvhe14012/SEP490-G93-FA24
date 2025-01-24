@@ -59,7 +59,7 @@ public class JobController {
         }
 
         Job createdJob = jobService.createJob(jobDTO, accountId);
-        return "redirect:/staff/viewJobCreated";
+        return "redirect:/job/viewJobCreated";
     }
 
     @GetMapping("/list")
@@ -164,6 +164,11 @@ public class JobController {
         }
 
         Job job = jobService.getJobById(id);
+        long staffId = job.getRecruiterId();
+        long recruiterId = job.getCompanyId();
+        if (userDTO.getId() != staffId & userDTO.getId() != recruiterId) {
+            return "redirect:/";
+        }
 
         // If a status is passed, filter by that status, otherwise return all
         List<JobApplied> jobApplieds;
@@ -223,7 +228,7 @@ public class JobController {
         job.setType(jobDTO.getType());
         jobRepository.save(job);
         model.addAttribute("job", job);
-        return "redirect:/staff/viewJobCreated";
+        return "redirect:/job/viewJobCreated";
     }
 
     @PostMapping("/deleteJob")
@@ -245,6 +250,6 @@ public class JobController {
         if (user.getRole() == 2) {
             return "redirect:/job/viewCompanyJob";
         }
-        return "redirect:/staff/viewJobCreated";
+        return "redirect:/job/viewJobCreated";
     }
 }
