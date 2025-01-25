@@ -21,6 +21,9 @@ public class CV {
     @Column(name="account_id")
     private Long accountId;
 
+    @Column(name="status")
+    private Integer status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
     private Candidate candidate;

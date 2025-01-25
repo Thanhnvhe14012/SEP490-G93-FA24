@@ -56,7 +56,7 @@
                     <ul>
                         <!-- Previous Page Button -->
                         <li class="utf-pagination-arrow">
-                            <a href="?page=${currentPage - 1 >= 0 ? currentPage - 1 : 0}&size=${pageSize}">
+                            <a href="?page=${currentPage - 1 >= 0 ? currentPage - 1 : 0}&size=${pageSize}&name=${param.name}&address=${param.address}&industryId=${param.industryId}&salaryMin=${param.salaryMin}&salaryMax=${param.salaryMax}&level=${param.level}&type=${param.type}">
                                 <i class="icon-material-outline-keyboard-arrow-left"></i>
                             </a>
                         </li>
@@ -64,7 +64,8 @@
                         <!-- Loop through page numbers -->
                         <c:forEach begin="0" end="${totalPages - 1}" var="i">
                             <li>
-                                <a href="?page=${i}&size=${pageSize}" class="${currentPage == i ? 'current-page' : ''}">
+                                <a href="?page=${i}&size=${pageSize}&name=${param.name}&address=${param.address}&industryId=${param.industryId}&salaryMin=${param.salaryMin}&salaryMax=${param.salaryMax}&level=${param.level}&type=${param.type}"
+                                   class="${currentPage == i ? 'current-page' : ''}">
                                         ${i + 1}
                                 </a>
                             </li>
@@ -72,7 +73,7 @@
 
                         <!-- Next Page Button -->
                         <li class="utf-pagination-arrow">
-                            <a href="?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&size=${pageSize}">
+                            <a href="?page=${currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1}&size=${pageSize}&name=${param.name}&address=${param.address}&industryId=${param.industryId}&salaryMin=${param.salaryMin}&salaryMax=${param.salaryMax}&level=${param.level}&type=${param.type}">
                                 <i class="icon-material-outline-keyboard-arrow-right"></i>
                             </a>
                         </li>

@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CVService {
-    CV save(CV cv, MultipartFile file) throws IOException;
+    CV save(CV cv);
 
-    List<CV> findAllByAccountId(long accountId);
+    List<CV> findAllByAccountIdAndStatus(long accountId, int status);
 
     CV findById(long id);
 

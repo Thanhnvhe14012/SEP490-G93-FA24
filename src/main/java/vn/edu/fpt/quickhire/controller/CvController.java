@@ -63,7 +63,7 @@ public class CvController {
         if (userDTO == null) {
             return "redirect:/login";
         }
-        List<CV> cvs = cvService.findAllByAccountId(userDTO.getId());
+        List<CV> cvs = cvService.findAllByAccountIdAndStatus(userDTO.getId(), 1);
         model.addAttribute("cvs", cvs);
         return "cv/cvList";
     }
@@ -71,7 +71,7 @@ public class CvController {
     @PostMapping("/upload")
     public String uploadCV(@RequestParam("cv") MultipartFile file,
                            @SessionAttribute(name = "user", required = false) UserDTO userDTO,
-                           RedirectAttributes redirectAttributes) throws IOException {
+                           RedirectAttributes redirectAttributes) {
         if (userDTO == null) {
             return "redirect:/login";
         }
@@ -92,7 +92,8 @@ public class CvController {
         cv.setFileName(uploadedFileUrl);
         cv.setName(originalFileName);
         cv.setAccountId(userDTO.getId());
-        cvService.save(cv, file);
+        cv.setStatus(1);
+        cvService.save(cv);
         return "redirect:/cv/list";
     }
 
@@ -107,7 +108,8 @@ public class CvController {
         CV cv = cvService.findById(cvId);
         if (cv != null && (cv.getAccountId().equals(user.getId()))) {
             // Ensure only the owner of the cv can delete it
-            cvService.delete(cv);
+            cv.setStatus(0);
+            cvService.save(cv);
         } else {
             System.out.println("staffID: " + cv.getAccountId());
             System.out.println("userID: " + user.getId());

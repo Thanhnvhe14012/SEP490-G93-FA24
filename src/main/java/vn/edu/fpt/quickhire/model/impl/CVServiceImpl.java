@@ -17,13 +17,13 @@ public class CVServiceImpl implements CVService {
     CVRepository cvRepository;
 
     @Override
-    public CV save(CV cv, MultipartFile file) throws IOException {
+    public CV save(CV cv) {
         return cvRepository.save(cv);
     }
 
     @Override
-    public List<CV> findAllByAccountId(long accountId) {
-        return cvRepository.findAllByAccountId(accountId);
+    public List<CV> findAllByAccountIdAndStatus(long accountId, int status) {
+        return cvRepository.findAllByAccountIdAndStatus(accountId, status);
     }
 
     @Override

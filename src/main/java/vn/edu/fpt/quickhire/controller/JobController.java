@@ -52,11 +52,10 @@ public class JobController {
             @ModelAttribute Job jobDTO, HttpSession session
     ) {
         UserDTO user = (UserDTO) session.getAttribute("user");
-        Long accountId = user.getId();
-        System.out.println("Session user: " + accountId);
-        if (accountId == null) {
-            return "redirect:/error";
+        if (user == null) {
+            return "redirect:/login";
         }
+        Long accountId = user.getId();
 
         Job createdJob = jobService.createJob(jobDTO, accountId);
         return "redirect:/job/viewJobCreated";

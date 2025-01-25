@@ -85,7 +85,8 @@ public class JobAppliedController {
             cv.setFileName(uploadedFileUrl);
             cv.setName(originalFileName);
             cv.setAccountId(userDTO.getId());
-            cvService.save(cv, file);
+            cv.setStatus(1);
+            cvService.save(cv);
 
             JobApplied jobApplied = new JobApplied();
             jobApplied.setUserID(userDTO.getId());
@@ -97,8 +98,6 @@ public class JobAppliedController {
             jobAppliedService.save(jobApplied);
 
             return "redirect:/job/jobDetail?id=" + jobID;
-        } catch (IOException e) {
-            return "redirect:/error";
         } catch (Exception e) {
             return "redirect:/error";
         }
