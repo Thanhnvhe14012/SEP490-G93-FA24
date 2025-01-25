@@ -11,7 +11,7 @@
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Responsive Resume CV</title>
+    <title>Mẫu CV</title>
 
     <!-- Import Fontawesome -->
     <script src="https://kit.fontawesome.com/cb81440751.js" crossorigin="anonymous"></script>
@@ -198,10 +198,10 @@
             <section class="experience section" id="experience">
                 <h2 class="section-title" contenteditable="true">Kinh nghiệm làm việc</h2>
 
-                <!-- Add buttons -->
-                <div class="experience-buttons">
-                    <button id="add-experience" class="btn-action-add"><i class="fa-solid fa-plus"></i>Thêm</button>
-                </div>
+                <button id="add-experience" class="btn-action-add" data-ignore="true">
+                    <i class="fa-solid fa-plus"></i>Thêm
+                </button>
+
 
                 <div class="experience_container bd-grid">
                     <div class="experience_content">
@@ -250,7 +250,7 @@
 
             <!-- EDUCATION -->
             <section class="education section" id="education">
-                <h2 class="section-title">Education</h2>
+                <h2 class="section-title">Học Vấn</h2>
 
                 <div class="education_container bd-grid">
                     <div class="education_content">
@@ -279,7 +279,7 @@
 
             <!-- INTERESTS -->
             <section class="interests section" id="interests">
-                <h2 class="section-title">Interests</h2>
+                <h2 class="section-title">Sở thích</h2>
                 <div class="interests_container bd-grid">
                     <div class="interests_content">
                         <i class="fa-solid fa-paw interests_icon"></i>

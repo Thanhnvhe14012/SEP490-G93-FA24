@@ -8,9 +8,7 @@ import vn.edu.fpt.quickhire.model.CVService;
 import vn.edu.fpt.quickhire.model.repository.CVRepository;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 public class CVServiceImpl implements CVService {
@@ -19,12 +17,22 @@ public class CVServiceImpl implements CVService {
     CVRepository cvRepository;
 
     @Override
-    public CV save(CV cv, MultipartFile file) throws IOException {
+    public CV save(CV cv) {
         return cvRepository.save(cv);
+    }
+
+    @Override
+    public List<CV> findAllByAccountIdAndStatus(long accountId, int status) {
+        return cvRepository.findAllByAccountIdAndStatus(accountId, status);
     }
 
     @Override
     public CV findById(long id) {
         return cvRepository.findById(id);
+    }
+
+    @Override
+    public void delete(CV cv) {
+        cvRepository.delete(cv);
     }
 }

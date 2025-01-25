@@ -83,6 +83,12 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> getJobsByCompanyId(Long companyId) {
+        List<Job> jobs = jobRepository.findAllByCompanyId(companyId);
+        return jobs;
+    }
+
+    @Override
     public Job deleteById(Long id) {
         return null;
     }

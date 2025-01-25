@@ -44,7 +44,7 @@ public class JobController {
             return "redirect:/";
         }
         model.addAttribute("job", new Job());
-        return "job/createJob";
+        return "staff/createJob";
     }
 
     @PostMapping("/create")
@@ -52,11 +52,10 @@ public class JobController {
             @ModelAttribute Job jobDTO, HttpSession session
     ) {
         UserDTO user = (UserDTO) session.getAttribute("user");
-        Long accountId = user.getId();
-        System.out.println("Session user: " + accountId);
-        if (accountId == null) {
-            return "redirect:/error";
+        if (user == null) {
+            return "redirect:/login";
         }
+        Long accountId = user.getId();
 
         Job createdJob = jobService.createJob(jobDTO, accountId);
         return "redirect:/job/viewJobCreated";
@@ -140,7 +139,7 @@ public class JobController {
         String formattedEndDate = job.getEnd() != null ? sdf.format(job.getEnd()) : "";
         model.addAttribute("job", job);
         model.addAttribute("formattedEndDate", formattedEndDate);
-        return "v2/editjob";
+        return "staff/editJob";
     }
 
     @GetMapping("/jobDetail")
@@ -155,28 +154,62 @@ public class JobController {
     }
 
     @GetMapping("/viewJobDetailRecruiter")
-    public String showViewJobDetailRecruiterForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO, @RequestParam(required = false) long id,
+    public String showViewJobDetailRecruiterForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
+                                                 @RequestParam(required = false) long id,
+                                                 @RequestParam(required = false) Integer status,
                                                  Model model, HttpSession session) {
         if (userDTO == null) {
             return "redirect:/login";
         }
+
         Job job = jobService.getJobById(id);
-        List<JobApplied> jobApplieds = jobAppliedRepository.findAllByJobID(id);
+        long staffId = job.getRecruiterId();
+        long recruiterId = job.getCompanyId();
+        if (userDTO.getId() != staffId & userDTO.getId() != recruiterId) {
+            return "redirect:/";
+        }
+
+        // If a status is passed, filter by that status, otherwise return all
+        List<JobApplied> jobApplieds;
+        if (status == null || status == 0) {
+            jobApplieds = jobAppliedRepository.findAllByJobID(id);
+        }
+        else {
+            jobApplieds = jobAppliedRepository.findAllByJobIDAndStatus(id, status);
+        }
+
         model.addAttribute("job", job);
         model.addAttribute("jobApplieds", jobApplieds);
-        return "v2/viewJobDetailRecruiter";
+        return "staff/viewJobDetailRecruiter";
     }
+
 
     @GetMapping("/viewJobCreated")
     public String showViewJobCreatedListForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
                                              Model model, HttpSession session) {
         if (userDTO == null) {
             return "redirect:/login";
+        } else if (userDTO.getRole() != 3) {
+            return "redirect:/";
         }
         List<Job> jobs = jobService.getJobsByRecruiterId(userDTO.getId());
         model.addAttribute("jobs", jobs);
         model.addAttribute("currentUserId", userDTO.getId());
-        return "job/viewJobCreated";
+        return "staff/viewJobCreated";
+    }
+
+    @GetMapping("/viewCompanyJob")
+    public String listCompanyJob(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
+                                 Model model) {
+        if (userDTO == null) {
+            return "redirect:/login";
+        } else if (userDTO.getRole() != 2) {
+            return "redirect:/";
+        }
+        List<Job> jobs = jobService.getJobsByCompanyId(userDTO.getId());
+        model.addAttribute("jobs", jobs);
+        model.addAttribute("currentUserId", userDTO.getId());
+        return "staff/viewJobCreated";
     }
 
     @PostMapping("/saveUpdateJob")
@@ -212,6 +245,9 @@ public class JobController {
             System.out.println("recruiterID: " + job.getRecruiter().getAccount().getId());
             System.out.println("userID: " + user.getId());
             return "redirect:/error";
+        }
+        if (user.getRole() == 2) {
+            return "redirect:/job/viewCompanyJob";
         }
         return "redirect:/job/viewJobCreated";
     }

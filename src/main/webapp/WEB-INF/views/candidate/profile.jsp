@@ -178,14 +178,7 @@
                 </div>
             </c:forEach>
         </div>
-        <button onclick="redirectToCVTemplate()" class="redirect-btn">Generate CV</button>
     </div>
-    <script>
-        function redirectToCVTemplate() {
-            window.location.href = '/generate-pdf/${sessionScope.user.id}';
-        }
-    </script>
-
 
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp" %>

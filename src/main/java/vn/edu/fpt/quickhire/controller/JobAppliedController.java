@@ -30,12 +30,19 @@ public class JobAppliedController {
     @Autowired
     private FileUploadServiceImpl fileUploadService;
 
-    @GetMapping("/viewJobApplied")
-    public String showViewJobAppliedForm(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
-                                         Model model, HttpSession session) {
+    @GetMapping("/list")
+    public String viewJobApplied(@SessionAttribute(name = "user", required = false) UserDTO userDTO,
+                                 Model model) {
+        if (userDTO == null || userDTO.getRole() != 4) {
+            return "redirect:/login";
+        }
         List<JobApplied> jobApplieds = jobAppliedService.getJobAppliedByUserId(userDTO.getId());
+        if (jobApplieds.isEmpty()) {
+            model.addAttribute("noJobAppliedsFound", true);
+        }
+
         model.addAttribute("jobApplieds", jobApplieds);
-        return "v2/viewAppliedJob";
+        return "candidate/jobAppliedList";
     }
 
     @PostMapping("/apply")
@@ -60,16 +67,26 @@ public class JobAppliedController {
             if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
                 // CV file uploaded successfully
                 System.out.println("CV uploaded cloud successfully. File URL: " + uploadedFileUrl);
-            }else {
+            } else {
                 System.out.println("CV uploaded cloud failed");
             }
+
+            // Extract the original file name
+            String originalFileName = file.getOriginalFilename();
+            if (originalFileName == null || originalFileName.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Tên file không hợp lệ.");
+                return "redirect:/job/jobDetail?id=" + jobID;
+            }
+
 //            In case you want to keep file content in database
 //            byte[] fileBytes = file.getBytes();
 //            cv.setFileContent(fileBytes);
             CV cv = new CV();
             cv.setFileName(uploadedFileUrl);
+            cv.setName(originalFileName);
             cv.setAccountId(userDTO.getId());
-            cvService.save(cv, file);
+            cv.setStatus(1);
+            cvService.save(cv);
 
             JobApplied jobApplied = new JobApplied();
             jobApplied.setUserID(userDTO.getId());
@@ -81,8 +98,6 @@ public class JobAppliedController {
             jobAppliedService.save(jobApplied);
 
             return "redirect:/job/jobDetail?id=" + jobID;
-        } catch (IOException e) {
-            return "redirect:/error";
         } catch (Exception e) {
             return "redirect:/error";
         }
@@ -122,7 +137,7 @@ public class JobAppliedController {
             redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy hồ sơ ứng tuyển.");
         }
 
-        return "redirect:/job/viewJobDetailRecruiter?id?=" + optionalJobApplied.orElse(null).getJobID();
+        return "redirect:/job/viewJobDetailRecruiter?id=" + optionalJobApplied.orElse(null).getJobID();
     }
 
 }

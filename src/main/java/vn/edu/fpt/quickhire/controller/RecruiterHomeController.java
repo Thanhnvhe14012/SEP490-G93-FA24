@@ -13,6 +13,6 @@ public class RecruiterHomeController {
         model.addAttribute("totalJobs", 10); // Số lượng công việc đăng tuyển
         model.addAttribute("newApplicants", 5); // Số lượng ứng viên mới
 
-        return "job/recruiterHome"; // Trả về trang home của nhà tuyển dụng
+        return "recruiter/recruiterHome"; // Trả về trang home của nhà tuyển dụng
     }
 }
