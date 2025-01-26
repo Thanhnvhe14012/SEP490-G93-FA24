@@ -96,8 +96,10 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job updateJob(Long id, Job jobDTO) {
-        validateJobInput(jobDTO);
         Optional<Job> job = jobRepository.findById(id);
+        jobDTO.setStart(job.get().getStart());
+        jobDTO.setEnd(job.get().getEnd());
+        validateJobInput(jobDTO);
         job.get().setName(jobDTO.getName());
         job.get().setDescription(jobDTO.getDescription());
         job.get().setStatus(jobDTO.getStatus());
