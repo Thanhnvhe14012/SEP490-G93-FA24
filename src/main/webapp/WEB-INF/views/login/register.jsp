@@ -207,7 +207,7 @@
     $('#addressId1').change(function () {
         const provinceCode = $(this).val();
         $.ajax({
-            url: '/getDistricts', // Đường dẫn đến controller xử lý
+            url: '/getDistricts', // Đường dẫn đến service xử lý
             type: 'GET',
             data: {provinceCode: provinceCode},
             success: function (response) {
@@ -225,7 +225,7 @@
     $('#addressId2').change(function () {
         const districtCode = $(this).val();
         $.ajax({
-            url: '/getWards', // Đường dẫn đến controller xử lý
+            url: '/getWards', // Đường dẫn đến service xử lý
             type: 'GET',
             data: {districtCode: districtCode},
             success: function (response) {
