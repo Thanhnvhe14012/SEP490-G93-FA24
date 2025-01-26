@@ -38,7 +38,8 @@
                             </div>
                             <div class="clearfix"></div>
                             <ul>
-                                <li><a href="/job/viewJobCreated"><i class="icon-material-outline-dashboard"></i> Bảng điều
+                                <li><a href="/job/viewJobCreated"><i class="icon-material-outline-dashboard"></i> Bảng
+                                    điều
                                     khiển</a></li>
                                 <li class="active"><a href="/job/create"><i class="icon-line-awesome-user-secret"></i>
                                     Đăng tin tuyển dụng</a></li>
@@ -74,7 +75,8 @@
                                 <h3>Đăng tin tuyển dụng</h3>
                             </div>
                             <div class="content with-padding padding-bottom-10">
-                                <form action="/job/saveUpdateJob?id=${job.id}" method="post">
+                                <form action="/job/saveUpdateJob?id=${job.id}" method="post"
+                                      onsubmit="return validateForm(event)">
                                     <div class="row">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="utf-submit-field">
@@ -95,13 +97,6 @@
                                                 <h5>Quyền lợi</h5>
                                                 <textarea cols="40" rows="2" class="utf-with-border" name="benefits"
                                                           required>${job.benefits}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6 col-sm-6">
-                                            <div class="utf-submit-field">
-                                                <h5>Ngày kết thúc</h5>
-                                                <input type="date" class="utf-with-border" name="end"
-                                                       value="${formattedEndDate}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-md-6 col-sm-6">
@@ -171,5 +166,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateForm(event) {
+        const minSalary = parseFloat(document.querySelector("input[name='salary_min']").value);
+        const maxSalary = parseFloat(document.querySelector("input[name='salary_max']").value);
+
+        if (minSalary <= 0 || maxSalary <= 0) {
+            alert("Lương phải là một con số dương");
+            event.preventDefault();
+            return false;
+        }
+
+        if (maxSalary < minSalary) {
+            alert("Lương tối đa phải lớn hơn lương tối thiểu");
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </body>
 </html>

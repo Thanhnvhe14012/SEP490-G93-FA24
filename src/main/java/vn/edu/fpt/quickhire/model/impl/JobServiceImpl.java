@@ -12,13 +12,12 @@ import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
 import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
 import java.util.*;
+
 @Service
 
 public class JobServiceImpl implements JobService {
     @Autowired
     private JobRepository jobRepository;
-    @Autowired
-    private RecruiterRepository recruiterRepository;
 
     @Autowired
     private StaffRepository staffRepository;
@@ -31,9 +30,44 @@ public class JobServiceImpl implements JobService {
             throw new RuntimeException("Staff not found for account ID: " + accountId);
         }
 
+        validateJobInput(jobDTO);
+
         Job job = getJob(jobDTO, staff);
 
         return jobRepository.save(job);
+    }
+
+    private void validateJobInput(Job jobDTO) {
+        if (jobDTO.getName() == null || jobDTO.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Tên công việc không được để trống");
+        }
+        if (jobDTO.getDescription() == null || jobDTO.getDescription().trim().isEmpty()) {
+            throw new IllegalArgumentException("Mô tả công việc không được để trống");
+        }
+        if (jobDTO.getType() == null) {
+            throw new IllegalArgumentException("Loại công việc không được để trống");
+        }
+        if (jobDTO.getLevel() == null) {
+            throw new IllegalArgumentException("Cấp bậc không được để trống");
+        }
+        if (jobDTO.getSalary_min() <= 0 || jobDTO.getSalary_max() <= 0) {
+            throw new IllegalArgumentException("Lương phải là một con số dương");
+        }
+        if (jobDTO.getSalary_max() < jobDTO.getSalary_min()) {
+            throw new IllegalArgumentException("Lương tối đa phải lớn hơn lương tối thiểu");
+        }
+        if (jobDTO.getBenefits() == null || jobDTO.getBenefits().trim().isEmpty()) {
+            throw new IllegalArgumentException("Quyền lợi không được để trống");
+        }
+        if (jobDTO.getStart() == null) {
+            throw new IllegalArgumentException("Ngày bắt đầu không được để trống");
+        }
+        if (jobDTO.getEnd() == null) {
+            throw new IllegalArgumentException("Ngày kết thúc không được để trống");
+        }
+        if (jobDTO.getEnd().before(jobDTO.getStart())) {
+            throw new IllegalArgumentException("Ngày bắt đầu phải trước ngày kết thúc");
+        }
     }
 
     private static Job getJob(Job jobDTO, Staff staff) {
@@ -61,8 +95,19 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job updateJob(Long id, Job job) {
-        return null;
+    public Job updateJob(Long id, Job jobDTO) {
+        validateJobInput(jobDTO);
+        Optional<Job> job = jobRepository.findById(id);
+        job.get().setName(jobDTO.getName());
+        job.get().setDescription(jobDTO.getDescription());
+        job.get().setStatus(jobDTO.getStatus());
+        job.get().setBenefits(jobDTO.getBenefits());
+        job.get().setSalary_min(jobDTO.getSalary_min());
+        job.get().setSalary_max(jobDTO.getSalary_max());
+        job.get().setLevel(jobDTO.getLevel());
+        job.get().setType(jobDTO.getType());
+        jobRepository.save(job.orElse(null));
+        return job.orElse(null);
     }
 
     @Override

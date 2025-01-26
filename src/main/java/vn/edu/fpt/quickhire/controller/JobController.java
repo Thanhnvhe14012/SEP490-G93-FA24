@@ -214,19 +214,8 @@ public class JobController {
 
     @PostMapping("/saveUpdateJob")
     public String saveUpdateJob(@RequestParam(required = false) Long id, @ModelAttribute Job jobDTO, Model model) {
-        System.out.println("id cua job " + id);
-        Job job = jobService.getJobById(id);
-        job.setName(jobDTO.getName());
-        job.setDescription(jobDTO.getDescription());
-        job.setEnd(jobDTO.getEnd());
-        job.setStatus(jobDTO.getStatus());
-        job.setBenefits(jobDTO.getBenefits());
-        job.setSalary_min(jobDTO.getSalary_min());
-        job.setSalary_max(jobDTO.getSalary_max());
-        job.setLevel(jobDTO.getLevel());
-        job.setType(jobDTO.getType());
-        jobRepository.save(job);
-        model.addAttribute("job", job);
+        Job updatedJob = jobService.updateJob(id, jobDTO);
+        model.addAttribute("job", updatedJob);
         return "redirect:/job/viewJobCreated";
     }
 

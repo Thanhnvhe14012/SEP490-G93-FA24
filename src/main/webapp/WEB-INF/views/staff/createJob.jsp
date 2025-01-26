@@ -155,7 +155,7 @@
         let endDate = new Date(document.getElementById('end').value);
         let currentDate = new Date();
 
-        if (salaryMin < 0 || salaryMax < 0) {
+        if (salaryMin <= 0 || salaryMax <= 0) {
             alert("Mức lương phải là một số dương");
             event.preventDefault(); // Prevent form submission
             return false;
