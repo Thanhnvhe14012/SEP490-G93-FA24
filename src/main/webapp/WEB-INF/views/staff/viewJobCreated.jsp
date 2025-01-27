@@ -144,7 +144,7 @@
                                                             </ul>
                                                             <div class="utf-buttons-to-right">
                                                                 <a href="/job/editJob?id=${job.id}"
-                                                                   class="button green ripple-effect ico" title="Edit"
+                                                                   class="button green ripple-effect ico" title="Chỉnh sửa"
                                                                    data-tippy-placement="top">
                                                                     <i class="icon-feather-edit"></i>
                                                                 </a>
@@ -153,7 +153,7 @@
                                                                     <input type="hidden" name="jobId" value="${job.id}">
                                                                     <button type="submit"
                                                                             class="button red ripple-effect ico"
-                                                                            title="Remove"
+                                                                            title="Xóa"
                                                                             data-tippy-placement="top"
                                                                             onclick="return confirm('Bạn có chắc muốn xóa bài đăng này không?');">
                                                                         <i class="icon-feather-trash-2"></i>
