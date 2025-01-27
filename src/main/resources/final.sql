@@ -48,7 +48,7 @@ CREATE TABLE `account` (
   CONSTRAINT `district` FOREIGN KEY (`address_id_2`) REFERENCES `districts` (`code`),
   CONSTRAINT `province` FOREIGN KEY (`address_id_1`) REFERENCES `provinces` (`code`),
   CONSTRAINT `ward` FOREIGN KEY (`address_id_3`) REFERENCES `wards` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (19,'recruiter1','admin123','dttan211@gmail.com',NULL,NULL,NULL,NULL,'01','276','09988','Trụ sở chính: Khu Giáo dục và Đào tạo - Khu Công nghệ cao Hòa Lạc, Km29 Đại lộ Thăng Long',2,'0904399139','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737103757/fptwebp.webp_1737103752449.webp',1),(21,'staff1','admin123','staff@gmail.com','1998-07-15 00:00:00.000000','Ngô','Phúc','Hưng','02','033','01135','SN02',3,NULL,NULL,1),(22,'staff2','admin123','staff2@gmail.com','1998-07-21 00:00:00.000000','Đào','Quang','Anh','14','124','04084','SN03',3,NULL,NULL,1),(23,'recruiter2','admin123','tandthe176226@fpt.edu.vn',NULL,NULL,NULL,NULL,'31','312','11593','Toà nhà Youngjin E&C Hải Phòng',2,'0823462313','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737106233/LG.webp_1737106228531.webp',1),(24,'staff3','admin123','staff3@gmail.com','2000-07-21 00:00:00.000000','Mai','Thùy','Anh','04','047','01465','SN52',3,NULL,NULL,1),(25,'recruiter3','admin123','thanhnvhe140127@fpt.edu.vn',NULL,NULL,NULL,NULL,'01','008','00322','Tầng 9 th Tòa Nhà NAM HAI Lake view Building | Lô 01-09A Khu Đô Thị Vĩnh Hoàng',2,'0395634568','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737106766/NamHai.webp_1737106762261.webp',1),(26,'staff4','admin123','staff4@gmail.com','1997-10-07 00:00:00.000000','Nguyễn','An','Diệp','19','169','05671','Ngõ Hòa Bình',3,NULL,NULL,1),(27,'recruiter4','admin123','thanhnvhe140127@fpt.edu.vn',NULL,NULL,NULL,NULL,'01','021','00610','Số 136 Phạm Văn Đồng',2,'0395634568','https://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737107889/M_A_ejvwhw.webp',1),(28,'staff5','admin123','staff5@gmail.com','1993-10-21 00:00:00.000000','Nguyễn','Hương','Quỳnh','22','205','07120','SN02',3,NULL,NULL,1),(29,'candidate1','admin123','thanhnv100800@gmail.com','2000-10-18 00:00:00.000000','Nguyễn','Văn','Thanh','04','045','01363','SN052',4,'0395634568','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737108077/pexels-simon-robben-55958-614810.jpg_1737108071147.jpg',1),(30,'recruiter5','admin123','recruiter@gmail.com',NULL,NULL,NULL,NULL,'79','770','27139','379-381 Hai Bà Trưng',2,'0123465789','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737128556/longchau.webp_1737128555903.webp',1),(31,'staff6','admin123','staff6@gmail.com','1993-11-22 00:00:00.000000','Nguyễn','Vũ Thảo','Quyên','08','074','02410','SN66A',3,NULL,NULL,1),(32,'candidate2','admin123','seimyname2@gmail.com','2003-07-14 00:00:00.000000','Đinh','Trọng','Tấn','01','019','00625','',4,'0823462313','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737132468/anh-cv-02.jpg_1737132465275.jpg',1);
+INSERT INTO `account` VALUES (19,'recruiter1','admin123','dttan211@gmail.com',NULL,NULL,NULL,NULL,'01','276','09988','Trụ sở chính: Khu Giáo dục và Đào tạo - Khu Công nghệ cao Hòa Lạc, Km29 Đại lộ Thăng Long',2,'0904399139','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737103757/fptwebp.webp_1737103752449.webp',1),(21,'staff1','admin123','staff@gmail.com','1998-07-15 00:00:00.000000','Ngô','Phúc','Hưng','02','033','01135','SN02',3,NULL,NULL,1),(22,'staff2','admin123','staff2@gmail.com','1998-07-21 00:00:00.000000','Đào','Quang','Anh','14','124','04084','SN03',3,NULL,NULL,1),(23,'recruiter2','admin123','tandthe176226@fpt.edu.vn',NULL,NULL,NULL,NULL,'31','312','11593','Toà nhà Youngjin E&C Hải Phòng',2,'0823462313','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737106233/LG.webp_1737106228531.webp',1),(24,'staff3','admin123','staff3@gmail.com','2000-07-21 00:00:00.000000','Mai','Thùy','Anh','04','047','01465','SN52',3,NULL,NULL,1),(25,'recruiter3','admin123','thanhnvhe140127@fpt.edu.vn',NULL,NULL,NULL,NULL,'01','008','00322','Tầng 9 th Tòa Nhà NAM HAI Lake view Building | Lô 01-09A Khu Đô Thị Vĩnh Hoàng',2,'0395634568','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737106766/NamHai.webp_1737106762261.webp',1),(26,'staff4','admin123','staff4@gmail.com','1997-10-07 00:00:00.000000','Nguyễn','An','Diệp','19','169','05671','Ngõ Hòa Bình',3,NULL,NULL,1),(27,'recruiter4','admin123','thanhnvhe140127@fpt.edu.vn',NULL,NULL,NULL,NULL,'01','021','00610','Số 136 Phạm Văn Đồng',2,'0395634568','https://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737107889/M_A_ejvwhw.webp',1),(28,'staff5','admin123','staff5@gmail.com','1993-10-21 00:00:00.000000','Nguyễn','Hương','Quỳnh','22','205','07120','SN02',3,NULL,NULL,1),(29,'candidate1','admin123','thanhnv100800@gmail.com','2000-10-18 00:00:00.000000','Nguyễn','Văn','Thanh','04','045','01363','SN052',4,'0395634568','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737108077/pexels-simon-robben-55958-614810.jpg_1737108071147.jpg',1),(30,'recruiter5','admin123','recruiter@gmail.com',NULL,NULL,NULL,NULL,'79','770','27139','379-381 Hai Bà Trưng',2,'0123465789','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737128556/longchau.webp_1737128555903.webp',1),(31,'staff6','admin123','staff6@gmail.com','1993-11-22 00:00:00.000000','Nguyễn','Vũ Thảo','Quyên','08','074','02410','SN66A',3,NULL,NULL,1),(32,'candidate2','admin123','seimyname2@gmail.com','2003-07-14 00:00:00.000000','Đinh','Trọng','Tấn','01','019','00625','',4,'0823462313','http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737132468/anh-cv-02.jpg_1737132465275.jpg',1),(33,'staff8','admin123','staff8@gmail.com','2020-10-13 00:00:00.000000','Nguyễn','Văn','A','14','120','03808','SN052',3,'',NULL,1),(34,'staff9','admin123','staff9@gmail.com','2025-01-15 00:00:00.000000','Nguyễn','Văn','B','22','198','06847','dawdawdawd',3,NULL,NULL,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,11 +128,13 @@ DROP TABLE IF EXISTS `cv`;
 CREATE TABLE `cv` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `file_name` varchar(2000) DEFAULT NULL,
+  `name` varchar(2000) DEFAULT NULL,
   `account_id` bigint NOT NULL,
+  `status` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cvOwner_idx` (`account_id`),
   CONSTRAINT `cv_owner` FOREIGN KEY (`account_id`) REFERENCES `candidate` (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +143,7 @@ CREATE TABLE `cv` (
 
 LOCK TABLES `cv` WRITE;
 /*!40000 ALTER TABLE `cv` DISABLE KEYS */;
-INSERT INTO `cv` VALUES (3,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737132274/Backend%20Developer_Nguy%E1%BB%85n%20V%C4%83n%20Thanh_Resume.pdf_1737132267857.pdf',29),(5,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737137613/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737137611590.pdf',32),(6,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737161211/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737161208658.pdf',32);
+INSERT INTO `cv` VALUES (3,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737132274/Backend%20Developer_Nguy%E1%BB%85n%20V%C4%83n%20Thanh_Resume.pdf_1737132267857.pdf','Backend Developer_Nguyễn Văn Thanh_Resume.pdf',29,1),(5,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737137613/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737137611590.pdf','On Job Training (Web)_Dinh Trong Tan_Resume.pdf',32,1),(6,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737161211/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737161208658.pdf','On Job Training (Web)_Dinh Trong Tan_Resume.pdf',32,1),(7,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737164511/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737164507792.pdf','On Job Training (Web)_Dinh Trong Tan_Resume.pdf',29,1),(8,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737195171/Backend%20Developer_Nguy%E1%BB%85n%20V%C4%83n%20Thanh_Resume.pdf_1737195160765.pdf','Backend Developer_Nguyễn Văn Thanh_Resume.pdf',29,1),(9,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737195352/Backend%20Developer_Nguy%E1%BB%85n%20V%C4%83n%20Thanh_Resume.pdf_1737195348679.pdf','Backend Developer_Nguyễn Văn Thanh_Resume.pdf',29,1),(12,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737207560/On%20Job%20Training%20%28Web%29_Dinh%20Trong%20Tan_Resume.pdf_1737207556565.pdf','On Job Training (Web)_Dinh Trong Tan_Resume.pdf',29,1),(13,'http://res.cloudinary.com/quickhiredcv4odqny/image/upload/v1737215403/myCV-light%20%281%29.pdf_1737215380086.pdf','myCV-light (1).pdf',29,0);
 /*!40000 ALTER TABLE `cv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +320,7 @@ CREATE TABLE `job` (
   CONSTRAINT `job_company` FOREIGN KEY (`company_id`) REFERENCES `recruiter` (`account_id`),
   CONSTRAINT `job_industry` FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`),
   CONSTRAINT `job_recruiter` FOREIGN KEY (`recruiter_id`) REFERENCES `staff` (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +354,7 @@ CREATE TABLE `job_applied` (
   CONSTRAINT `candidate` FOREIGN KEY (`userID`) REFERENCES `candidate` (`account_id`),
   CONSTRAINT `cv` FOREIGN KEY (`cvID`) REFERENCES `cv` (`id`),
   CONSTRAINT `job` FOREIGN KEY (`jobID`) REFERENCES `job` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +363,7 @@ CREATE TABLE `job_applied` (
 
 LOCK TABLES `job_applied` WRITE;
 /*!40000 ALTER TABLE `job_applied` DISABLE KEYS */;
-INSERT INTO `job_applied` VALUES (3,29,14,3,'Kính gửi quý công ty,\r\nTôi tên là Nguyễn Văn Thanh, và tôi xin gửi đến quý công ty thư giới thiệu bản thân cho vị trí Backend Developer với chuyên môn về Python và Java. Với sự đam mê trong việc phát triển các hệ thống backend mạnh mẽ, hiệu quả và an toàn, tôi tin rằng mình có thể đóng góp tích cực vào đội ngũ kỹ thuật của công ty.',1),(6,32,14,6,'Kính gửi quý công ty,\rTôi tên là Đinh Trọng Tấn, và tôi xin gửi đến quý công ty thư giới thiệu bản thân cho vị trí Backend Developer với chuyên môn về Python và Java. Với sự đam mê trong việc phát triển các hệ thống backend mạnh mẽ, hiệu quả và an toàn, tôi tin rằng mình có thể đóng góp tích cực vào đội ngũ kỹ thuật của công ty.\rTôi là người có tư duy logic tốt, thích giải quyết các vấn đề phức tạp và luôn đặt trọng tâm vào việc cung cấp các giải pháp hiệu quả và chất lượng cao. Với hơn [số năm kinh nghiệm, nếu có] kinh nghiệm trong lĩnh vực backend development, tôi tin rằng mình có thể đáp ứng tốt yêu cầu của công ty.\rTôi rất mong có cơ hội được tham gia vào đội ngũ phát triển của quý công ty và đóng góp vào các dự án thú vị trong tương lai.\rCảm ơn quý công ty đã dành thời gian xem xét hồ sơ của tôi. Tôi sẵn lòng trao đổi thêm trong buổi phỏng vấn để trình bày rõ hơn về kinh nghiệm và năng lực của mình.\rTrân trọng,Đinh Trọng Tấn',1);
+INSERT INTO `job_applied` VALUES (3,29,14,3,'Kính gửi quý công ty,\r\nTôi tên là Nguyễn Văn Thanh, và tôi xin gửi đến quý công ty thư giới thiệu bản thân cho vị trí Backend Developer với chuyên môn về Python và Java. Với sự đam mê trong việc phát triển các hệ thống backend mạnh mẽ, hiệu quả và an toàn, tôi tin rằng mình có thể đóng góp tích cực vào đội ngũ kỹ thuật của công ty.',2),(6,32,14,6,'Kính gửi quý công ty,\rTôi tên là Đinh Trọng Tấn, và tôi xin gửi đến quý công ty thư giới thiệu bản thân cho vị trí Backend Developer với chuyên môn về Python và Java. Với sự đam mê trong việc phát triển các hệ thống backend mạnh mẽ, hiệu quả và an toàn, tôi tin rằng mình có thể đóng góp tích cực vào đội ngũ kỹ thuật của công ty.\rTôi là người có tư duy logic tốt, thích giải quyết các vấn đề phức tạp và luôn đặt trọng tâm vào việc cung cấp các giải pháp hiệu quả và chất lượng cao. Với hơn [số năm kinh nghiệm, nếu có] kinh nghiệm trong lĩnh vực backend development, tôi tin rằng mình có thể đáp ứng tốt yêu cầu của công ty.\rTôi rất mong có cơ hội được tham gia vào đội ngũ phát triển của quý công ty và đóng góp vào các dự án thú vị trong tương lai.\rCảm ơn quý công ty đã dành thời gian xem xét hồ sơ của tôi. Tôi sẵn lòng trao đổi thêm trong buổi phỏng vấn để trình bày rõ hơn về kinh nghiệm và năng lực của mình.\rTrân trọng,Đinh Trọng Tấn',1),(7,29,9,7,'Thư giới thiệu đến với nhà tuyển dụng',2),(12,29,10,13,'Thư giới thiệu đến với nhà tuyển dụng',3);
 /*!40000 ALTER TABLE `job_applied` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,7 +505,7 @@ CREATE TABLE `staff` (
   CONSTRAINT `staff_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `staff_industry` FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`),
   CONSTRAINT `staff_manager` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -512,7 +514,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (5,21,19,5),(6,22,19,7),(7,24,23,1),(8,26,25,3),(9,28,27,4),(10,31,30,10);
+INSERT INTO `staff` VALUES (5,21,19,5),(6,22,19,7),(7,24,23,1),(8,26,25,3),(9,28,27,4),(10,31,30,10),(11,33,19,4),(12,34,19,7);
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -556,4 +558,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-18  8:02:06
+-- Dump completed on 2025-01-25 17:07:59
