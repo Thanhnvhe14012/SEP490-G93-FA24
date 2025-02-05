@@ -27,6 +27,19 @@
         }
     </style>
 </head>
+<script>
+    $(document).ready(function () {
+        $("form").submit(function (event) {
+            var startDate = new Date($("#start").val());
+            var endDate = new Date($("#end").val());
+
+            if (startDate > endDate) {
+                alert("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+                event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+            }
+        });
+    });
+</script>
 <body>
 <div class="container">
     <div class="form-container">

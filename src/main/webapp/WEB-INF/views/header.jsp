@@ -104,6 +104,9 @@
                                 <c:when test="${sessionScope.user.role == 2}">
                                 <li><a href="/my-profile-recruiter"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
                                     </c:when>
+                                    <c:when test="${sessionScope.user.role == 3}">
+                                <li><a href="/my-profile-staff"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>
+                                    </c:when>
                                     <c:when test="${sessionScope.user.role == 4}">
                                 <li><a href="/candidate/profile"><i class="icon-feather-user"></i> Trang cá nhân</a>
                                 <li><a href="/my-profile-candidate"><i class="icon-feather-user"></i> Hồ sơ của tôi</a>

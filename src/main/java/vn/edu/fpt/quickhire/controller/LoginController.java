@@ -13,19 +13,13 @@ import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.impl.AccountServiceImpl;
 import org.springframework.mail.javamail.JavaMailSender;
 import vn.edu.fpt.quickhire.model.impl.RecruiterServiceImpl;
-import vn.edu.fpt.quickhire.model.repository.DistrictRepository;
-import vn.edu.fpt.quickhire.model.repository.PasswordResetRepository;
-import vn.edu.fpt.quickhire.model.repository.ProvinceRepository;
-import vn.edu.fpt.quickhire.model.repository.WardRepository;
+import vn.edu.fpt.quickhire.model.repository.*;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class LoginController {
@@ -50,6 +44,8 @@ public class LoginController {
     private DistrictRepository districtRepository;
     @Autowired
     private WardRepository wardRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     // Hiển thị form đăng nhập
     @GetMapping("/login")
@@ -71,6 +67,7 @@ public class LoginController {
         if (account != null) {
             session.setAttribute("user", account);
             session.setAttribute("userDisplayName", account.getDisplayName());
+            session.setMaxInactiveInterval(1500);
             if (account.getRole() == 4){
                 return "redirect:/";
             }
@@ -102,10 +99,24 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image
+    public String registerUser(@ModelAttribute("user") UserDTO user, Model model,@RequestParam("image") MultipartFile image, HttpSession session
     ) throws ParseException, IOException {
         if (!userService.checkRegister(user.getUsername())) {
             model.addAttribute("error", "Tài khoản đã tồn tại");
+            model.addAttribute("user", new UserDTO());
+            List<Province> provinces = provinceRepository.findAll();
+
+            // Đưa danh sách tỉnh vào model để sử dụng trong JSP
+            model.addAttribute("provinces", provinces);
+            return "login/register";
+        }
+        if(userService.checkEmail(user.getEmail())) {
+            model.addAttribute("error", "Email đã tồn tại");
+            model.addAttribute("user", new UserDTO());
+            List<Province> provinces = provinceRepository.findAll();
+
+            // Đưa danh sách tỉnh vào model để sử dụng trong JSP
+            model.addAttribute("provinces", provinces);
             return "login/register";
         }
         System.out.println("arnh ne: " + image);
@@ -136,6 +147,11 @@ public class LoginController {
             if(existRecruiter != null) {
                 model.addAttribute("message", "Tạo tài khoản nhà tuyển dụng không thành công. Mã công ty đã trùng lặp");
                 model.addAttribute("messageType", "error");
+                model.addAttribute("user", new UserDTO());
+                List<Province> provinces = provinceRepository.findAll();
+
+                // Đưa danh sách tỉnh vào model để sử dụng trong JSP
+                model.addAttribute("provinces", provinces);
                 return "login/register";
             }
 
@@ -147,10 +163,6 @@ public class LoginController {
             recruiter.setCompany_logo(uploadedFileUrl);
 
             recruiter.setCompany_status(1);
-            account.setRecruiter(recruiter);
-            account.setRole(2L);
-            userService.save(account);
-
             Province province = provinceRepository.findByCode(account.getAddressId1());
             District district = districtRepository.findByCode(account.getAddressId2());
             Ward ward = wardRepository.findByCode(account.getAddressId3());
@@ -163,7 +175,9 @@ public class LoginController {
 
 
             recruiter.setCompany_location(companyLocation);
-            recruiterService.save(recruiter);
+            account.setRecruiter(recruiter);
+            account.setRole(2L);
+//            userService.save(account);
 
         } else if (user.getRole() == 3) {
             Date dob=new SimpleDateFormat("yyyy-MM-dd").parse(user.getDateOfBirth());
@@ -175,12 +189,49 @@ public class LoginController {
             candidate.setBiography(user.getBiography());
             account.setCandidate(candidate);
             account.setRole(4L);
-            userService.save(account);
+//            userService.save(account);
+        }
+        // Tạo mã xác nhận
+        String verificationCode = UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        session.setAttribute("verificationCode", verificationCode);
+        session.setAttribute("pendingAccount", account);
+        session.setMaxInactiveInterval(300);
+
+
+        // Gửi email xác nhận
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Xác nhận quên mật khẩu");
+        message.setText("Mã xác nhận của bạn là: " + verificationCode + ". Mã này có hiệu lực trong 5 phút.");
+        mailSender.send(message);
+
+        return "login/verify_email";
+    }
+
+    @PostMapping("/verify-email")
+    public String verifyEmail(@RequestParam("verificationCode") String code, HttpSession session, Model model) {
+        String storedCode = (String) session.getAttribute("verificationCode");
+        Account pendingAccount = (Account) session.getAttribute("pendingAccount");
+
+        if (storedCode == null || pendingAccount == null) {
+            model.addAttribute("error", "Phiên xác nhận đã hết hạn. Vui lòng đăng ký lại.");
+            return "login/register";
         }
 
-        model.addAttribute("error", "Đăng ký thành công!");
+        if (!storedCode.equals(code)) {
+            model.addAttribute("error", "Mã xác nhận không đúng!");
+            return "login/verify_email";
+        }
+
+        pendingAccount.setStatus(1); // Kích hoạt tài khoản
+        userService.save(pendingAccount);
+        session.removeAttribute("verificationCode");
+        session.removeAttribute("pendingAccount");
+
+        model.addAttribute("error", "Đăng ký thành công! Hãy đăng nhập.");
         return "login/login";
     }
+
 
 
     @GetMapping("/forgot-password")
@@ -190,6 +241,13 @@ public class LoginController {
 
     @PostMapping("/forgot-password")
     public String sendVerificationCode(@RequestParam("email") String email, Model model) {
+
+        Optional<Account> userOptional = accountRepository.findAllByEmail(email);
+        if (!userOptional.isPresent()) {
+            model.addAttribute("error", "Không tìm thấy tài khoản, vui lòng kiểm tra và thử lại");
+            return "login/forgot-password";
+        }
+
         String verificationCode = String.format("%06d", new Random().nextInt(999999));
         LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5);
         // Lưu mã xác nhận vào bảng password_reset

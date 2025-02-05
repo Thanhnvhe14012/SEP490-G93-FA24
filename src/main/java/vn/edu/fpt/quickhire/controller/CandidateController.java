@@ -71,7 +71,7 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setProject(experience.getProject());
         experienceRepository.save(ex);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/education/new")
@@ -97,7 +97,7 @@ public class CandidateController {
         ex.setSchoolName(education.getSchoolName());
         ex.setMajor(education.getMajor());
         educationRepository.save(ex);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/candidate/profile")
@@ -154,7 +154,7 @@ public class CandidateController {
         ex.setEnd(end);
         ex.setProject(experience.getProject());
         experienceRepository.save(ex);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/education/update")
@@ -191,7 +191,7 @@ public class CandidateController {
         ex.setSchoolName(education.getSchoolName());
         ex.setMajor(education.getMajor());
         educationRepository.save(ex);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/cetificate/new")
@@ -218,7 +218,7 @@ public class CandidateController {
         ex.setOrganization(cetificateDTO.getOrganization());
         ex.setLink(cetificateDTO.getLink());
         cetificateRepository.save(ex);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/cetificate/update")
@@ -255,7 +255,7 @@ public class CandidateController {
         cetificate.setCetificateName(cetificateDTO.getCetificateName());
         cetificate.setLink(cetificateDTO.getLink());
         cetificateRepository.save(cetificate);
-        return showFormProfileCandidate(userDTO, model);
+        return "redirect:/candidate/profile";
     }
 
     @GetMapping("/deleteExperience/{id}")

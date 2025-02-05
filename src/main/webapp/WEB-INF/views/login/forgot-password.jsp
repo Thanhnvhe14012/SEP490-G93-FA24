@@ -59,6 +59,10 @@
 <div class="container">
   <h1>Quên mật khẩu</h1>
   <form action="/forgot-password" method="post">
+    <!-- Hiển thị thông báo lỗi (nếu có) -->
+    <c:if test="${not empty error}">
+      <p class="error" style="color: red">${error}</p>
+    </c:if>
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
     <button type="submit">Gửi mã xác nhận</button>

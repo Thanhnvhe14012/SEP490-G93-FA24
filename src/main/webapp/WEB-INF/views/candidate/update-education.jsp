@@ -31,6 +31,28 @@
         }
     </style>
 </head>
+<script>
+    $(document).ready(function () {
+        $("form").submit(function (event) {
+            var startDate = new Date($("#start").val());
+            var endDate = new Date($("#end").val());
+            var gpaCheck = $("#gpa").val()
+
+            if (startDate > endDate) {
+                alert("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+                event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+            }
+            if(gpaCheck < 0){
+                alert("GPA không được nhỏ hơn 0.");
+                event.preventDefault();
+            }
+            if(gpaCheck > 4){
+                alert("GPA không được lớn hơn 4.");
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 <body>
 <div class="container">
     <div class="form-container">
