@@ -2,6 +2,7 @@ package vn.edu.fpt.quickhire.model.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import vn.edu.fpt.quickhire.entity.Account;
 import vn.edu.fpt.quickhire.entity.Candidate;
 import vn.edu.fpt.quickhire.entity.DTO.AccountDTO;
@@ -9,10 +10,12 @@ import vn.edu.fpt.quickhire.entity.DTO.UserDTO;
 import vn.edu.fpt.quickhire.entity.Recruiter;
 import vn.edu.fpt.quickhire.entity.Staff;
 import vn.edu.fpt.quickhire.model.AccountService;
+import vn.edu.fpt.quickhire.model.FileUploadService;
 import vn.edu.fpt.quickhire.model.repository.AccountRepository;
 import vn.edu.fpt.quickhire.model.repository.RecruiterRepository;
 import vn.edu.fpt.quickhire.model.repository.StaffRepository;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -28,6 +31,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    private FileUploadService fileUploadService;
     @Autowired
     RecruiterRepository recruiterRepository;
     @Autowired
@@ -70,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
                 userDTO.setCompanyDescription(account.getStaff().getRecruiter().getCompanyDescription());
                 userDTO.setCompanyScale(account.getStaff().getRecruiter().getCompanyScale());
                 userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
+                userDTO.setDateOfBirth(formatter.format(account.getDateOfBirth()));
             } else if (account.getRole() == 4) {
                 userDTO.setBiography(account.getCandidate().getBiography());
                 userDTO.setDisplayName(account.getFirstName() + " " + account.getMiddleName() + " " + account.getLastName());
@@ -86,6 +92,14 @@ public class AccountServiceImpl implements AccountService {
     public boolean checkRegister(String username) {
         Account account = accountRepository.findByUsername(username);
         if (account == null) {
+            return true;
+        } else return false;
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        Optional<Account> account = accountRepository.findAllByEmail(email);
+        if(account.isPresent()){
             return true;
         } else return false;
     }
@@ -160,9 +174,23 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account updateAccount(UserDTO userDTO) throws ParseException {
+    public Account updateAccount(UserDTO userDTO,  MultipartFile image) throws ParseException, IOException {
         // Map DTO to Entity if needed
         Account userProfile = accountRepository.findByUsername(userDTO.getUsername());
+
+        System.out.println("Anh tu form:" + image);
+        String uploadedFileUrl = "";
+        if(!image.isEmpty()){
+            uploadedFileUrl = fileUploadService.uploadFile(image);
+            if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
+                userProfile.setAvatar(uploadedFileUrl);
+                // CV file uploaded successfully
+                System.out.println("CV uploaded cloud successfully. File URL: " + uploadedFileUrl);
+            }else {
+                System.out.println("CV uploaded cloud failed");
+            }
+        }
+
         userProfile.setUsername(userDTO.getUsername());
         userProfile.setEmail(userDTO.getEmail());
         userProfile.setPhoneNumber(userDTO.getPhoneNumber());
@@ -179,7 +207,7 @@ public class AccountServiceImpl implements AccountService {
             recruiter.setCompanyScale(userDTO.getCompanyScale());
 
             userProfile.setRecruiter(recruiter);
-        } else {
+        } else if(userDTO.getRole() == 4){
             userProfile.setFirstName(userDTO.getFirstName());
             userProfile.setMiddleName(userDTO.getMiddleName());
             userProfile.setLastName(userDTO.getLastName());
@@ -188,6 +216,13 @@ public class AccountServiceImpl implements AccountService {
             userProfile.setDateOfBirth(df.parse(userDTO.getDateOfBirth()));
             Candidate candidate = userProfile.getCandidate();
             candidate.setBiography(userDTO.getBiography());
+        } else if(userDTO.getRole() == 3){
+            userProfile.setFirstName(userDTO.getFirstName());
+            userProfile.setMiddleName(userDTO.getMiddleName());
+            userProfile.setLastName(userDTO.getLastName());
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+            userProfile.setDateOfBirth(df.parse(userDTO.getDateOfBirth()));
         }
 
 

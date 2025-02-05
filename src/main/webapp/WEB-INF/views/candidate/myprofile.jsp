@@ -50,7 +50,7 @@
                                                         <img class="profile-pic"
                                                              src="${user.avatar}" alt=""/>
                                                         <div class="upload-button"></div>
-                                                        <input class="file-upload" type="file" accept="image/*"/>
+                                                        <input class="file-upload" type="file" id="image" name="image" accept="image/*"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-7 col-md-9 col-sm-8">
@@ -232,25 +232,31 @@
 
 <script>
     document.getElementById('save-profile-btn').addEventListener('click', function () {
-        const profileData = {
-            username: document.querySelector('input[value="${user.username}"]').value,
-            email: document.querySelector('input[value="${user.email}"]').value,
-            phoneNumber: document.querySelector('input[value="${user.phoneNumber}"]').value,
-            firstName: document.querySelector('input[value="${user.firstName}"]').value,
-            middleName: document.querySelector('input[value="${user.middleName}"]').value,
-            lastName: document.querySelector('input[value="${user.lastName}"]').value,
-            dateOfBirth: document.querySelector('input[value="${user.dateOfBirth}"]').value,
-            biography: document.querySelector('input[value="${user.biography}"]').value,
-            address: document.querySelector('input[value="${user.address}"]').value,
-            addressId1: document.getElementById('addressId1').value,
-            addressId2: document.getElementById('addressId2').value,
-            addressId3: document.getElementById('addressId3').value
-        };
+        const formData = new FormData();
+
+        // Collect profile details
+        formData.append('username', document.querySelector('input[value="${user.username}"]').value);
+        formData.append('email', document.querySelector('input[value="${user.email}"]').value);
+        formData.append('phoneNumber', document.querySelector('input[value="${user.phoneNumber}"]').value);
+        formData.append('firstName', document.querySelector('input[value="${user.firstName}"]').value);
+        formData.append('middleName', document.querySelector('input[value="${user.middleName}"]').value);
+        formData.append('lastName', document.querySelector('input[value="${user.lastName}"]').value);
+        formData.append('dateOfBirth', document.querySelector('input[value="${user.dateOfBirth}"]').value);
+        formData.append('biography', document.querySelector('input[value="${user.biography}"]').value);
+        formData.append('address', document.querySelector('input[value="${user.address}"]').value);
+        formData.append('addressId1', document.getElementById('addressId1').value);
+        formData.append('addressId2', document.getElementById('addressId2').value);
+        formData.append('addressId3', document.getElementById('addressId3').value);
+
+        // Collect image file (if any)
+        const imageFile = document.getElementById('image').files[0];
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
 
         fetch('/saveAccountInfor', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(profileData),
+            body: formData
         })
             .then(response => {
                 if (response.ok) {

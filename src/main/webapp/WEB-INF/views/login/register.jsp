@@ -241,6 +241,7 @@
     document.querySelector('form').addEventListener('submit', function (e) {
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
+        const dateOfBirth = document.getElementById('dateOfBirth').value;
         let valid = true;
 
         // Kiểm tra độ dài mật khẩu
@@ -257,6 +258,15 @@
             valid = false;
         } else {
             document.getElementById('confirm-password-error').style.display = 'none';
+        }
+
+        // Kiểm tra ngày sinh không được lớn hơn ngày hiện tại
+        if (dateOfBirth) {
+            const today = new Date().toISOString().split('T')[0]; // Lấy ngày hiện tại (YYYY-MM-DD)
+            if (dateOfBirth > today) {
+                alert("Ngày sinh không thể lớn hơn ngày hiện tại!");
+                valid = false;
+            }
         }
 
         // Nếu không hợp lệ, chặn gửi biểu mẫu

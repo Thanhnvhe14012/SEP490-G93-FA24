@@ -65,7 +65,7 @@
                                                                        data-tippy-placement="top"
                                                                        class="utf-ripple-effect-dark"><i
                                                                         class="icon-material-outline-business-center"></i>
-                                                                    Người tuyển dụng</label>
+                                                                    Quản lý công ty</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,38 +139,35 @@
 
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Mã code công ty:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.companyCode}">
+                                                <h5>Họ:</h5>
+                                                <input type="text" class="utf-with-border" value="${user.firstName}">
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Tên công ty:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.companyName}">
+                                                <h5>Tên đệm:</h5>
+                                                <input type="text" class="utf-with-border" value="${user.middleName}">
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Mô tả công ty:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.companyDescription}">
+                                                <h5>Tên:</h5>
+                                                <input type="text" class="utf-with-border" value="${user.lastName}">
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Số lượng nhân viên:</h5>
-                                                <input type="number" class="utf-with-border" value="${user.companyScale}">
+                                                <h5>Ngày tháng năm sinh:</h5>
+                                                <input type="date" class="utf-with-border" value="${user.dateOfBirth}">
                                             </div>
                                         </div>
-                                        
-
-
-
 
                                     </div>
                                 </div>
                             </div>
                             <a href="javascript:void(0);"
-                               class="button ripple-effect big margin-top-10 margin-bottom-20" id="save-profile-btn">Lưu</a>
+                               class="button ripple-effect big margin-top-10 margin-bottom-20"
+                               id="save-profile-btn">Lưu</a>
                         </div>
                     </div>
                 </div>
@@ -206,7 +203,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="javascript:void(0);" class="button ripple-effect big margin-top-10" id="update-password-btn">Lưu mật khẩu</a>
+                            <a href="javascript:void(0);" class="button ripple-effect big margin-top-10"
+                               id="update-password-btn">Lưu mật khẩu</a>
                         </div>
                     </div>
                 </div>
@@ -221,21 +219,22 @@
     </div>
 
 
-<%--    <%@ include file="/WEB-INF/views/footer.jsp" %>--%>
+    <%--    <%@ include file="/WEB-INF/views/footer.jsp" %>--%>
 </div>
 
 <script>
     document.getElementById('save-profile-btn').addEventListener('click', function () {
         const formData = new FormData();
 
+
         // Collect profile details
         formData.append('username', document.querySelector('input[value="${user.username}"]').value);
         formData.append('email', document.querySelector('input[value="${user.email}"]').value);
         formData.append('phoneNumber', document.querySelector('input[value="${user.phoneNumber}"]').value);
-        formData.append('companyCode', document.querySelector('input[value="${user.companyCode}"]').value);
-        formData.append('companyName', document.querySelector('input[value="${user.companyName}"]').value);
-        formData.append('companyDescription', document.querySelector('input[value="${user.companyDescription}"]').value);
-        formData.append('companyScale', document.querySelector('input[value="${user.companyScale}"]').value);
+        formData.append('firstName', document.querySelector('input[value="${user.firstName}"]').value);
+        formData.append('middleName', document.querySelector('input[value="${user.middleName}"]').value);
+        formData.append('lastName', document.querySelector('input[value="${user.lastName}"]').value);
+        formData.append('dateOfBirth', document.querySelector('input[value="${user.dateOfBirth}"]').value);
         formData.append('address', document.querySelector('input[value="${user.address}"]').value);
         formData.append('addressId1', document.getElementById('addressId1').value);
         formData.append('addressId2', document.getElementById('addressId2').value);
@@ -247,7 +246,6 @@
             formData.append('image', imageFile);
         }
 
-        // Send the FormData to the server
         fetch('/saveAccountInfor', {
             method: 'POST',
             body: formData
@@ -261,7 +259,6 @@
             })
             .catch(error => console.error('Error:', error));
     });
-
 
     document.getElementById('update-password-btn').addEventListener('click', function () {
         // Lấy giá trị từ các ô input
@@ -304,6 +301,7 @@
             })
             .catch(error => console.error('Error:', error));
     });
+
     // Load districts when a province is selected
     $('#addressId1').change(function () {
         var provinceCode = $(this).val();
