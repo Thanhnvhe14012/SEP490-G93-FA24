@@ -36,49 +36,23 @@
 </head>
 <script>
     $(document).ready(function () {
-        $("#educationForm").on("submit", function (e) {
-            let isValid = true;
-
-            // Xóa thông báo lỗi cũ trước khi kiểm tra lại
-            $(".error").remove();
-
-            // Kiểm tra các trường không được để trống
-            $(".form-control").each(function () {
-                if (!$(this).val()) {
-                    isValid = false;
-                    $(this).addClass("is-invalid");
-                    $(this).after("<div class='error'>This field is required.</div>");
-                } else {
-                    $(this).removeClass("is-invalid");
-                }
-            });
-
-            // Kiểm tra ngày bắt đầu không lớn hơn ngày kết thúc
+        $("form").submit(function (event) {
             var startDate = new Date($("#start").val());
             var endDate = new Date($("#end").val());
+            var gpaCheck = $("#gpa").val()
+
             if (startDate > endDate) {
-                isValid = false;
-                $("#end").addClass("is-invalid");
-                $("#end").after("<div class='error'>Ngày bắt đầu không được lớn hơn ngày kết thúc.</div>");
+                alert("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+                event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
             }
-
-            // Kiểm tra GPA không được lớn hơn 4
-            var gpa = parseFloat($("#gpa").val());
-            if (gpa > 4) {
-                isValid = false;
-                $("#gpa").addClass("is-invalid");
-                $("#gpa").after("<div class='error'>GPA không được lớn hơn 4.</div>");
+            if(gpaCheck < 0){
+                alert("GPA không được nhỏ hơn 0.");
+                event.preventDefault();
             }
-
-            if (!isValid) {
-                e.preventDefault(); // Ngăn form gửi nếu có lỗi
+            if(gpaCheck > 4){
+                alert("GPA không được lớn hơn 4.");
+                event.preventDefault();
             }
-        });
-
-        // Xóa lỗi khi người dùng nhập lại đúng
-        $(".form-control").on("input", function () {
-            $(this).removeClass("is-invalid");
-            $(this).next(".error").remove();
         });
     });
 </script>
