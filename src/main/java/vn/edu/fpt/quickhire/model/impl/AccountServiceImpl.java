@@ -180,7 +180,7 @@ public class AccountServiceImpl implements AccountService {
 
         System.out.println("Anh tu form:" + image);
         String uploadedFileUrl = "";
-        if(!image.isEmpty()){
+        if(image != null){
             uploadedFileUrl = fileUploadService.uploadFile(image);
             if (uploadedFileUrl != null && !uploadedFileUrl.isEmpty()) {
                 userProfile.setAvatar(uploadedFileUrl);
