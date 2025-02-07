@@ -20,12 +20,12 @@
         <div id="dashboard-titlebar" class="utf-dashboard-headline-item">
             <div class="row">
                 <div class="col-xl-12">
-                    <h3>My Profile</h3>
+                    <h3>Hồ sơ của tôi</h3>
                     <nav id="breadcrumbs">
                         <ul>
-                            <li><a href="index-1.html">Home</a></li>
-                            <li><a href="dashboard.html">Dashboard</a></li>
-                            <li>My Profile</li>
+                            <li><a href="/">Trang chủ</a></li>
+                            <li><a href="/">Bảng điều khiển</a></li>
+                            <li>Hồ sơ của tôi</li>
                         </ul>
                     </nav>
                 </div>
@@ -47,10 +47,23 @@
                                                 <div class="col-xl-5 col-md-3 col-sm-4">
                                                     <div class="utf-avatar-wrapper" data-tippy-placement="top"
                                                          title="Change Profile Picture">
-                                                        <img class="profile-pic"
-                                                             src="${user.avatar}" alt=""/>
-                                                        <div class="upload-button"></div>
-                                                        <input class="file-upload" type="file" id="image" name="image" accept="image/*"/>
+                                                        <c:if test="${empty sessionScope.user.avatar}">
+                                                            <img class="profile-pic"
+                                                                 src="https://vietnampfa.com/wp-content/uploads/2024/10/avatar-facebook-390ktogb.webp"
+                                                                 alt=""/>
+                                                            <div class="upload-button"></div>
+                                                            <input class="file-upload" type="file" id="image"
+                                                                   name="image"
+                                                                   accept="image/*"/>
+                                                        </c:if>
+                                                        <c:if test="${not empty sessionScope.user.avatar}">
+                                                            <img class="profile-pic"
+                                                                 src="${user.avatar}" alt=""/>
+                                                            <div class="upload-button"></div>
+                                                            <input class="file-upload" type="file" id="image"
+                                                                   name="image"
+                                                                   accept="image/*"/>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-7 col-md-9 col-sm-8">
@@ -146,25 +159,25 @@
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Mô tả công ty:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.companyDescription}">
+                                                <input type="text" class="utf-with-border"
+                                                       value="${user.companyDescription}">
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Số lượng nhân viên:</h5>
-                                                <input type="number" class="utf-with-border" value="${user.companyScale}">
+                                                <input type="number" class="utf-with-border"
+                                                       value="${user.companyScale}">
                                             </div>
                                         </div>
-                                        
-
-
 
 
                                     </div>
                                 </div>
                             </div>
                             <a href="javascript:void(0);"
-                               class="button ripple-effect big margin-top-10 margin-bottom-20" id="save-profile-btn">Lưu</a>
+                               class="button ripple-effect big margin-top-10 margin-bottom-20"
+                               id="save-profile-btn">Lưu</a>
                         </div>
                     </div>
                 </div>
@@ -200,7 +213,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="javascript:void(0);" class="button ripple-effect big margin-top-10" id="update-password-btn">Lưu mật khẩu</a>
+                            <a href="javascript:void(0);" class="button ripple-effect big margin-top-10"
+                               id="update-password-btn">Lưu mật khẩu</a>
                         </div>
                     </div>
                 </div>
@@ -215,7 +229,7 @@
     </div>
 
 
-<%--    <%@ include file="/WEB-INF/views/footer.jsp" %>--%>
+    <%--    <%@ include file="/WEB-INF/views/footer.jsp" %>--%>
 </div>
 
 <script>
