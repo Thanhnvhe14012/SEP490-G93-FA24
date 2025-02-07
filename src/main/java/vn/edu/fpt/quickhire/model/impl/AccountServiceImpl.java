@@ -191,7 +191,6 @@ public class AccountServiceImpl implements AccountService {
             }
         }
 
-        userProfile.setUsername(userDTO.getUsername());
         userProfile.setEmail(userDTO.getEmail());
         userProfile.setPhoneNumber(userDTO.getPhoneNumber());
         userProfile.setAddressId1(userDTO.getAddressId1());

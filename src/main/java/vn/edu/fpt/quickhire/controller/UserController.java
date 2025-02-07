@@ -121,6 +121,7 @@ public class UserController {
 //        userProfileDTO.setLastName(lastName);
 
         userProfileDTO.setRole(user.getRole());
+        userProfileDTO.setUsername(user.getUsername());
         Account x = accountService.updateAccount(userProfileDTO, image);
         UserDTO account = accountService.login(x.getUsername(), x.getPassword());
 
