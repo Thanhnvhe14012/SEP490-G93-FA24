@@ -201,7 +201,7 @@ public class LoginController {
         // Gửi email xác nhận
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
-        message.setSubject("Xác nhận quên mật khẩu");
+        message.setSubject("Xác nhận đăng ký");
         message.setText("Mã xác nhận của bạn là: " + verificationCode + ". Mã này có hiệu lực trong 5 phút.");
         mailSender.send(message);
 
