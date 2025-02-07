@@ -87,12 +87,6 @@
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Tên đăng nhập:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.username}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12 col-md-6 col-sm-6">
-                                            <div class="utf-submit-field">
                                                 <h5>Email:</h5>
                                                 <input type="text" class="utf-with-border" value="${user.email}">
                                             </div>
@@ -243,7 +237,6 @@
         const formData = new FormData();
 
         // Collect profile details
-        formData.append('username', document.querySelector('input[value="${user.username}"]').value);
         formData.append('email', document.querySelector('input[value="${user.email}"]').value);
         formData.append('phoneNumber', document.querySelector('input[value="${user.phoneNumber}"]').value);
         formData.append('companyCode', document.querySelector('input[value="${user.companyCode}"]').value);

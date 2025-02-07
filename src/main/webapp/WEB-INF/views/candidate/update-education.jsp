@@ -37,6 +37,20 @@
             var startDate = new Date($("#start").val());
             var endDate = new Date($("#end").val());
             var gpaCheck = $("#gpa").val()
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (startDate > today) {
+                alert("Ngày bắt đầu không được lớn hơn ngày hiện tại.");
+                event.preventDefault();
+                return;
+            }
+
+            if (endDate > today) {
+                alert("Ngày kết thúc không được lớn hơn ngày hiện tại.");
+                event.preventDefault();
+                return;
+            }
 
             if (startDate > endDate) {
                 alert("Ngày bắt đầu không được lớn hơn ngày kết thúc.");

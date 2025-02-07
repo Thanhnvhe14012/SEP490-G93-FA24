@@ -87,20 +87,14 @@
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
-                                                <h5>Tên đăng nhập:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.username}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12 col-md-6 col-sm-6">
-                                            <div class="utf-submit-field">
                                                 <h5>Email:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.email}">
+                                                <input type="text" class="utf-with-border" value="${user.email}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Số điện thoại:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.phoneNumber}">
+                                                <input type="text" class="utf-with-border" value="${user.phoneNumber}" required>
                                             </div>
                                         </div>
 
@@ -146,39 +140,39 @@
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Địa chỉ chi tiết:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.address}">
+                                                <input type="text" class="utf-with-border" value="${user.address}" required>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Họ:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.firstName}">
+                                                <input type="text" class="utf-with-border" value="${user.firstName}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Tên đệm:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.middleName}">
+                                                <input type="text" class="utf-with-border" value="${user.middleName}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Tên:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.lastName}">
+                                                <input type="text" class="utf-with-border" value="${user.lastName}" required>
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Ngày tháng năm sinh:</h5>
-                                                <input type="date" class="utf-with-border" value="${user.dateOfBirth}">
+                                                <input type="date" class="utf-with-border" value="${user.dateOfBirth}" required>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-6 col-sm-6">
                                             <div class="utf-submit-field">
                                                 <h5>Mô tả cá nhân:</h5>
-                                                <input type="text" class="utf-with-border" value="${user.biography}">
+                                                <input type="text" class="utf-with-border" value="${user.biography}" required>
                                             </div>
                                         </div>
 
@@ -247,14 +241,25 @@
     document.getElementById('save-profile-btn').addEventListener('click', function () {
         const formData = new FormData();
 
+
+        const dateOfBirthInput = document.querySelector('input[value="${user.dateOfBirth}"]');
+        const dateOfBirth = new Date(dateOfBirthInput.value);
+        const today = new Date();
+
+        // Kiểm tra nếu ngày sinh lớn hơn ngày hiện tại
+        if (dateOfBirth > today) {
+            alert("Ngày sinh không được lớn hơn ngày hiện tại!");
+            return;
+        }
+
+
         // Collect profile details
-        formData.append('username', document.querySelector('input[value="${user.username}"]').value);
         formData.append('email', document.querySelector('input[value="${user.email}"]').value);
         formData.append('phoneNumber', document.querySelector('input[value="${user.phoneNumber}"]').value);
         formData.append('firstName', document.querySelector('input[value="${user.firstName}"]').value);
         formData.append('middleName', document.querySelector('input[value="${user.middleName}"]').value);
         formData.append('lastName', document.querySelector('input[value="${user.lastName}"]').value);
-        formData.append('dateOfBirth', document.querySelector('input[value="${user.dateOfBirth}"]').value);
+        formData.append('dateOfBirth', dateOfBirthInput.value);
         formData.append('biography', document.querySelector('input[value="${user.biography}"]').value);
         formData.append('address', document.querySelector('input[value="${user.address}"]').value);
         formData.append('addressId1', document.getElementById('addressId1').value);

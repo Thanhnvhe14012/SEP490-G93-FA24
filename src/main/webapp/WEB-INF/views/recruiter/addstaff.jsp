@@ -121,6 +121,18 @@
 
 <!-- jQuery Scripts for Address Dropdowns -->
 <script>
+    $(document).ready(function() {
+        $('#dateOfBirth').on('change', function() {
+            var dob = new Date($(this).val());
+            var today = new Date();
+            today.setHours(0, 0, 0, 0); // Đặt thời gian về 00:00:00 để so sánh chính xác
+
+            if (dob > today) {
+                alert("Ngày sinh không thể lớn hơn ngày hiện tại!");
+                $(this).val(''); // Xóa giá trị không hợp lệ
+            }
+        });
+    });
     // Load districts when a province is selected
     $('#addressId1').change(function() {
         var provinceCode = $(this).val();
